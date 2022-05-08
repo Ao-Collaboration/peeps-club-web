@@ -94,8 +94,36 @@ const styles = {
 		top: '20vh',
 		right: '5vw',
 		cursor: 'pointer',
+
+
+		'&:hover div': {
+			display: 'block'
+		},
+		'& div': {
+			display: 'none',
+			borderRadius: '0 0 2em 2em',
+			backgroundColor: 'white',
+			width: '80%',
+			margin: 'auto',
+			marginTop: '-8px',
+			'& a': {
+				display: 'block',
+				float: 'none',
+				color: 'black',
+				padding: '12px 16px',
+				textDecoration: 'none',
+				textAlign: 'center',
+				'&:last-of-type': {
+					borderRadius: '0 0 2em 2em',
+				},
+				'&:hover': {
+					backgroundColor: '#1ca9f3',
+					color: 'white'
+				}
+			}
+		},
 	},
-	
+
 }
 
 export default createUseStyles(styles)
