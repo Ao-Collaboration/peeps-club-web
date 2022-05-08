@@ -1,5 +1,5 @@
 import { createUseStyles } from 'react-jss'
-import { teal } from '../../config/colors'
+import { peepBlue, teal } from '../../config/colors'
 
 const styles = {
 	'@global': {
@@ -117,7 +117,7 @@ const styles = {
 					borderRadius: '0 0 2em 2em',
 				},
 				'&:hover': {
-					backgroundColor: '#1ca9f3',
+					backgroundColor: peepBlue,
 					color: 'white'
 				}
 			}
