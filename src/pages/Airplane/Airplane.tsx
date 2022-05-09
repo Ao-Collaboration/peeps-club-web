@@ -25,7 +25,7 @@ function Airplane() {
 			</div>
 			<div className={classes.land}>
 				<SVG src={'/assets/Cloud Button Asset.svg'} />
-				<div>
+				<div className={classes.landingLinks}>
 					<a href="#">Jamaica</a>
 					<a href="#">New Zealand</a>
 					<a href="#">Japan</a>
