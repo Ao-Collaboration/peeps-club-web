@@ -48,12 +48,12 @@ const Airplane: React.FC<any> = (props) => {
 				<div className={`${classes.airplane} ${isLanding ? classes.landAnimation : classes.floatAnimation}`} onAnimationEnd={startFade}>
 					<SVG src={'/assets/Plane Asset.svg'} />
 				</div>
-				<div className={`${classes.land} ${isLanding ? classes.pullAwayAnimation : ''}`}>
+				<div aria-label='Land the Plane' className={`${classes.land} ${isLanding ? classes.pullAwayAnimation : ''}`}>
 					<SVG src={'/assets/Cloud Button Asset.svg'} />
 					<div className={classes.landingLinks}>
 						{
 							landingLocations.map((option, index) => (
-								<a href="#" key={index} onClick={() => {startLanding(option.bg)}}>{option.location}</a>
+								<a href="#" aria-label={option.location} key={index} onClick={() => {startLanding(option.bg)}}>{option.location}</a>
 							))
 						}
 					</div>
