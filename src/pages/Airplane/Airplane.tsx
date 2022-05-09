@@ -6,7 +6,7 @@ import { black } from '../../config/colors'
 import { useNavigate } from 'react-router-dom'
 import { landingLocations } from '../../config/traits'
 
-const Airplane: React.FC<any> = (props) => {
+const Airplane = () => {
 	const classes = useStyles()
 	const [isLanding, setIsLanding] = useState(false)
 	const [isFading, setisFading] = useState(false)
