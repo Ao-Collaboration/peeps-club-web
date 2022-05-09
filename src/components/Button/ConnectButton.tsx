@@ -7,8 +7,8 @@ import Button from './Button'
 import { ethers } from 'ethers'
 import { Web3Context } from '../../context/Web3/Web3Context'
 
-import { host } from '../../config/api'
-import doFetch from '../../utils/doFetch'
+// import { host } from '../../config/api'
+// import doFetch from '../../utils/doFetch'
 
 function ConnectButton() {
 	const { account, setAccount, setWeb3Provider } = useContext(Web3Context)
