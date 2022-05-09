@@ -4,6 +4,7 @@ import { useState } from 'react'
 import FadeTo from '../../components/Scene/FadeTo'
 import { black } from '../../config/colors'
 import { useNavigate } from 'react-router-dom'
+import { landingLocations } from '../../config/traits'
 
 const Airplane: React.FC<any> = (props) => {
 	const classes = useStyles()
@@ -48,12 +49,15 @@ const Airplane: React.FC<any> = (props) => {
 				<div className={`${classes.land} ${isLanding ? classes.pullAwayAnimation : ''}`}>
 					<SVG src={'/assets/Cloud Button Asset.svg'} />
 					<div className={classes.landingLinks}>
-						<a href="#" onClick={startLanding}>Jamaica</a>
-						<a href="#" onClick={startLanding}>New Zealand</a>
-						<a href="#" onClick={startLanding}>Japan</a>
+						{
+							landingLocations.map((option, index) => (
+								<a href="#" key={index} onClick={startLanding}>{option.location}</a>
+							))
+						}
 					</div>
 				</div>
 				<div className={`${classes.cloud} ${classes.initialCloud}`}>
+
 					<SVG src={'/assets/Cloud 1 Asset.svg'} />
 				</div>
 			</div>
