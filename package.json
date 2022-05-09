@@ -38,7 +38,7 @@
     "prettier:fix": "prettier --fix .",
     "postinstall": "husky install",
     "predeploy": "yarn build",
-    "deploy": "gh-pages -d build"
+    "deploy": "echo my.peeps.club > ./build/CNAME && gh-pages -d build"
   },
   "eslintConfig": {
     "extends": [
