@@ -1,8 +1,11 @@
+import { Link } from 'react-router-dom'
+import { AirplaneRoute } from '../routes'
+
 function Home() {
 	return (
-		<div>
-			<h1>Home Page</h1>
-		</div>
+		<>
+			<Link to={`${AirplaneRoute.path}`}>Start</Link>
+		</>
 	)
 }
 

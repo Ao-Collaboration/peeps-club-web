@@ -6,7 +6,7 @@ function Header() {
 
 	return (
 		<div className={classes.header}>
-			<span>OOO Marketplace</span>
+			<span>Peeps Club</span>
 			<ConnectButton />
 		</div>
 	)

@@ -36,17 +36,8 @@ function ConnectButton() {
 		const connection = await web3Modal.connect()
 		const provider = new ethers.providers.Web3Provider(connection)
 		const accounts = await provider.listAccounts()
-		const signer = await provider.getSigner()
 
 		const addr = accounts[0]
-
-		// request signature from server
-		const sigReq = await doFetch(`${host}/profile?address=${addr}`, 'GET')
-		const signature = await signer.signMessage(sigReq['message'])
-
-		// verify signature
-		const userData = await doFetch(`${host}/profile/sign?address=${addr}`, 'POST', { 'signature': signature })
-		//fixme add error handling if signature verification fails
 
 		try {
 			const name = await provider.lookupAddress(addr)
