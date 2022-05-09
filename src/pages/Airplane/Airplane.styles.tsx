@@ -1,5 +1,5 @@
 import { createUseStyles } from 'react-jss'
-import { peepBlue } from '../../config/colors'
+import { peepBlue, white } from '../../config/colors'
 
 const styles = {
 	'@global': {
@@ -28,6 +28,28 @@ const styles = {
 			},
 			'to': {
 				'transform': 'translate(0, -0px)'
+			}
+		},
+		'@keyframes landing': {
+			'from': {
+				'transform': 'translate(0,  0px)'
+			},
+			'to': {
+				'transform': 'translate(100%, 100%)'
+			}
+		},
+		'@keyframes pullaway': {
+			'from': {
+				top: '20vh',
+				opacity: '100%'
+			},
+			'50%': {
+				top: '10vh',
+				opacity: '0%'
+			},
+			'to': {
+				top: '-30vh',
+				opacity: '0%'
 			}
 		}
 	},
@@ -83,22 +105,36 @@ const styles = {
 		position: 'absolute',
 		top: '20vh',
 		left: '0vw',
-		animationName: 'floating',
-		animationDuration: '3s',
-		animationIterationCount: 'infinite',
-		animationTimingFunction: 'ease-in-out',
 		'& svg': {
 			width: '60vw',
 			height: '60vh'
 		},
 	},
+	floatAnimation: {
+		animationName: 'floating',
+		animationDuration: '3s',
+		animationIterationCount: 'infinite',
+		animationTimingFunction: 'ease-in-out',
+	},
+	landAnimation: {
+		animationName: 'landing',
+		animationDuration: '5s',
+		animationFillMode: 'forwards',
+		animationTimingFunction: 'linear',
+	},
+	pullAwayAnimation: {
+		animationName: 'pullaway',
+		animationDuration: '2s',
+		animationFillMode: 'forwards',
+		animationTimingFunction: 'linear',
+	},
 	land: {
 		position: 'absolute',
 		top: '20vh',
 		right: '5vw',
+		zIndex: '1000',
 		'& svg': {
-			width: '30vw',
-			height: '15vh'
+			width: '30vw'
 		},
 		cursor: 'pointer',
 		'&:hover $landingLinks': {
@@ -108,7 +144,7 @@ const styles = {
 	landingLinks: {
 		display: 'none',
 		borderRadius: '0 0 2em 2em',
-		backgroundColor: 'white',
+		backgroundColor: white,
 		width: '80%',
 		margin: 'auto',
 		marginTop: '-8px',

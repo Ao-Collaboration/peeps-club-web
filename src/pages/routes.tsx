@@ -13,3 +13,8 @@ export const AirplaneRoute: Route = {
 	name: 'Airplane',
 	path: '/airplane',
 }
+
+export const ImmigrationRoute: Route = {
+	name: 'Immigration',
+	path: '/immigration',
+}

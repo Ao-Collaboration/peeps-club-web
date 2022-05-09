@@ -1,7 +1,8 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
-import { AirplaneRoute, HomeRoute } from './routes'
+import { AirplaneRoute, HomeRoute, ImmigrationRoute } from './routes'
 import Home from './Home/Home'
 import Airplane from './Airplane/Airplane'
+import Immigration from './Immigration/Immigration'
 import { useContext } from 'react'
 import { Web3Context } from '../context/Web3/Web3Context'
 import ConnectWallet from './ConnectWallet/ConnectWallet'
@@ -21,6 +22,7 @@ function Router() {
 				<Routes>
 					<Route path={HomeRoute.path} element={<Home />} />
 					<Route path={AirplaneRoute.path} element={<Airplane />} />
+					<Route path={ImmigrationRoute.path} element={<Immigration />} />
 				</Routes>
 			</BrowserRouter>
 		</>
