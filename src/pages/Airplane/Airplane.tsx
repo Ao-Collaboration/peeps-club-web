@@ -10,9 +10,11 @@ const Airplane: React.FC<any> = (props) => {
 	const classes = useStyles()
 	const [isLanding, setIsLanding] = useState(false)
 	const [isFading, setisFading] = useState(false)
+	const [backgroundTrait, setBackgroundTrait] = useState('')
 	const navigate = useNavigate()
 
-	const startLanding = () => {
+	const startLanding = (backgroundColor : string) => {
+		setBackgroundTrait(backgroundColor)
 		setIsLanding(true)
 	}
 
@@ -21,7 +23,7 @@ const Airplane: React.FC<any> = (props) => {
 	}
 
 	const isDone = () => {
-		navigate('/immigration')
+		navigate('/immigration', { state: { backgroundColor: backgroundTrait} })
 	}
 
 	return (
@@ -51,13 +53,12 @@ const Airplane: React.FC<any> = (props) => {
 					<div className={classes.landingLinks}>
 						{
 							landingLocations.map((option, index) => (
-								<a href="#" key={index} onClick={startLanding}>{option.location}</a>
+								<a href="#" key={index} onClick={() => {startLanding(option.bg)}}>{option.location}</a>
 							))
 						}
 					</div>
 				</div>
 				<div className={`${classes.cloud} ${classes.initialCloud}`}>
-
 					<SVG src={'/assets/Cloud 1 Asset.svg'} />
 				</div>
 			</div>
