@@ -41,11 +41,15 @@ const styles = {
 		'@keyframes pullaway': {
 			'from': {
 				top: '20vh',
-				right: '5vw'
+				opacity: '100%'
+			},
+			'50%': {
+				top: '10vh',
+				opacity: '0%'
 			},
 			'to': {
-				top: '-50vh',
-				right: '5vw'
+				top: '-30vh',
+				opacity: '0%'
 			}
 		}
 	},
@@ -120,7 +124,7 @@ const styles = {
 	},
 	pullAwayAnimation: {
 		animationName: 'pullaway',
-		animationDuration: '5s',
+		animationDuration: '2s',
 		animationFillMode: 'forwards',
 		animationTimingFunction: 'linear',
 	},
@@ -128,9 +132,9 @@ const styles = {
 		position: 'absolute',
 		top: '20vh',
 		right: '5vw',
+		zIndex: '1000',
 		'& svg': {
-			width: '30vw',
-			height: '15vh'
+			width: '30vw'
 		},
 		cursor: 'pointer',
 		'&:hover $landingLinks': {
