@@ -1,3 +1,4 @@
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const doFetch = async (path: string, method: string, body?: any) => {
 	const res = await fetch(path, {
 		method: method,
