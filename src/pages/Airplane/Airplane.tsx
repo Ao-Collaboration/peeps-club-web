@@ -1,20 +1,26 @@
 import useStyles from './Airplane.styles'
 import SVG from 'react-inlinesvg'
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import FadeTo from '../../components/Scene/FadeTo'
 import { black } from '../../config/colors'
 import { useNavigate } from 'react-router-dom'
 import { landingLocations } from '../../config/traits'
+import { MetadataContext } from '../../context/Metadata/MetadataContext'
 
 const Airplane = () => {
 	const classes = useStyles()
 	const [isLanding, setIsLanding] = useState(false)
 	const [isFading, setisFading] = useState(false)
-	const [backgroundTrait, setBackgroundTrait] = useState('')
+	const {setMetadata}= useContext(MetadataContext)
 	const navigate = useNavigate()
 
-	const startLanding = (backgroundColor : string) => {
-		setBackgroundTrait(backgroundColor)
+
+	if (!setMetadata) {
+		return <></>
+	}
+
+	const startLanding = (district : string) => {
+		setMetadata({district: district})
 		setIsLanding(true)
 	}
 
@@ -23,7 +29,7 @@ const Airplane = () => {
 	}
 
 	const isDone = () => {
-		navigate('/immigration', { state: { backgroundColor: backgroundTrait} })
+		navigate('/immigration')
 	}
 
 	return (
@@ -53,7 +59,7 @@ const Airplane = () => {
 					<div className={classes.landingLinks}>
 						{
 							landingLocations.map((option, index) => (
-								<a href="#" aria-label={option.location} key={index} onClick={() => {startLanding(option.bg)}}>{option.location}</a>
+								<a href="#" aria-label={option.location} key={index} onClick={() => {startLanding(option.district)}}>{option.location}</a>
 							))
 						}
 					</div>
