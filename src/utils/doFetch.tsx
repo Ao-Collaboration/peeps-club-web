@@ -3,9 +3,9 @@ const doFetch = async (path: string, method: string, body?: any) => {
 	const res = await fetch(path, {
 		method: method,
 		body: body && JSON.stringify(body),
-		credentials: 'include',
+		credentials: 'omit',
 		headers: {
-			'Content-Type': 'application/json',
+			'Content-Type': method !== 'GET' ? 'application/json' : 'text/plain',
 			'Accept': 'application/json'
 		}
 	})
