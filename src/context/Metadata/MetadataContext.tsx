@@ -6,7 +6,7 @@ import {
 	SetStateAction,
 	useState,
 } from 'react'
-import { Metadata } from '../../interface/metadata'
+import { defaultPeepMetadata, Metadata } from '../../interface/metadata'
 interface CtxProps {
 	metadata?: Metadata | null
 	setMetadata?: Dispatch<SetStateAction<Metadata | null>>
@@ -17,7 +17,7 @@ interface Props {
 
 export const MetadataContext = createContext<CtxProps>({})
 const MetadataContextProvider: FC<Props> = ({ children }) => {
-	const [metadata, setMetadata] = useState<Metadata | null>(null)
+	const [metadata, setMetadata] = useState<Metadata | null>(defaultPeepMetadata)
 
 	return (
 		<MetadataContext.Provider value={{ metadata, setMetadata }}>
