@@ -36,14 +36,14 @@ const styles = {
 	fadeOutAnimation: {
 		opacity: '0%',
 		animationName: 'fadeOut',
-		animationDuration: '3s',
+		animationDuration: '2s',
 		animationFillMode: 'forwards',
 		animationTimingFunction: 'linear',
 	},
 	fadeInAnimation: {
 		opacity: '100%',
 		animationName: 'fadeIn',
-		animationDuration: '1s',
+		animationDuration: '2s',
 		animationFillMode: 'forwards',
 		animationTimingFunction: 'linear',
 	}
