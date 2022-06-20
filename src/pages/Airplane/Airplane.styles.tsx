@@ -145,7 +145,7 @@ const styles = {
 		display: 'none',
 		borderRadius: '0 0 2em 2em',
 		backgroundColor: white,
-		width: '80%',
+		width: '60%',
 		margin: 'auto',
 		marginTop: '-8px',
 		'& a': {

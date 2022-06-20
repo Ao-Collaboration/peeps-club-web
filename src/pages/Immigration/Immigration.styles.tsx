@@ -27,10 +27,19 @@ const styles = {
 		justifyContent: 'center',
 		height: '100vh',
 		transform: 'translate(0%, 100%)',
-		'& img' :{
-			width: '50vw'
-
-		}
+	},
+	passportContainer: {
+		display:'flex',
+		flexDirection: 'column',
+		marginLeft: '-10em',
+	},
+	bottom: {
+		width: 'auto',
+		position: 'relative',
+	},
+	hands:{
+		marginTop: '-3em',
+		zIndex: '100',
 	},
 	pullUpPassportAnimation: {
 		animationName: 'passport',
