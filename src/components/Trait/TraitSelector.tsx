@@ -1,3 +1,5 @@
+import { faAngleLeft, faBackward } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useState } from 'react'
 import { Category } from '../../interface/traits'
 import useStyles from './TraitSelector.styles'
@@ -9,12 +11,12 @@ interface Props {
 const TraitSelector: React.FC<Props> = ({ availableTraits }) => {
 	const classes = useStyles()
 	const categories = ['Skin Condition', 'Skin Tone', 'Facial Hair', 'Hair Style', 'Hair Colour', 'Eye Colour', 'Eye Style', 'Eye Lashes']
-	const [selectedCategoryIndex, setSelectedCategoryIndex] = useState(0)
+	const categoryExampleImages = ['Asymmetric Vitiligo', 'Almond', 'Moustache', 'Twin Braids', 'Mid Brown', 'Blue', 'Bow', 'Eyelashes']
+	const [selectedCategoryIndex, setSelectedCategoryIndex] = useState(-1)
 	const [selectedTraits, setSelectedTraits] = useState<number[]>([])
 
-	const updateCategory = () => {
-		const categorySelect = document.getElementById('categorySelect') as HTMLSelectElement
-		setSelectedCategoryIndex(categorySelect.selectedIndex)
+	const updateCategory = (index: number) => {
+		setSelectedCategoryIndex(index)
 	}
 
 	const updateSelectedTraits = (categoryIndex: number, selectedIndex: number) => {
@@ -25,25 +27,38 @@ const TraitSelector: React.FC<Props> = ({ availableTraits }) => {
 
 	return (
 		<div className={classes.container}>
-			<select onChange={updateCategory} className={classes.tabs} id='categorySelect'>
+			<div className={classes.tabs}>
 				{
-					categories.map((category, index) => (
-						<option key={category} value={index}>{category}</option>
-					))
+					selectedCategoryIndex < 0 ?
+						<p>Customise Peep</p> :
+						<>
+							<button onClick={() => {setSelectedCategoryIndex(-1)}}><FontAwesomeIcon icon={faAngleLeft}/></button><p> {categories[selectedCategoryIndex]} </p>
+						</>
 				}
-			</select>
+			</div>
 			<div className={classes.thumbnails}>
 				{	
-					availableTraits.filter((traitCategory) => {
-						return traitCategory.name === categories[selectedCategoryIndex]
-					})[0].items.map((item, itemIndex) => (
-						<div  className={itemIndex === selectedTraits[selectedCategoryIndex] ? classes.selected : ''} onClick={() => {
-							updateSelectedTraits(selectedCategoryIndex, itemIndex)
-						}}>
-							<img src={`/assets/${categories[selectedCategoryIndex]}/${item}.png`}/>
-							<p>{item}</p>
-						</div>
-					))
+					selectedCategoryIndex < 0  
+						?
+						categories.map((category, index) => (
+							<div onClick={() => {
+								updateCategory(index)
+							}}>
+								<img src={`/assets/${category}/${categoryExampleImages[index]}.png`}/>
+								<p>{category}</p>
+							</div>
+						)) 
+						:
+						availableTraits.filter((traitCategory) => {
+							return traitCategory.name === categories[selectedCategoryIndex]
+						})[0].items.map((item, itemIndex) => (
+							<div  className={itemIndex === selectedTraits[selectedCategoryIndex] ? classes.selected : ''} onClick={() => {
+								updateSelectedTraits(selectedCategoryIndex, itemIndex)
+							}}>
+								<img src={`/assets/${categories[selectedCategoryIndex]}/${item}.png`}/>
+								<p>{item}</p>
+							</div>
+						))
 				}
 			</div>
 		</div>

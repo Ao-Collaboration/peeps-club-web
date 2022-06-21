@@ -327,7 +327,7 @@
             "Basic",
             "Eyelashes"
         ],
-        "name": "Eye Outline"
+        "name": "Eye Lashes"
     },
     {
         "items": [
@@ -397,8 +397,8 @@
     {
         "items": [
             "Almond",
-            "Band",
             "Honey",
+            "Band",
             "Senna",
             "Beige",
             "Limestone",
@@ -415,6 +415,6 @@
             "Bronze",
             "Chestnut"
         ],
-        "name": "Skin"
+        "name": "Skin Tone"
     }
 ]
