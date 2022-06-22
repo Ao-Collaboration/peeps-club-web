@@ -11,16 +11,22 @@ const Airplane = () => {
 	const classes = useStyles()
 	const [isLanding, setIsLanding] = useState(false)
 	const [isFading, setisFading] = useState(false)
-	const {setMetadata}= useContext(MetadataContext)
+	const {metadata, setMetadata}= useContext(MetadataContext)
 	const navigate = useNavigate()
 
 
-	if (!setMetadata) {
+	if (!metadata || !setMetadata) {
 		return <></>
 	}
 
 	const startLanding = (district : string) => {
-		setMetadata({district: district})
+		const updatedMetadata = [...metadata]
+		updatedMetadata.forEach(item => {
+			if(item.trait_type === 'District'){
+				item.value = district
+			}
+		})
+		setMetadata(updatedMetadata)
 		setIsLanding(true)
 	}
 

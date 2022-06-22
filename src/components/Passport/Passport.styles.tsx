@@ -1,5 +1,5 @@
 import { createUseStyles } from 'react-jss'
-import { peeps_darkblue, black, white } from '../../config/colors'
+import { peeps_darkblue, black } from '../../config/colors'
 import { headingFontFamily, standardFontFamily, weightSemiBold } from '../../config/jss-vars'
 
 const styles = {
@@ -18,15 +18,15 @@ const styles = {
 		width: '100%',
 		textAlign: 'center',
 	},
-	passportPhoto: {
+	passportPhoto:(imageURL: string) => ({
 		width: '300px',
 		height: '300px',
-		backgroundImage: 'url(/assets/examplePeep.svg)',
-		backgroundPositionX: '50%',
+		backgroundImage: `url(${imageURL})`,
+		backgroundPositionX: '45%',
 		backgroundPositionY: '20%',
 		backgroundSize: '600px',
 		border: `1px solid ${black}`
-	},
+	}),
 	passportForm: {
 		padding: '0 2em',
 		'& div': {
