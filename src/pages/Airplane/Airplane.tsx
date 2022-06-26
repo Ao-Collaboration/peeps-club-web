@@ -14,18 +14,17 @@ const Airplane = () => {
 	const [isLanding, setIsLanding] = useState(false)
 	const [isFading, setisFading] = useState(false)
 	const [availableDistricts, setAvailableDistricts] = useState<Category>()
-	const {metadata, setMetadata}= useContext(MetadataContext)
+	const {metadata, setMetadata, availableTraits}= useContext(MetadataContext)
 	const navigate = useNavigate()
 
 
 
-	if (!metadata || !setMetadata) {
+	if (!metadata || !setMetadata || !availableTraits) {
 		return <></>
 	}
 
 	const getAvailableDistricts = async() => {
-		// const results = await doFetch(`${host}/peep/traits`, 'GET')
-		const districts = testDataTraits.filter(item => {
+		const districts = availableTraits.filter(item => {
 			return item.category === 'District'
 		})[0]
 

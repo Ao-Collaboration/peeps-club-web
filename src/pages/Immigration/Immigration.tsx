@@ -4,32 +4,15 @@ import { black } from '../../config/colors'
 import { MetadataContext } from '../../context/Metadata/MetadataContext'
 import useStyles from './Immigration.styles'
 import TraitSelector from '../../components/Trait/TraitSelector'
-import { Category } from '../../interface/availableTraits'
-
 import Passport from '../../components/Passport/Passport'
-
-import testDataTraits from '../../testData/traits.json'
 
 function Immigration() {
 	const classes = useStyles()
-	const {metadata, setMetadata} = useContext(MetadataContext)
-	const [currentPeepImage, setCurrentPeepImage] = useState<string>()
+	const {metadata, setMetadata, availableTraits} = useContext(MetadataContext)
 
-	const [availableTraits, setAvailableTraits] = useState<Category[]>()
-
-	if (!setMetadata) {
+	if (!metadata || !setMetadata || !availableTraits) {
 		return <></>
 	}
-
-	const getAvailableTraits = async() => {
-		// const results = await doFetch(`${host}/peep/traits`, 'GET')
-		setAvailableTraits(testDataTraits)
-	}
-	
-	useEffect(() => {
-		getAvailableTraits()
-
-	}, [])	
 
 	return (
 		<>
