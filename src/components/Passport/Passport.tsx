@@ -25,19 +25,15 @@ const Passport: React.FC = () => {
 		})[0]
 	}
 
-	const updateTrait = (category: CategoryName, value: string) => {
+	const updateTrait = (category: CategoryName, selectId: string) => {
+		const select = (document.getElementById(selectId) as HTMLSelectElement)
 		const updatedMetadata = [...metadata]
 		updatedMetadata.forEach(trait => {
 			if(trait.trait_type === category){
-				trait.value = value
+				trait.value = select.value
 			}
 		})
 		setMetadata(updatedMetadata)
-	}
-
-	const updateDistrict = () => {
-		const select = (document.getElementById('districtSelect') as HTMLSelectElement)
-		updateTrait('District', select.value)
 	}
 
 	const getPeepImage = async() => {
@@ -63,7 +59,7 @@ const Passport: React.FC = () => {
 				</div>
 				<div>
 					<label>District</label>
-					<select onChange={updateDistrict} id='districtSelect'>
+					<select onChange={() =>{updateTrait('District', 'districtSelect')}} id='districtSelect'>
 						{
 							getDistricts()?.items.map(item => (
 								<option key={item.name} value={item.name} selected={getTrait('District').value === item.name}>{item.name}</option>
@@ -73,7 +69,7 @@ const Passport: React.FC = () => {
 				</div>
 				<div>
 					<label>Pronouns</label>
-					<select>
+					<select onChange={() =>{updateTrait('Pronouns', 'pronounsSelect')}} id='pronounsSelect'>
 						<option>He/Him</option>
 						<option>She/Her</option>
 						<option>They/Them</option>

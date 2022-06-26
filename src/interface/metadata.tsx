@@ -79,5 +79,9 @@ export const defaultPeep: Trait[] = [
 	{
 		'trait_type': 'Top Facial Hair',
 		'value': 'None'
+	},
+	{
+		'trait_type': 'Pronouns',
+		'value': 'He/Him'
 	}
 ]
