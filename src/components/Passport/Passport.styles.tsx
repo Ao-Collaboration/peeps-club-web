@@ -29,6 +29,7 @@ const styles = {
 	}),
 	passportForm: {
 		padding: '0 2em',
+		width: '16em',
 		'& div': {
 			padding: '0 0 0.5em 0',
 			display: 'flex',
@@ -42,14 +43,14 @@ const styles = {
 				backgroundColor: '#fffd',
 				fontFamily: standardFontFamily,
 			}
-		}
+		},
 	},
 	text: {
 		textAlign: 'center',
 		fontWeight: weightSemiBold,
 		textTransform: 'uppercase',
 		fontSize: '1.2em',
-	},
+	}
 }
 
 export default createUseStyles(styles)

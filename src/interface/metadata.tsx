@@ -83,5 +83,13 @@ export const defaultPeep: Trait[] = [
 	{
 		'trait_type': 'Pronouns',
 		'value': 'He/Him'
-	}
+	},
+	{
+		'trait_type': 'Birthday',
+		'value': '4 February'
+	},
+	{
+		'trait_type': 'Name',
+		'value': ''
+	},
 ]
