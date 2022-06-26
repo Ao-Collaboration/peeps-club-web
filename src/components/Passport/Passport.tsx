@@ -79,7 +79,7 @@ const Passport: React.FC = () => {
 					<label>Birthday</label>
 					<input type='date' />
 				</div>
-				<p onClick={() => {alert(JSON.stringify(metadata))}}>{'P<PC#####<####<######'}</p>
+				<p>{'P<PC#####<####<######'}</p>
 			</div>
 		</div>
 	)
