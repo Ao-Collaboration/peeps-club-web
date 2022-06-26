@@ -1,23 +1,41 @@
 import useStyles from './Airplane.styles'
 import SVG from 'react-inlinesvg'
-import { useContext, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import FadeTo from '../../components/Scene/FadeTo'
 import { black } from '../../config/colors'
 import { useNavigate } from 'react-router-dom'
-import { landingLocations } from '../../config/traits'
 import { MetadataContext } from '../../context/Metadata/MetadataContext'
+import { Category } from '../../interface/availableTraits'
+
+import testDataTraits from '../../testData/traits.json'
 
 const Airplane = () => {
 	const classes = useStyles()
 	const [isLanding, setIsLanding] = useState(false)
 	const [isFading, setisFading] = useState(false)
+	const [availableDistricts, setAvailableDistricts] = useState<Category>()
 	const {metadata, setMetadata}= useContext(MetadataContext)
 	const navigate = useNavigate()
+
 
 
 	if (!metadata || !setMetadata) {
 		return <></>
 	}
+
+	const getAvailableDistricts = async() => {
+		// const results = await doFetch(`${host}/peep/traits`, 'GET')
+		const districts = testDataTraits.filter(item => {
+			return item.category === 'District'
+		})[0]
+
+		setAvailableDistricts(districts)
+	}
+
+	useEffect(() => {
+		getAvailableDistricts()
+	}, [])	
+
 
 	const startLanding = (district : string) => {
 		const updatedMetadata = [...metadata]
@@ -63,9 +81,9 @@ const Airplane = () => {
 				<div aria-label='Land the Plane' className={`${classes.land} ${isLanding ? classes.pullAwayAnimation : ''}`}>
 					<SVG src={'/assets/Cloud Button Asset.svg'} />
 					<div className={classes.landingLinks}>
-						{
-							landingLocations.map((option, index) => (
-								<a href="#" aria-label={option.location} key={index} onClick={() => {startLanding(option.district)}}>{option.location}</a>
+						{ availableDistricts &&
+							availableDistricts.items.map((option) => (
+								<a href="#" aria-label={option.name} key={option.name} onClick={() => {startLanding(option.name)}}>{option.name}</a>
 							))
 						}
 					</div>
