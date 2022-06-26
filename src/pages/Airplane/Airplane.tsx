@@ -7,8 +7,6 @@ import { useNavigate } from 'react-router-dom'
 import { MetadataContext } from '../../context/Metadata/MetadataContext'
 import { Category } from '../../interface/availableTraits'
 
-import testDataTraits from '../../testData/traits.json'
-
 const Airplane = () => {
 	const classes = useStyles()
 	const [isLanding, setIsLanding] = useState(false)

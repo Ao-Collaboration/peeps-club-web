@@ -29,7 +29,7 @@ const MetadataContextProvider: FC<Props> = ({ children }) => {
 	const getAvailableTraits = async() => {
 		// FIXME - Get available traits from server
 		// const results = await doFetch(`${host}/peep/traits`, 'GET')
-		setAvailableTraits(testDataTraits)
+		setAvailableTraits(testDataTraits as Category[])
 	}
 
 	useEffect(() => {

@@ -1,17 +1,43 @@
 import { useContext, useEffect, useState } from 'react'
 import { host } from '../../config/api'
 import { MetadataContext } from '../../context/Metadata/MetadataContext'
+import { CategoryName } from '../../interface/availableTraits'
 import doFetch from '../../utils/doFetch'
 import useStyles from './Passport.styles'
 
 const Passport: React.FC = () => {
-	const {metadata, setMetadata} = useContext(MetadataContext)
-	const [peepImage, setPeepImage] = useState('/assets/examplePeep.svg')
+	const {metadata, setMetadata, availableTraits} = useContext(MetadataContext)
+	const [peepImage, setPeepImage] = useState('')
 
 	const classes = useStyles(peepImage)
 
 	if(!metadata || !setMetadata){
 		return <></>
+	}
+
+	const getDistricts = () => {
+		return availableTraits?.filter(item => { return item.category === 'District'})[0]
+	}
+
+	const getTrait = (category: CategoryName) => {
+		return metadata.filter( item => {
+			return category === item.trait_type
+		})[0]
+	}
+
+	const updateTrait = (category: CategoryName, value: string) => {
+		const updatedMetadata = [...metadata]
+		updatedMetadata.forEach(trait => {
+			if(trait.trait_type === category){
+				trait.value = value
+			}
+		})
+		setMetadata(updatedMetadata)
+	}
+
+	const updateDistrict = () => {
+		const select = (document.getElementById('districtSelect') as HTMLSelectElement)
+		updateTrait('District', select.value)
 	}
 
 	const getPeepImage = async() => {
@@ -37,19 +63,20 @@ const Passport: React.FC = () => {
 				</div>
 				<div>
 					<label>District</label>
-					<select>
-						<option>Mountains</option>
-						<option>Beach</option>
-						<option>Forest</option>
+					<select onChange={updateDistrict} id='districtSelect'>
+						{
+							getDistricts()?.items.map(item => (
+								<option key={item.name} value={item.name} selected={getTrait('District').value === item.name}>{item.name}</option>
+							))
+						}
 					</select>
 				</div>
 				<div>
 					<label>Pronouns</label>
 					<select>
-						<option>They/Them</option>
-						<option>She/Her</option>
 						<option>He/Him</option>
-						<option>Ask me</option>
+						<option>She/Her</option>
+						<option>They/Them</option>
 					</select>
 				</div>
 				<div>
