@@ -7,15 +7,17 @@ import {
 	useEffect,
 	useState,
 } from 'react'
-import { Category } from '../../interface/availableTraits'
+import { host } from '../../config/api'
+import { Category, CategoryName } from '../../interface/availableTraits'
 import { defaultPeep, Trait } from '../../interface/metadata'
-import testDataTraits from '../../testData/traits.json'
+import doFetch from '../../utils/doFetch'
 
 interface CtxProps {
 	metadata?: Trait[] | null
 	setMetadata?: Dispatch<SetStateAction<Trait[] | null>>
 	availableTraits?: Category[] | null
 	setAvailableTraits?: Dispatch<SetStateAction<Category[] | null>>
+	getSelectedTrait?: (category: CategoryName) => string | undefined
 }
 interface Props {
 	children: ReactNode
@@ -27,9 +29,16 @@ const MetadataContextProvider: FC<Props> = ({ children }) => {
 	const [availableTraits, setAvailableTraits] = useState<Category[] | null>([])
 
 	const getAvailableTraits = async () => {
-		// FIXME - Get available traits from server
-		// const results = await doFetch(`${host}/peep/traits`, 'GET')
-		setAvailableTraits(testDataTraits as Category[])
+		const results = await doFetch(`${host}/peep/traits`, 'GET')
+		setAvailableTraits(results as Category[])
+	}
+
+	const getSelectedTrait = (category: CategoryName) => {
+		if (metadata) {
+			return metadata.filter(trait => {
+				return trait.trait_type === category
+			})[0].value
+		}
 	}
 
 	useEffect(() => {
@@ -38,7 +47,13 @@ const MetadataContextProvider: FC<Props> = ({ children }) => {
 
 	return (
 		<MetadataContext.Provider
-			value={{ metadata, setMetadata, availableTraits, setAvailableTraits }}
+			value={{
+				metadata,
+				setMetadata,
+				availableTraits,
+				setAvailableTraits,
+				getSelectedTrait,
+			}}
 		>
 			{children}
 		</MetadataContext.Provider>
