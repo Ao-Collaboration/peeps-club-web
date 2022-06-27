@@ -2,7 +2,7 @@ import { faAngleLeft } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useContext, useState } from 'react'
 import { MetadataContext } from '../../context/Metadata/MetadataContext'
-import { Category } from '../../interface/availableTraits'
+import { Category, CategoryName } from '../../interface/availableTraits'
 import useStyles from './TraitSelector.styles'
 
 interface Props {
@@ -11,7 +11,7 @@ interface Props {
 
 const TraitSelector: React.FC<Props> = ({ availableTraits }) => {
 	const classes = useStyles()
-	const categories = [
+	const categories: CategoryName[] = [
 		'Skin Condition',
 		'Skin',
 		'Facial Hair',
@@ -33,9 +33,10 @@ const TraitSelector: React.FC<Props> = ({ availableTraits }) => {
 	]
 	const [selectedCategoryIndex, setSelectedCategoryIndex] = useState(-1)
 
-	const { metadata, setMetadata } = useContext(MetadataContext)
+	const { metadata, setMetadata, getSelectedTrait } =
+		useContext(MetadataContext)
 
-	if (!metadata || !setMetadata) {
+	if (!metadata || !setMetadata || !getSelectedTrait) {
 		return <></>
 	}
 
@@ -51,12 +52,6 @@ const TraitSelector: React.FC<Props> = ({ availableTraits }) => {
 			}
 		})
 		setMetadata(updatedMetadata)
-	}
-
-	const getSelectedTrait = (category: string) => {
-		return metadata.filter(trait => {
-			return trait.trait_type === category
-		})[0].value
 	}
 
 	return (
