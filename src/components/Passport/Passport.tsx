@@ -9,23 +9,26 @@ import useStyles from './Passport.styles'
 const Passport: React.FC = () => {
 	const { metadata, setMetadata, availableTraits } = useContext(MetadataContext)
 	const [peepImage, setPeepImage] = useState('')
-
-	const classes = useStyles(peepImage)
-
+	
+	const classes = useStyles()
+	
 	if (!metadata || !setMetadata) {
 		return <></>
 	}
-
+	
+	useEffect(() => {
+		getPeepImage()
+	}, [metadata])
+	
+	const getPeepImage = async () => {
+		const svg = await doFetch(`${host}/peep/`, 'POST', { attributes: metadata }, 'image/svg+xml')
+		setPeepImage(URL.createObjectURL(svg))
+	}
+	
 	const getDistricts = () => {
 		return availableTraits?.filter(item => { return item.category === 'District' })[0]
 	}
-
-	const getTrait = (category: CategoryName) => {
-		return metadata.filter(item => {
-			return category === item.trait_type
-		})[0]
-	}
-
+	
 	const updateTrait = (category: CategoryName, value: string) => {
 		const updatedMetadata = [...metadata]
 		updatedMetadata.forEach(trait => {
@@ -35,27 +38,18 @@ const Passport: React.FC = () => {
 		})
 		setMetadata(updatedMetadata)
 	}
-
+	
 	const updateTraitViaInput = (category: CategoryName, id: string) => {
 		const input = (document.getElementById(id) as HTMLInputElement)
 		updateTrait(category, input.value)
 	}
-
-
-	const getPeepImage = async () => {
-		const svg = await doFetch(`${host}/peep/`, 'POST', { attributes: metadata }, 'image/svg+xml')
-		setPeepImage(URL.createObjectURL(svg))
-	}
-
-	useEffect(() => {
-		getPeepImage()
-	}, [metadata])
+	
 
 	return (
 		<div className={classes.container}>
 			<div>
 				<p className={classes.text}>Passport</p>
-				<div className={classes.passportPhoto}></div>
+				<div style={{backgroundImage: `url(${peepImage})`}} className={classes.passportPhoto}></div>
 			</div>
 			<div className={classes.passportForm}>
 				<h2 className={classes.title}>Peeps Club</h2>
@@ -65,10 +59,10 @@ const Passport: React.FC = () => {
 				</div>
 				<div>
 					<label>District</label>
-					<select onChange={() => { updateTraitViaInput('District', 'districtSelect') }} id='districtSelect'>
+					<select onChange={() => { updateTraitViaInput('District', 'districtSelect') }} id='districtSelect' defaultValue={getDistricts()?.items[0].name}>
 						{
 							getDistricts()?.items.map(item => (
-								<option key={item.name} value={item.name} selected={getTrait('District').value === item.name}>{item.name}</option>
+								<option key={item.name} value={item.name}>{item.name}</option>
 							))
 						}
 					</select>

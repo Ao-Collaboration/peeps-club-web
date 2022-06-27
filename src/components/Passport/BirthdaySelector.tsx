@@ -43,16 +43,16 @@ const BirthdaySelector: React.FC<Props> = ({ onChange }) => {
 		<div>
 			<label>Birthday</label>
 			<div className={classes.flexOverride}>
-				<select id='daySelect' onChange={updateBirthday}>
-					<option selected disabled hidden>Day</option>
+				<select id='daySelect' onChange={updateBirthday} defaultValue='None'>
+					<option disabled hidden value='None'>Day</option>
 					{
 						[...Array(daysInSelectedMonth)].map((day, index) => (
 							<option key={index} value={index + 1}>{index + 1}</option>
 						))
 					}
 				</select>
-				<select id='monthSelect' onChange={updateBirthday}>
-					<option selected disabled hidden>Month</option>
+				<select id='monthSelect' onChange={updateBirthday} defaultValue='None'>
+					<option disabled hidden value='None'>Month</option>
 					{
 						months.map((month, index) => (
 							<option key={index} value={index}>{month}</option>

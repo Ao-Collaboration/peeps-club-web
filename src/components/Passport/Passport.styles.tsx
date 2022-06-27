@@ -18,15 +18,14 @@ const styles = {
 		width: '100%',
 		textAlign: 'center',
 	},
-	passportPhoto:(imageURL: string) => ({
+	passportPhoto:{
 		width: '300px',
 		height: '300px',
-		backgroundImage: `url(${imageURL})`,
 		backgroundPositionX: '45%',
 		backgroundPositionY: '20%',
 		backgroundSize: '600px',
 		border: `1px solid ${black}`
-	}),
+	},
 	passportForm: {
 		padding: '0 2em',
 		width: '16em',
