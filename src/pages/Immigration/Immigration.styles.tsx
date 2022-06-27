@@ -37,7 +37,19 @@ const styles = {
 				transform: 'translate(0%,  0%)',
 			},
 			'100%': {
-				transform: 'translate(0%,  -200%)',
+				transform: 'translate(0%,  -300%)',
+			},
+		},
+		'@keyframes squash_traits': {
+			'0%': {
+				width: '250px',
+			},
+			'99%': {
+				width: '0px',
+			},
+			'100%': {
+				width: '0px',
+				opacity: '0',
 			},
 		},
 	},
@@ -122,6 +134,17 @@ const styles = {
 	stampArmAnimation: {
 		animationName: 'stamp_arm',
 		animationDuration: '4s',
+		animationFillMode: 'forwards',
+		animationTimingFunction: 'linear',
+		onIterationCount: '1',
+	},
+	traitsContainer: {
+		width: '250px',
+		zIndex: '1000',
+	},
+	squashTraitsAnimation: {
+		animationName: 'squash_traits',
+		animationDuration: '0.3s',
 		animationFillMode: 'forwards',
 		animationTimingFunction: 'linear',
 		onIterationCount: '1',

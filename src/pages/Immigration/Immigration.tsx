@@ -39,8 +39,14 @@ function Immigration() {
 				<div
 					className={`${classes.passport} ${classes.pullUpPassportAnimation}`}
 				>
-					{availableTraits && !isFlipped && (
-						<TraitSelector availableTraits={availableTraits} />
+					{availableTraits && (
+						<div
+							className={`${classes.traitsContainer} ${
+								isFlipped && classes.squashTraitsAnimation
+							}`}
+						>
+							<TraitSelector availableTraits={availableTraits} />
+						</div>
 					)}
 					<div className={classes.passportContainer}>
 						<img src={'/assets/passport_top.svg'} />

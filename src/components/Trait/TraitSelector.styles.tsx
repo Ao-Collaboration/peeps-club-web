@@ -4,7 +4,7 @@ import { weightSemiBold } from '../../config/jss-vars'
 
 const styles = {
 	container: {
-		width: '250px',
+		width: '100%',
 		backgroundColor: '#ffdb13',
 		marginTop: '10em',
 		zIndex: '1000',
@@ -14,7 +14,7 @@ const styles = {
 		display: 'flex',
 		justifyContent: 'space-around',
 		alignItems: 'center',
-		width: '250px',
+		width: '100%',
 		backgroundColor: peeps_darkblue,
 		color: white,
 		fontWeight: weightSemiBold,
