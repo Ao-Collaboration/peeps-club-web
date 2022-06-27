@@ -4,54 +4,54 @@ import { peepBlue, white } from '../../config/colors'
 const styles = {
 	'@global': {
 		'@keyframes moveFirst': {
-			'from': {
-				'left': '40%'
+			from: {
+				left: '40%',
 			},
-			'to': {
-				'left': '-50%'
-			}
+			to: {
+				left: '-50%',
+			},
 		},
 		'@keyframes move': {
-			'from': {
-				'left': '100%'
+			from: {
+				left: '100%',
 			},
-			'to': {
-				'left': '-50%'
-			}
+			to: {
+				left: '-50%',
+			},
 		},
 		'@keyframes floating': {
-			'from': {
-				'transform': 'translate(0,  0px)'
+			from: {
+				transform: 'translate(0,  0px)',
 			},
 			'65%': {
-				'transform': 'translate(0, 15px)'
+				transform: 'translate(0, 15px)',
 			},
-			'to': {
-				'transform': 'translate(0, -0px)'
-			}
+			to: {
+				transform: 'translate(0, -0px)',
+			},
 		},
 		'@keyframes landing': {
-			'from': {
-				'transform': 'translate(0,  0px)'
+			from: {
+				transform: 'translate(0,  0px)',
 			},
-			'to': {
-				'transform': 'translate(100%, 100%)'
-			}
+			to: {
+				transform: 'translate(100%, 100%)',
+			},
 		},
 		'@keyframes pullaway': {
-			'from': {
+			from: {
 				top: '20vh',
-				opacity: '100%'
+				opacity: '100%',
 			},
 			'50%': {
 				top: '10vh',
-				opacity: '0%'
+				opacity: '0%',
 			},
-			'to': {
+			to: {
 				top: '-30vh',
-				opacity: '0%'
-			}
-		}
+				opacity: '0%',
+			},
+		},
 	},
 	airplaneBackground: {
 		backgroundImage: 'url("assets/Sky Background Day.svg")',
@@ -61,12 +61,12 @@ const styles = {
 		position: 'absolute',
 		top: '0',
 		zIndex: '-100',
-		overflow: 'hidden'
+		overflow: 'hidden',
 	},
 	cloud: {
 		'& svg': {
 			width: '80vw',
-			height: '65vh'
+			height: '65vh',
 		},
 	},
 	initialCloud: {
@@ -75,31 +75,31 @@ const styles = {
 		left: '40%',
 		animation: 'moveFirst 5s linear .2s',
 		animationIterationCount: '1',
-		animationFillMode: 'forwards'
+		animationFillMode: 'forwards',
 	},
 	firstCloud: {
 		position: 'absolute',
 		top: '20%',
 		left: '200%',
-		animation: 'move 5s linear 5s infinite'
+		animation: 'move 5s linear 5s infinite',
 	},
 	secondCloud: {
 		position: 'absolute',
 		top: '30%',
 		left: '150%',
-		animation: 'move 8s linear 0s infinite'
+		animation: 'move 8s linear 0s infinite',
 	},
 	thirdCloud: {
 		position: 'absolute',
 		top: '50%',
 		left: '170%',
-		animation: 'move 11s linear 1s infinite'
+		animation: 'move 11s linear 1s infinite',
 	},
 	fourthCloud: {
 		position: 'absolute',
 		top: '40%',
 		left: '210%',
-		animation: 'move 6s linear 1s infinite'
+		animation: 'move 6s linear 1s infinite',
 	},
 	airplane: {
 		position: 'absolute',
@@ -107,7 +107,7 @@ const styles = {
 		left: '0vw',
 		'& svg': {
 			width: '60vw',
-			height: '60vh'
+			height: '60vh',
 		},
 	},
 	floatAnimation: {
@@ -134,18 +134,18 @@ const styles = {
 		right: '5vw',
 		zIndex: '1000',
 		'& svg': {
-			width: '30vw'
+			width: '30vw',
 		},
 		cursor: 'pointer',
 		'&:hover $landingLinks': {
-			display: 'block'
-		}
+			display: 'block',
+		},
 	},
 	landingLinks: {
 		display: 'none',
 		borderRadius: '0 0 2em 2em',
 		backgroundColor: white,
-		width: '80%',
+		width: '60%',
 		margin: 'auto',
 		marginTop: '-8px',
 		'& a': {
@@ -160,11 +160,10 @@ const styles = {
 			},
 			'&:hover': {
 				backgroundColor: peepBlue,
-				color: 'white'
-			}
-		}
-	}
-
+				color: 'white',
+			},
+		},
+	},
 }
 
 export default createUseStyles(styles)

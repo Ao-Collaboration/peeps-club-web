@@ -1,20 +1,44 @@
 import useStyles from './Airplane.styles'
 import SVG from 'react-inlinesvg'
-import { useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import FadeTo from '../../components/Scene/FadeTo'
 import { black } from '../../config/colors'
 import { useNavigate } from 'react-router-dom'
-import { landingLocations } from '../../config/traits'
+import { MetadataContext } from '../../context/Metadata/MetadataContext'
+import { Category } from '../../interface/availableTraits'
 
 const Airplane = () => {
 	const classes = useStyles()
 	const [isLanding, setIsLanding] = useState(false)
 	const [isFading, setisFading] = useState(false)
-	const [backgroundTrait, setBackgroundTrait] = useState('')
+	const [availableDistricts, setAvailableDistricts] = useState<Category>()
+	const { metadata, setMetadata, availableTraits } = useContext(MetadataContext)
 	const navigate = useNavigate()
 
-	const startLanding = (backgroundColor : string) => {
-		setBackgroundTrait(backgroundColor)
+	if (!metadata || !setMetadata || !availableTraits) {
+		return <></>
+	}
+
+	const getAvailableDistricts = async () => {
+		const districts = availableTraits.filter(item => {
+			return item.category === 'District'
+		})[0]
+
+		setAvailableDistricts(districts)
+	}
+
+	useEffect(() => {
+		getAvailableDistricts()
+	}, [])
+
+	const startLanding = (district: string) => {
+		const updatedMetadata = [...metadata]
+		updatedMetadata.forEach(item => {
+			if (item.trait_type === 'District') {
+				item.value = district
+			}
+		})
+		setMetadata(updatedMetadata)
 		setIsLanding(true)
 	}
 
@@ -23,7 +47,7 @@ const Airplane = () => {
 	}
 
 	const isDone = () => {
-		navigate('/immigration', { state: { backgroundColor: backgroundTrait} })
+		navigate('/immigration')
 	}
 
 	return (
@@ -45,17 +69,35 @@ const Airplane = () => {
 				<div className={`${classes.cloud} ${classes.fourthCloud}`}>
 					<SVG src={'/assets/Cloud 4 Asset.svg'} />
 				</div>
-				<div className={`${classes.airplane} ${isLanding ? classes.landAnimation : classes.floatAnimation}`} onAnimationEnd={startFade}>
+				<div
+					className={`${classes.airplane} ${
+						isLanding ? classes.landAnimation : classes.floatAnimation
+					}`}
+					onAnimationEnd={startFade}
+				>
 					<SVG src={'/assets/Plane Asset.svg'} />
 				</div>
-				<div aria-label='Land the Plane' className={`${classes.land} ${isLanding ? classes.pullAwayAnimation : ''}`}>
+				<div
+					aria-label="Land the Plane"
+					className={`${classes.land} ${
+						isLanding ? classes.pullAwayAnimation : ''
+					}`}
+				>
 					<SVG src={'/assets/Cloud Button Asset.svg'} />
 					<div className={classes.landingLinks}>
-						{
-							landingLocations.map((option, index) => (
-								<a href="#" aria-label={option.location} key={index} onClick={() => {startLanding(option.bg)}}>{option.location}</a>
-							))
-						}
+						{availableDistricts &&
+							availableDistricts.items.map(option => (
+								<a
+									href="#"
+									aria-label={option.name}
+									key={option.name}
+									onClick={() => {
+										startLanding(option.name)
+									}}
+								>
+									{option.name}
+								</a>
+							))}
 					</div>
 				</div>
 				<div className={`${classes.cloud} ${classes.initialCloud}`}>

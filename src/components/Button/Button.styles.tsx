@@ -9,7 +9,13 @@ import {
 	off_white,
 } from '../../config/colors'
 
-export type ClassNames = 'primary' | 'secondary' | 'link' | 'success' | 'error' | 'info'
+export type ClassNames =
+	| 'primary'
+	| 'secondary'
+	| 'link'
+	| 'success'
+	| 'error'
+	| 'info'
 
 const styles = {
 	base: {
@@ -42,7 +48,7 @@ const styles = {
 		color: off_white,
 		'&:hover': {
 			color: white,
-		}
+		},
 	},
 	secondary: {
 		composes: '$button',

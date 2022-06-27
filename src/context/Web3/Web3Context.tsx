@@ -1,4 +1,11 @@
-import { createContext, Dispatch, FC, ReactNode, SetStateAction, useState } from 'react'
+import {
+	createContext,
+	Dispatch,
+	FC,
+	ReactNode,
+	SetStateAction,
+	useState,
+} from 'react'
 import { Web3Provider } from '@ethersproject/providers'
 
 interface CtxProps {
@@ -17,9 +24,12 @@ const Web3ContextProvider: FC<Props> = ({ children }) => {
 	const [web3Provider, setWeb3Provider] = useState<Web3Provider | null>(null)
 
 	return (
-		<Web3Context.Provider value={{account, setAccount, web3Provider, setWeb3Provider}}>{children}</Web3Context.Provider>
+		<Web3Context.Provider
+			value={{ account, setAccount, web3Provider, setWeb3Provider }}
+		>
+			{children}
+		</Web3Context.Provider>
 	)
-
 }
 
 export default Web3ContextProvider

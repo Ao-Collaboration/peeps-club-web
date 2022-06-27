@@ -1,19 +1,39 @@
-import { Link } from 'react-router-dom'
-import { HomeRoute } from '../routes'
+import { useContext } from 'react'
 import FadeTo from '../../components/Scene/FadeTo'
 import { black } from '../../config/colors'
-import { useLocation } from 'react-router-dom'
-import { TraitState } from '../../interface/TraitState'
+import { MetadataContext } from '../../context/Metadata/MetadataContext'
+import useStyles from './Immigration.styles'
+import TraitSelector from '../../components/Trait/TraitSelector'
+import Passport from '../../components/Passport/Passport'
 
 function Immigration() {
-	const location = useLocation()
-	const state = location.state as TraitState
+	const classes = useStyles()
+	const { metadata, setMetadata, availableTraits } = useContext(MetadataContext)
+
+	if (!metadata || !setMetadata || !availableTraits) {
+		return <></>
+	}
 
 	return (
 		<>
 			<FadeTo color={black} isFadeOut={false} isFading={true} />
-			<Link to={`${HomeRoute.path}`}>Start</Link>
-			<p>Background - {state.backgroundColor}</p>
+			<div className={classes.page}>
+				<div
+					className={`${classes.passport} ${classes.pullUpPassportAnimation}`}
+				>
+					{availableTraits && (
+						<TraitSelector availableTraits={availableTraits} />
+					)}
+					<div className={classes.passportContainer}>
+						<img src={'/assets/passport_top.svg'} />
+						<div className={classes.bottom}>
+							<img src={'/assets/passport_mid.svg'} />
+							{metadata && <Passport />}
+						</div>
+						<img className={classes.hands} src={'/assets/passport_hands.svg'} />
+					</div>
+				</div>
+			</div>
 		</>
 	)
 }
