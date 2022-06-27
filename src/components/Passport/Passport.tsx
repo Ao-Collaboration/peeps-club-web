@@ -7,12 +7,13 @@ import BirthdaySelector from './BirthdaySelector'
 import useStyles from './Passport.styles'
 
 const Passport: React.FC = () => {
-	const { metadata, setMetadata, availableTraits } = useContext(MetadataContext)
+	const { metadata, setMetadata, availableTraits, getSelectedTrait } =
+		useContext(MetadataContext)
 	const [peepImage, setPeepImage] = useState('')
 
 	const classes = useStyles()
 
-	if (!metadata || !setMetadata) {
+	if (!metadata || !setMetadata || !getSelectedTrait) {
 		return <></>
 	}
 
@@ -79,7 +80,7 @@ const Passport: React.FC = () => {
 							updateTraitViaInput('District', 'districtSelect')
 						}}
 						id="districtSelect"
-						defaultValue={getDistricts()?.items[0].name}
+						defaultValue={getSelectedTrait('District')}
 					>
 						{getDistricts()?.items.map(item => (
 							<option key={item.name} value={item.name}>
@@ -95,6 +96,7 @@ const Passport: React.FC = () => {
 							updateTraitViaInput('Pronouns', 'pronounsSelect')
 						}}
 						id="pronounsSelect"
+						defaultValue={getSelectedTrait('Pronouns')}
 					>
 						<option>He/Him</option>
 						<option>She/Her</option>
