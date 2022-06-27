@@ -1,6 +1,10 @@
 import { createUseStyles } from 'react-jss'
 import { peeps_darkblue, black } from '../../config/colors'
-import { headingFontFamily, standardFontFamily, weightSemiBold } from '../../config/jss-vars'
+import {
+	headingFontFamily,
+	standardFontFamily,
+	weightSemiBold,
+} from '../../config/jss-vars'
 
 const styles = {
 	container: {
@@ -12,19 +16,19 @@ const styles = {
 	},
 	title: {
 		color: peeps_darkblue,
-		fontFamily : headingFontFamily,
+		fontFamily: headingFontFamily,
 		fontSize: '3em',
 		margin: '0.3em 0em',
 		width: '100%',
 		textAlign: 'center',
 	},
-	passportPhoto:{
+	passportPhoto: {
 		width: '300px',
 		height: '300px',
 		backgroundPositionX: '45%',
 		backgroundPositionY: '20%',
 		backgroundSize: '600px',
-		border: `1px solid ${black}`
+		border: `1px solid ${black}`,
 	},
 	passportForm: {
 		padding: '0 2em',
@@ -41,7 +45,7 @@ const styles = {
 				padding: '0.5em',
 				backgroundColor: '#fffd',
 				fontFamily: standardFontFamily,
-			}
+			},
 		},
 	},
 	text: {
@@ -49,7 +53,7 @@ const styles = {
 		fontWeight: weightSemiBold,
 		textTransform: 'uppercase',
 		fontSize: '1.2em',
-	}
+	},
 }
 
 export default createUseStyles(styles)

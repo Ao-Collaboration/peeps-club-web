@@ -16,19 +16,20 @@ function ConnectButton() {
 		return <></>
 	}
 
-	const getWeb3Modal = async () => new Web3Modal({
-		network: 'mainnet',
-		cacheProvider: false,
-		providerOptions: {
-			// walletconnect: {
-			// 	package: WalletConnectProvider,
-			// 	options: {
-			// 		infuraId: '240248d1c65143c082ae6b411905d45a', //FIXME
-			// 	},
-			// },
-		},
-		disableInjectedProvider: false,
-	})
+	const getWeb3Modal = async () =>
+		new Web3Modal({
+			network: 'mainnet',
+			cacheProvider: false,
+			providerOptions: {
+				// walletconnect: {
+				// 	package: WalletConnectProvider,
+				// 	options: {
+				// 		infuraId: '240248d1c65143c082ae6b411905d45a', //FIXME
+				// 	},
+				// },
+			},
+			disableInjectedProvider: false,
+		})
 
 	const connect = async () => {
 		const web3Modal = await getWeb3Modal()
@@ -53,11 +54,10 @@ function ConnectButton() {
 		setAccount(
 			`${addr.substring(0, 5)}...${addr.substring(
 				addr.length - 4,
-				addr.length
-			)}`
+				addr.length,
+			)}`,
 		)
 		setWeb3Provider(provider)
-
 	}
 
 	return (

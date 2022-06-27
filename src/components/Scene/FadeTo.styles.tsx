@@ -7,21 +7,21 @@ interface Props {
 const styles = {
 	'@global': {
 		'@keyframes fadeOut': {
-			'from': {
-				opacity: '0%'
+			from: {
+				opacity: '0%',
 			},
-			'to': {
-				opacity: '100%'
-			}
+			to: {
+				opacity: '100%',
+			},
 		},
 		'@keyframes fadeIn': {
-			'from': {
-				opacity: '100%'
+			from: {
+				opacity: '100%',
 			},
-			'to': {
-				opacity: '0%'
-			}
-		}
+			to: {
+				opacity: '0%',
+			},
+		},
 	},
 	fadeTo: {
 		opacity: '0%',
@@ -31,7 +31,7 @@ const styles = {
 		top: '0',
 		left: '0',
 		pointerEvents: 'none',
-		backgroundColor: (props: Props) => props.backgroundColor
+		backgroundColor: (props: Props) => props.backgroundColor,
 	},
 	fadeOutAnimation: {
 		opacity: '0%',
@@ -46,7 +46,7 @@ const styles = {
 		animationDuration: '2s',
 		animationFillMode: 'forwards',
 		animationTimingFunction: 'linear',
-	}
+	},
 }
 
 export default createUseStyles(styles)

@@ -26,7 +26,7 @@ const MetadataContextProvider: FC<Props> = ({ children }) => {
 	const [metadata, setMetadata] = useState<Trait[] | null>(defaultPeep)
 	const [availableTraits, setAvailableTraits] = useState<Category[] | null>([])
 
-	const getAvailableTraits = async() => {
+	const getAvailableTraits = async () => {
 		// FIXME - Get available traits from server
 		// const results = await doFetch(`${host}/peep/traits`, 'GET')
 		setAvailableTraits(testDataTraits as Category[])
@@ -34,11 +34,12 @@ const MetadataContextProvider: FC<Props> = ({ children }) => {
 
 	useEffect(() => {
 		getAvailableTraits()
-
 	}, [])
 
 	return (
-		<MetadataContext.Provider value={{ metadata, setMetadata, availableTraits, setAvailableTraits }}>
+		<MetadataContext.Provider
+			value={{ metadata, setMetadata, availableTraits, setAvailableTraits }}
+		>
 			{children}
 		</MetadataContext.Provider>
 	)

@@ -4,11 +4,11 @@ const styles = {
 	'@global': {
 		'@keyframes passport': {
 			from: {
-				transform: 'translate(0%, 100%)'
+				transform: 'translate(0%, 100%)',
 			},
 			to: {
-				transform: 'translate(0%,  0%)'
-			}
+				transform: 'translate(0%,  0%)',
+			},
 		},
 	},
 	page: {
@@ -19,7 +19,7 @@ const styles = {
 		position: 'absolute',
 		top: '0',
 		zIndex: '-100',
-		overflow: 'hidden'
+		overflow: 'hidden',
 	},
 	passport: {
 		display: 'flex',
@@ -29,7 +29,7 @@ const styles = {
 		transform: 'translate(0%, 100%)',
 	},
 	passportContainer: {
-		display:'flex',
+		display: 'flex',
 		flexDirection: 'column',
 		marginLeft: '-10em',
 	},
@@ -37,7 +37,7 @@ const styles = {
 		width: 'auto',
 		position: 'relative',
 	},
-	hands:{
+	hands: {
 		marginTop: '-3em',
 		zIndex: '100',
 	},
@@ -46,7 +46,7 @@ const styles = {
 		animationDuration: '1s',
 		animationFillMode: 'forwards',
 		animationTimingFunction: 'linear',
-		animationIterationCount: '1'
+		animationIterationCount: '1',
 	},
 }
 

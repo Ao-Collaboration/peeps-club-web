@@ -1,12 +1,12 @@
 import { createUseStyles } from 'react-jss'
-import { black, peeps_darkblue, white} from '../../config/colors'
+import { black, peeps_darkblue, white } from '../../config/colors'
 import { weightSemiBold } from '../../config/jss-vars'
 
 const styles = {
 	container: {
 		width: '250px',
 		backgroundColor: '#ffdb13',
-		marginTop:'10em',
+		marginTop: '10em',
 		zIndex: '1000',
 		border: `3px solid ${peeps_darkblue}`,
 	},
@@ -31,7 +31,7 @@ const styles = {
 			border: 'none',
 			borderRadius: '10px',
 			cursor: 'pointer',
-		}
+		},
 	},
 	thumbnails: {
 		display: 'grid',
@@ -45,20 +45,19 @@ const styles = {
 			'& img': {
 				width: '80%',
 				margin: 'auto',
-				display: 'block'
+				display: 'block',
 			},
 			'& p': {
 				textAlign: 'center',
 				padding: '0.3em',
 				margin: '0',
-			}
-		}
+			},
+		},
 	},
 	selected: {
 		backgroundColor: white,
 		borderRadius: '1em',
-	}
-
+	},
 }
 
 export default createUseStyles(styles)

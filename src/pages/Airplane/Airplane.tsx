@@ -12,16 +12,14 @@ const Airplane = () => {
 	const [isLanding, setIsLanding] = useState(false)
 	const [isFading, setisFading] = useState(false)
 	const [availableDistricts, setAvailableDistricts] = useState<Category>()
-	const {metadata, setMetadata, availableTraits}= useContext(MetadataContext)
+	const { metadata, setMetadata, availableTraits } = useContext(MetadataContext)
 	const navigate = useNavigate()
-
-
 
 	if (!metadata || !setMetadata || !availableTraits) {
 		return <></>
 	}
 
-	const getAvailableDistricts = async() => {
+	const getAvailableDistricts = async () => {
 		const districts = availableTraits.filter(item => {
 			return item.category === 'District'
 		})[0]
@@ -31,13 +29,12 @@ const Airplane = () => {
 
 	useEffect(() => {
 		getAvailableDistricts()
-	}, [])	
+	}, [])
 
-
-	const startLanding = (district : string) => {
+	const startLanding = (district: string) => {
 		const updatedMetadata = [...metadata]
 		updatedMetadata.forEach(item => {
-			if(item.trait_type === 'District'){
+			if (item.trait_type === 'District') {
 				item.value = district
 			}
 		})
@@ -72,17 +69,35 @@ const Airplane = () => {
 				<div className={`${classes.cloud} ${classes.fourthCloud}`}>
 					<SVG src={'/assets/Cloud 4 Asset.svg'} />
 				</div>
-				<div className={`${classes.airplane} ${isLanding ? classes.landAnimation : classes.floatAnimation}`} onAnimationEnd={startFade}>
+				<div
+					className={`${classes.airplane} ${
+						isLanding ? classes.landAnimation : classes.floatAnimation
+					}`}
+					onAnimationEnd={startFade}
+				>
 					<SVG src={'/assets/Plane Asset.svg'} />
 				</div>
-				<div aria-label='Land the Plane' className={`${classes.land} ${isLanding ? classes.pullAwayAnimation : ''}`}>
+				<div
+					aria-label="Land the Plane"
+					className={`${classes.land} ${
+						isLanding ? classes.pullAwayAnimation : ''
+					}`}
+				>
 					<SVG src={'/assets/Cloud Button Asset.svg'} />
 					<div className={classes.landingLinks}>
-						{ availableDistricts &&
-							availableDistricts.items.map((option) => (
-								<a href="#" aria-label={option.name} key={option.name} onClick={() => {startLanding(option.name)}}>{option.name}</a>
-							))
-						}
+						{availableDistricts &&
+							availableDistricts.items.map(option => (
+								<a
+									href="#"
+									aria-label={option.name}
+									key={option.name}
+									onClick={() => {
+										startLanding(option.name)
+									}}
+								>
+									{option.name}
+								</a>
+							))}
 					</div>
 				</div>
 				<div className={`${classes.cloud} ${classes.initialCloud}`}>

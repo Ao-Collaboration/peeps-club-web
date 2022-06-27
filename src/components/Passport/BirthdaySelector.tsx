@@ -7,18 +7,31 @@ interface Props {
 
 const BirthdaySelector: React.FC<Props> = ({ onChange }) => {
 	const classes = useStyles()
-	const months = ['January', 'February', 'March', 'April', 'May', 'June',
-		'July', 'August', 'September', 'October', 'November', 'December']
+	const months = [
+		'January',
+		'February',
+		'March',
+		'April',
+		'May',
+		'June',
+		'July',
+		'August',
+		'September',
+		'October',
+		'November',
+		'December',
+	]
 	const daysInMonth = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
 	const [daysInSelectedMonth, setDaysInSelectedMonth] = useState(31)
 
-
 	const updateBirthday = () => {
 		const daySelect = document.getElementById('daySelect') as HTMLSelectElement
-		const monthSelect = document.getElementById('monthSelect') as HTMLSelectElement
+		const monthSelect = document.getElementById(
+			'monthSelect',
+		) as HTMLSelectElement
 
 		// no month selected yet, do nothing
-		if(monthSelect.selectedIndex < 1){
+		if (monthSelect.selectedIndex < 1) {
 			return
 		}
 
@@ -27,7 +40,8 @@ const BirthdaySelector: React.FC<Props> = ({ onChange }) => {
 
 		if (day > daysInMonth[month]) {
 			// not a valid day e.g. 31 February - set at highest allowable
-			(document.getElementById('daySelect') as HTMLSelectElement).value = daysInMonth[month].toString() 
+			(document.getElementById('daySelect') as HTMLSelectElement).value =
+				daysInMonth[month].toString()
 			day = daysInMonth[month]
 		}
 		setDaysInSelectedMonth(daysInMonth[month])
@@ -43,21 +57,25 @@ const BirthdaySelector: React.FC<Props> = ({ onChange }) => {
 		<div>
 			<label>Birthday</label>
 			<div className={classes.flexOverride}>
-				<select id='daySelect' onChange={updateBirthday} defaultValue='None'>
-					<option disabled hidden value='None'>Day</option>
-					{
-						[...Array(daysInSelectedMonth)].map((day, index) => (
-							<option key={index} value={index + 1}>{index + 1}</option>
-						))
-					}
+				<select id="daySelect" onChange={updateBirthday} defaultValue="None">
+					<option disabled hidden value="None">
+						Day
+					</option>
+					{[...Array(daysInSelectedMonth)].map((day, index) => (
+						<option key={index} value={index + 1}>
+							{index + 1}
+						</option>
+					))}
 				</select>
-				<select id='monthSelect' onChange={updateBirthday} defaultValue='None'>
-					<option disabled hidden value='None'>Month</option>
-					{
-						months.map((month, index) => (
-							<option key={index} value={index}>{month}</option>
-						))
-					}
+				<select id="monthSelect" onChange={updateBirthday} defaultValue="None">
+					<option disabled hidden value="None">
+						Month
+					</option>
+					{months.map((month, index) => (
+						<option key={index} value={index}>
+							{month}
+						</option>
+					))}
 				</select>
 			</div>
 		</div>

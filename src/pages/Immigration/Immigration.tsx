@@ -8,7 +8,7 @@ import Passport from '../../components/Passport/Passport'
 
 function Immigration() {
 	const classes = useStyles()
-	const {metadata, setMetadata, availableTraits} = useContext(MetadataContext)
+	const { metadata, setMetadata, availableTraits } = useContext(MetadataContext)
 
 	if (!metadata || !setMetadata || !availableTraits) {
 		return <></>
@@ -18,17 +18,17 @@ function Immigration() {
 		<>
 			<FadeTo color={black} isFadeOut={false} isFading={true} />
 			<div className={classes.page}>
-				<div className={`${classes.passport} ${classes.pullUpPassportAnimation}`}>
-					{availableTraits &&
-						<TraitSelector availableTraits={availableTraits}/>
-					}
+				<div
+					className={`${classes.passport} ${classes.pullUpPassportAnimation}`}
+				>
+					{availableTraits && (
+						<TraitSelector availableTraits={availableTraits} />
+					)}
 					<div className={classes.passportContainer}>
 						<img src={'/assets/passport_top.svg'} />
 						<div className={classes.bottom}>
 							<img src={'/assets/passport_mid.svg'} />
-							{metadata &&
-								<Passport />
-							}
+							{metadata && <Passport />}
 						</div>
 						<img className={classes.hands} src={'/assets/passport_hands.svg'} />
 					</div>
