@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="1715.744mm"
+   height="1470.2711mm"
+   viewBox="0 0 1715.744 1470.2711"
+   version="1.1"
+   id="svg3299"
+   inkscape:version="1.2 (dc2aedaf03, 2022-05-15)"
+   sodipodi:docname="wardrobe_door.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview3301"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     showgrid="false"
+     inkscape:zoom="0.097926974"
+     inkscape:cx="6111.6971"
+     inkscape:cy="2711.204"
+     inkscape:window-width="1920"
+     inkscape:window-height="1115"
+     inkscape:window-x="0"
+     inkscape:window-y="48"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs3296" />
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(914.02497,511.60394)">
+    <g
+       id="g98882"
+       transform="matrix(0.82908172,0,0,0.82908172,-1350.1823,-640.71464)"
+       style="display:inline">
+      <path
+         id="path60990"
+         style="display:inline;fill:#e3e3e3;fill-rule:evenodd;stroke-width:51.2633;stroke-linecap:round;paint-order:markers stroke fill"
+         d="m 1580.0823,248.28273 861.0697,11.61103 51.8297,-1.13406 10.6628,6.53186 0.3754,1641.33534 -18.7723,11.5995 -905.1653,-1.3096 z"
+         sodipodi:nodetypes="cccccccc" />
+      <rect
+         style="display:inline;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:51.7255;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
+         id="rect2213-4-9-5-5"
+         width="942.64648"
+         height="1665.1379"
+         x="1550.3741"
+         y="256.39432" />
+      <path
+         style="display:inline;opacity:0.0243902;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         d="m 2504.1391,256.73662 -946.0856,-0.3852 c 1.7242,235.7697 -0.8288,630.89158 6.2858,1037.55188 l 8.6171,-371.76025 c 391.1872,9.73685 483.67,138.68555 934.4684,418.32015 z"
+         id="path98396"
+         sodipodi:nodetypes="cccccc" />
+    </g>
+  </g>
+</svg>

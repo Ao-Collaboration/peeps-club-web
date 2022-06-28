@@ -32,6 +32,7 @@ const styles = {
 		left: '0',
 		pointerEvents: 'none',
 		backgroundColor: (props: Props) => props.backgroundColor,
+		zIndex: '100000',
 	},
 	fadeOutAnimation: {
 		opacity: '0%',

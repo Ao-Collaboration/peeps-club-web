@@ -18,3 +18,8 @@ export const ImmigrationRoute: Route = {
 	name: 'Immigration',
 	path: '/immigration',
 }
+
+export const WardrobeRoute: Route = {
+	name: 'Wardrobe',
+	path: '/wardrobe',
+}
