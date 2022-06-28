@@ -6,11 +6,16 @@ import useStyles from './Immigration.styles'
 import TraitSelector from '../../components/Trait/TraitSelector'
 import Passport from '../../components/Passport/Passport'
 import Button from '../../components/Button/Button'
+import { useNavigate } from 'react-router-dom'
+import { WardrobeRoute } from '../routes'
 
 function Immigration() {
 	const classes = useStyles()
 	const { metadata, setMetadata, availableTraits } = useContext(MetadataContext)
 	const [isFlipped, setIsFlipped] = useState(false)
+	const [isFadeOut, setIsFadeOut] = useState(false)
+
+	const navigate = useNavigate()
 
 	if (!metadata || !setMetadata || !availableTraits) {
 		return <></>
@@ -18,11 +23,25 @@ function Immigration() {
 
 	const completePassport = () => {
 		setIsFlipped(true)
+		setInterval(() => {
+			setIsFadeOut(true)
+		}, 4000)
+	}
+
+	const moveToClothing = () => {
+		if (isFlipped) {
+			navigate(WardrobeRoute.path)
+		}
 	}
 
 	return (
 		<>
-			<FadeTo color={black} isFadeOut={false} isFading={true} />
+			<FadeTo
+				onAnimationEnd={moveToClothing}
+				color={black}
+				isFadeOut={isFadeOut}
+				isFading={true}
+			/>
 			<div className={classes.page}>
 				{isFlipped && (
 					<>
