@@ -36,6 +36,9 @@ const styles = {
 			'50%': {
 				transform: 'translate(0%,  0%)',
 			},
+			'55%': {
+				transform: 'translate(0%,  0%)',
+			},
 			'100%': {
 				transform: 'translate(0%,  -300%)',
 			},
@@ -119,21 +122,21 @@ const styles = {
 	},
 	flipAnimation: {
 		animationName: 'flip',
-		animationDuration: '0.4s',
+		animationDuration: '0.6s',
 		animationFillMode: 'forwards',
 		animationTimingFunction: 'linear',
 		onIterationCount: '1',
 	},
 	stampAnimation: {
 		animationName: 'stamp',
-		animationDuration: '4s',
+		animationDuration: '3s',
 		animationFillMode: 'forwards',
 		animationTimingFunction: 'linear',
 		onIterationCount: '1',
 	},
 	stampArmAnimation: {
 		animationName: 'stamp_arm',
-		animationDuration: '4s',
+		animationDuration: '3s',
 		animationFillMode: 'forwards',
 		animationTimingFunction: 'linear',
 		onIterationCount: '1',
