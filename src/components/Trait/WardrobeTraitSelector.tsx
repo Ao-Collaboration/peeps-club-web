@@ -1,4 +1,4 @@
-import { faLevelDownAlt, faSortDown } from '@fortawesome/free-solid-svg-icons'
+import { faSortDown } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useContext, useEffect, useState } from 'react'
 import { MetadataContext } from '../../context/Metadata/MetadataContext'

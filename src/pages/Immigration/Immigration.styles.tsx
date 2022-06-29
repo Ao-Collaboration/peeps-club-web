@@ -57,7 +57,7 @@ const styles = {
 		},
 	},
 	page: {
-		backgroundImage: 'url("assets/Immigration Gate.svg")',
+		backgroundColor: '#464646',
 		backgroundSize: 'cover',
 		height: '100vh',
 		width: '100vw',

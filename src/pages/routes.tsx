@@ -19,6 +19,16 @@ export const ImmigrationRoute: Route = {
 	path: '/immigration',
 }
 
+export const ImmigrationIntroRoute: Route = {
+	name: 'ImmigrationIntro',
+	path: '/immigration-intro',
+}
+
+export const ImmigrationGateRoute: Route = {
+	name: 'ImmigrationGate',
+	path: '/immigration-gate',
+}
+
 export const WardrobeRoute: Route = {
 	name: 'Wardrobe',
 	path: '/wardrobe',
