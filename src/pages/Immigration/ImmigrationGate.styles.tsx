@@ -1,4 +1,5 @@
 import { createUseStyles } from 'react-jss'
+import { translucent_white } from '../../config/colors'
 import { headingFontFamily } from '../../config/jss-vars'
 
 const styles = {
@@ -41,7 +42,7 @@ const styles = {
 		position: 'absolute',
 		top: '20%',
 		right: '5%',
-		backgroundColor: '#ffffffcc',
+		backgroundColor: translucent_white,
 		width: '20em',
 		borderRadius: '2em 2em 2em 0em',
 		textAlign: 'center',

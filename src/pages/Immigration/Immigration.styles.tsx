@@ -1,4 +1,5 @@
 import { createUseStyles } from 'react-jss'
+import { dark_grey } from '../../config/colors'
 
 const styles = {
 	'@global': {
@@ -57,7 +58,7 @@ const styles = {
 		},
 	},
 	page: {
-		backgroundColor: '#464646',
+		backgroundColor: dark_grey,
 		backgroundSize: 'cover',
 		height: '100vh',
 		width: '100vw',
