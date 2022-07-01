@@ -5,8 +5,16 @@ export interface Trait {
 
 export const defaultPeep: Trait[] = [
 	{
-		trait_type: 'Clothes',
-		value: 'Tucked Tank and Skinny Black Jeans',
+		trait_type: 'Tops',
+		value: 'Tucked Tank',
+	},
+	{
+		trait_type: 'Bottoms',
+		value: 'Skinny Black Jeans',
+	},
+	{
+		trait_type: 'One Piece',
+		value: 'None',
 	},
 	{
 		trait_type: 'Clothing Accessory',
