@@ -22,7 +22,9 @@ function Wardrobe() {
 		'Eye Outline',
 	]
 	const shirtIconTraits: CategoryName[] = [
-		'Clothes',
+		'Tops',
+		'Bottoms',
+		'One Piece',
 		'Outerwear',
 		'Front Accessory',
 		'Rear Accessory',

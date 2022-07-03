@@ -11,7 +11,9 @@ export interface TraitOption {
 export type CategoryName =
 	| 'District'
 	| 'Time'
-	| 'Clothes'
+	| 'Tops'
+	| 'Bottoms'
+	| 'One Piece'
 	| 'Outerwear'
 	| 'Pose'
 	| 'Rear Accessory'
