@@ -1,4 +1,8 @@
-import { faSortDown } from '@fortawesome/free-solid-svg-icons'
+import {
+	faLevelDownAlt,
+	faQuestionCircle,
+	faSortDown,
+} from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useContext, useEffect, useState } from 'react'
 import { MetadataContext } from '../../context/Metadata/MetadataContext'
@@ -41,20 +45,94 @@ const WardrobeTraitSelector: React.FC<Props> = ({ categories }) => {
 		}
 	}
 
-	const updateSelectedTraits = (categoryIndex: number, name: string) => {
+	const updateTrait = (category: CategoryName, value: string) => {
 		const updatedMetadata = [...metadata]
 		updatedMetadata.forEach(traitItem => {
-			if (traitItem.trait_type === categories[categoryIndex]) {
-				traitItem.value = name
+			if (traitItem.trait_type === category) {
+				traitItem.value = value
 			}
 		})
 		setMetadata(updatedMetadata)
+	}
+
+	const updateSelectedTraits = (categoryIndex: number, value: string) => {
+		const category = categories[categoryIndex]
+		if (['Tops', 'Bottoms', 'One Piece'].includes(category)) {
+			if (getSelectedTrait(category) === 'None') {
+				if (category === 'One Piece') {
+					updateTrait('Tops', 'None')
+					updateTrait('Bottoms', 'None')
+				} else {
+					updateTrait('One Piece', 'None')
+					if (category === 'Tops') {
+						updateTrait('Bottoms', 'Skinny Black Jeans')
+					} else {
+						updateTrait('Tops', 'Tucked Tank')
+					}
+				}
+			}
+		}
+
+		updateTrait(category, value)
 	}
 
 	const getSelectedTrait = (category: string) => {
 		return metadata.filter(trait => {
 			return trait.trait_type === category
 		})[0].value
+	}
+
+	const showCLothingException = () => {
+		const category = categories[selectedCategoryIndex]
+		if (['Tops', 'Bottoms', 'One Piece'].includes(category)) {
+			return getSelectedTrait(category) === 'None'
+		}
+		return false
+	}
+
+	const traitHangar = (traitName: string) => {
+		const exclusionReasons = ''
+
+		// hide None options on tops/bottoms/one-piece
+		if (
+			['Tops', 'Bottoms', 'One Piece'].includes(
+				categories[selectedCategoryIndex],
+			)
+		) {
+			if (traitName === 'None') {
+				return <></>
+			}
+		}
+
+		return (
+			<div
+				className={`${classes.hanger}  ${classes.fadeInHangars}`}
+				key={`${categories[selectedCategoryIndex]}-${traitName}`}
+			>
+				<div
+					className={`${classes.hangerText} ${
+						traitName === getSelectedTrait(categories[selectedCategoryIndex])
+							? classes.underlined
+							: ''
+					}`}
+					onClick={() => {
+						updateSelectedTraits(selectedCategoryIndex, traitName)
+					}}
+				>
+					<p>{traitName}</p>
+				</div>
+				<img
+					className={classes.hangerImage}
+					src={'/assets/Trait Hanger Asset.svg'}
+				/>
+				{exclusionReasons.length > 0 && (
+					<div className={classes.exclusion}>
+						<FontAwesomeIcon icon={faQuestionCircle} />
+						<div className={classes.exclusionReason}>{exclusionReasons}</div>
+					</div>
+				)}
+			</div>
+		)
 	}
 
 	return (
@@ -88,6 +166,11 @@ const WardrobeTraitSelector: React.FC<Props> = ({ categories }) => {
 							{categoryName}
 						</div>
 					))}
+					{showCLothingException() && (
+						<div className={classes.exclusionTips}>
+							<p>* Tops & Bottoms are not compatible with One Piece options</p>
+						</div>
+					)}
 				</div>
 				{selectableTraits?.length > 6 && (
 					<div className={classes.moreTraitsArrow}>
@@ -98,30 +181,7 @@ const WardrobeTraitSelector: React.FC<Props> = ({ categories }) => {
 					<>
 						{selectedCategoryIndex >= 0 &&
 							categories[selectedCategoryIndex] &&
-							selectableTraits.map(item => (
-								<div
-									className={`${classes.hanger}  ${classes.fadeInHangars}`}
-									key={`${categories[selectedCategoryIndex]}-${item.name}`}
-								>
-									<div
-										className={`${classes.hangerText} ${
-											item.name ===
-											getSelectedTrait(categories[selectedCategoryIndex])
-												? classes.underlined
-												: ''
-										}`}
-										onClick={() => {
-											updateSelectedTraits(selectedCategoryIndex, item.name)
-										}}
-									>
-										<p>{item.name}</p>
-									</div>
-									<img
-										className={classes.hangerImage}
-										src={'/assets/Trait Hanger Asset.svg'}
-									/>
-								</div>
-							))}
+							selectableTraits.map(item => traitHangar(item.name))}
 					</>
 				</div>
 			</div>
