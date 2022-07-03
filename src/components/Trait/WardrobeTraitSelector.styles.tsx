@@ -1,5 +1,5 @@
 import { createUseStyles } from 'react-jss'
-import { black, peepBlue, white } from '../../config/colors'
+import { black, peepBlue } from '../../config/colors'
 import { standardFontFamily } from '../../config/jss-vars'
 
 const styles = {

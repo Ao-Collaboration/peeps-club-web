@@ -6,6 +6,7 @@ import { black } from '../../config/colors'
 import { useNavigate } from 'react-router-dom'
 import { MetadataContext } from '../../context/Metadata/MetadataContext'
 import { Category } from '../../interface/availableTraits'
+import { ImmigrationIntroRoute } from '../routes'
 
 const Airplane = () => {
 	const classes = useStyles()
@@ -47,7 +48,7 @@ const Airplane = () => {
 	}
 
 	const isDone = () => {
-		navigate('/immigration')
+		navigate(ImmigrationIntroRoute.path)
 	}
 
 	return (
