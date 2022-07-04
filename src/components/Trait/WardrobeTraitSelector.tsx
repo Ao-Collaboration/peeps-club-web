@@ -64,7 +64,8 @@ const WardrobeTraitSelector: React.FC<Props> = ({ categories }) => {
 		setMetadata(updatedMetadata)
 	}
 
-	const updateSelectedTraits = (categoryIndex: number, value: string) => {
+	// takes into account clothing types
+	const updateSelectedTrait = (categoryIndex: number, value: string) => {
 		const category = categories[categoryIndex]
 		if (['Tops', 'Bottoms', 'One Piece'].includes(category)) {
 			if (getSelectedTrait(category) === 'None') {
@@ -91,6 +92,7 @@ const WardrobeTraitSelector: React.FC<Props> = ({ categories }) => {
 		})[0].value
 	}
 
+	// highlights if changing the current trait would remove other clothing items
 	const showClothingException = () => {
 		const category = categories[selectedCategoryIndex]
 		if (['Tops', 'Bottoms', 'One Piece'].includes(category)) {
@@ -99,6 +101,7 @@ const WardrobeTraitSelector: React.FC<Props> = ({ categories }) => {
 		return false
 	}
 
+	// check metadata against exclusions list to ensure they are valid
 	const validateMetadata = (testMetadata: Trait[]) => {
 		for (let i = 0; i < testMetadata.length; i++) {
 			const trait = testMetadata[i]
@@ -125,32 +128,50 @@ const WardrobeTraitSelector: React.FC<Props> = ({ categories }) => {
 		return true
 	}
 
-	const resolve = (categoryToUpdate: CategoryName, updatedTrait: Trait) => {
+	// attempt to place and new trait and reset an offending category (must be tested to ensure validity)
+	const resolve = (categoryToReset: CategoryName, updatedTrait: Trait) => {
 		const updatedMetadata: Trait[] = JSON.parse(JSON.stringify(metadata))
 		updatedMetadata.forEach(item => {
 			//set new trait
 			if (item.trait_type === updatedTrait.trait_type) {
 				item.value = updatedTrait.value
 			}
-			//set default replacement
-			if (item.trait_type === categoryToUpdate) {
+			//test the default replacement
+			if (item.trait_type === categoryToReset) {
 				const defaultValue = defaultPeep.filter(trait => {
-					return trait.trait_type === categoryToUpdate
+					return trait.trait_type === categoryToReset
 				})[0].value
 				item.value = defaultValue
+
+				// try all others from category if replacement doesn't work
+				if (!validateMetadata(updatedMetadata)) {
+					let exhaustedOptions = false
+					let index = 0
+					while (!validateMetadata(updatedMetadata) || exhaustedOptions) {
+						try {
+							item.value = availableTraits.filter(traitCategory => {
+								return traitCategory.category === categoryToReset
+							})[0].items[index].name
+						} catch {
+							exhaustedOptions = true
+						}
+						index++
+					}
+				}
 			}
 		})
 		return updatedMetadata
 	}
 
 	const canBeResolved = (
-		categoryToUpdate: CategoryName,
+		categoryToReset: CategoryName,
 		updatedTrait: Trait,
 	) => {
-		const testMetadata = resolve(categoryToUpdate, updatedTrait)
+		const testMetadata = resolve(categoryToReset, updatedTrait)
 		return validateMetadata(testMetadata)
 	}
 
+	// find exclusions on a particular trait
 	const getExclusions = (traitName: string) => {
 		const exclusions: Trait[] = []
 		exclusionList.forEach(traitPair => {
@@ -181,7 +202,7 @@ const WardrobeTraitSelector: React.FC<Props> = ({ categories }) => {
 		exclusions: Trait[],
 	) => {
 		if (exclusions.length < 1) {
-			updateSelectedTraits(selectedCategoryIndex, traitName)
+			updateSelectedTrait(selectedCategoryIndex, traitName)
 		} else if (
 			exclusions.length === 1 &&
 			canBeResolved(exclusions[0].trait_type, {
@@ -189,7 +210,7 @@ const WardrobeTraitSelector: React.FC<Props> = ({ categories }) => {
 				value: traitName,
 			})
 		) {
-			updateSelectedTraits(selectedCategoryIndex, traitName)
+			updateSelectedTrait(selectedCategoryIndex, traitName)
 			const newMeta = resolve(exclusions[0].trait_type, {
 				trait_type: category,
 				value: traitName,
@@ -198,6 +219,7 @@ const WardrobeTraitSelector: React.FC<Props> = ({ categories }) => {
 		}
 	}
 
+	// is a hangar disabled
 	const isDisabled = (
 		exclusions: Trait[],
 		traitName: string,

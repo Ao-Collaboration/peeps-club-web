@@ -163,6 +163,7 @@ const styles = {
 		fontSize: '0.8em',
 		padding: '0.3em',
 		marginLeft: '-3.5em',
+		bottom: '0',
 	},
 	exclusionTips: {
 		position: 'absolute',
