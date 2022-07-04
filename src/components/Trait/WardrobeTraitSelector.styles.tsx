@@ -1,4 +1,3 @@
-import { isAbsolute } from 'path'
 import { createUseStyles } from 'react-jss'
 import { black, peepBlue, peeps_darkblue, white } from '../../config/colors'
 import { standardFontFamily } from '../../config/jss-vars'
@@ -170,6 +169,10 @@ const styles = {
 		bottom: '2em',
 		width: '18em',
 		color: peeps_darkblue,
+	},
+	disabled: {
+		filter: 'brightness(0.7)',
+		zIndex: '-100',
 	},
 }
 

@@ -1,12 +1,11 @@
-import {
-	faLevelDownAlt,
-	faQuestionCircle,
-	faSortDown,
-} from '@fortawesome/free-solid-svg-icons'
+import { faQuestionCircle, faSortDown } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useContext, useEffect, useState } from 'react'
+import { host } from '../../config/api'
 import { MetadataContext } from '../../context/Metadata/MetadataContext'
 import { CategoryName, TraitOption } from '../../interface/availableTraits'
+import { defaultPeep, Trait } from '../../interface/metadata'
+import doFetch from '../../utils/doFetch'
 import useStyles from './WardrobeTraitSelector.styles'
 
 interface Props {
@@ -18,12 +17,22 @@ const WardrobeTraitSelector: React.FC<Props> = ({ categories }) => {
 	const [selectedCategoryIndex, setSelectedCategoryIndex] = useState(-1)
 	const [isWardrobeOpen, setIsWardrobeOpen] = useState(false)
 	const [selectableTraits, setSelectableTraits] = useState<TraitOption[]>([])
+	const [exclusionList, setExclusionList] = useState<string[][]>([])
 
 	const { metadata, setMetadata, availableTraits } = useContext(MetadataContext)
 
 	if (!metadata || !setMetadata || !availableTraits) {
 		return <></>
 	}
+
+	useEffect(() => {
+		const getExclusions = async () => {
+			const exclusions = await doFetch(`${host}/peep/exclusions`, 'GET')
+			setExclusionList(exclusions)
+		}
+
+		getExclusions()
+	}, [])
 
 	useEffect(() => {
 		setSelectedCategoryIndex(-1)
@@ -82,7 +91,7 @@ const WardrobeTraitSelector: React.FC<Props> = ({ categories }) => {
 		})[0].value
 	}
 
-	const showCLothingException = () => {
+	const showClothingException = () => {
 		const category = categories[selectedCategoryIndex]
 		if (['Tops', 'Bottoms', 'One Piece'].includes(category)) {
 			return getSelectedTrait(category) === 'None'
@@ -90,45 +99,168 @@ const WardrobeTraitSelector: React.FC<Props> = ({ categories }) => {
 		return false
 	}
 
+	const validateMetadata = (testMetadata: Trait[]) => {
+		for (let i = 0; i < testMetadata.length; i++) {
+			const trait = testMetadata[i]
+			for (let j = 0; j < exclusionList.length; j++) {
+				const traitPair = exclusionList[j]
+
+				let valueToFind = ''
+				if (traitPair[0] === trait.value) {
+					valueToFind = traitPair[1]
+				} else if (traitPair[1] === trait.value) {
+					valueToFind = traitPair[0]
+				}
+
+				if (valueToFind.length > 0) {
+					for (let k = 0; k < testMetadata.length; k++) {
+						const traitAgain = testMetadata[k]
+						if (traitAgain.value === valueToFind) {
+							return false
+						}
+					}
+				}
+			}
+		}
+		return true
+	}
+
+	const resolve = (categoryToUpdate: CategoryName, updatedTrait: Trait) => {
+		const updatedMetadata: Trait[] = JSON.parse(JSON.stringify(metadata))
+		updatedMetadata.forEach(item => {
+			//set new trait
+			if (item.trait_type === updatedTrait.trait_type) {
+				item.value = updatedTrait.value
+			}
+			//set default replacement
+			if (item.trait_type === categoryToUpdate) {
+				const defaultValue = defaultPeep.filter(trait => {
+					return trait.trait_type === categoryToUpdate
+				})[0].value
+				item.value = defaultValue
+			}
+		})
+		return updatedMetadata
+	}
+
+	const canBeResolved = (
+		categoryToUpdate: CategoryName,
+		updatedTrait: Trait,
+	) => {
+		const testMetadata = resolve(categoryToUpdate, updatedTrait)
+		return validateMetadata(testMetadata)
+	}
+
+	const getExclusions = (traitName: string) => {
+		const exclusions: Trait[] = []
+		exclusionList.forEach(traitPair => {
+			if (traitPair.includes(traitName)) {
+				metadata.forEach(trait => {
+					if (traitPair.includes(trait.value)) {
+						if (traitPair[0] === traitName) {
+							exclusions.push({
+								trait_type: trait.trait_type,
+								value: traitPair[1],
+							})
+						} else {
+							exclusions.push({
+								trait_type: trait.trait_type,
+								value: traitPair[0],
+							})
+						}
+					}
+				})
+			}
+		})
+		return exclusions
+	}
+
+	const selectTraitHangar = (
+		traitName: string,
+		category: CategoryName,
+		exclusions: Trait[],
+	) => {
+		if (exclusions.length < 1) {
+			updateSelectedTraits(selectedCategoryIndex, traitName)
+		} else if (
+			exclusions.length === 1 &&
+			canBeResolved(exclusions[0].trait_type, {
+				trait_type: category,
+				value: traitName,
+			})
+		) {
+			updateSelectedTraits(selectedCategoryIndex, traitName)
+			const newMeta = resolve(exclusions[0].trait_type, {
+				trait_type: category,
+				value: traitName,
+			})
+			setMetadata(newMeta)
+		}
+	}
+
+	const isDisabled = (
+		exclusions: Trait[],
+		traitName: string,
+		category: CategoryName,
+	) => {
+		if (exclusions.length > 1) {
+			return true
+		}
+		if (
+			exclusions.length === 1 &&
+			!canBeResolved(exclusions[0].trait_type, {
+				trait_type: category,
+				value: traitName,
+			})
+		) {
+			{
+				return true
+			}
+		}
+		return false
+	}
+
 	const traitHangar = (traitName: string) => {
-		const exclusionReasons = ''
+		const category = categories[selectedCategoryIndex]
+		const exclusions: Trait[] = getExclusions(traitName)
 
 		// hide None options on tops/bottoms/one-piece
 		if (
-			['Tops', 'Bottoms', 'One Piece'].includes(
-				categories[selectedCategoryIndex],
-			)
+			['Tops', 'Bottoms', 'One Piece'].includes(category) &&
+			traitName === 'None'
 		) {
-			if (traitName === 'None') {
-				return <></>
-			}
+			return <></>
 		}
 
 		return (
 			<div
 				className={`${classes.hanger}  ${classes.fadeInHangars}`}
-				key={`${categories[selectedCategoryIndex]}-${traitName}`}
+				key={`${category}-${traitName}`}
 			>
 				<div
 					className={`${classes.hangerText} ${
-						traitName === getSelectedTrait(categories[selectedCategoryIndex])
-							? classes.underlined
-							: ''
+						traitName === getSelectedTrait(category) ? classes.underlined : ''
 					}`}
 					onClick={() => {
-						updateSelectedTraits(selectedCategoryIndex, traitName)
+						selectTraitHangar(traitName, category, exclusions)
 					}}
 				>
 					<p>{traitName}</p>
 				</div>
 				<img
-					className={classes.hangerImage}
+					className={`${classes.hangerImage} ${
+						isDisabled(exclusions, traitName, category) && classes.disabled
+					}`}
 					src={'/assets/Trait Hanger Asset.svg'}
 				/>
-				{exclusionReasons.length > 0 && (
+				{exclusions.length > 0 && traitName !== getSelectedTrait(category) && (
 					<div className={classes.exclusion}>
 						<FontAwesomeIcon icon={faQuestionCircle} />
-						<div className={classes.exclusionReason}>{exclusionReasons}</div>
+						<div className={classes.exclusionReason}>
+							{`Not compatible with ${exclusions.map(item => {
+								return `${item.trait_type}: ${item.value}`
+							})}`}
+						</div>
 					</div>
 				)}
 			</div>
@@ -166,7 +298,7 @@ const WardrobeTraitSelector: React.FC<Props> = ({ categories }) => {
 							{categoryName}
 						</div>
 					))}
-					{showCLothingException() && (
+					{showClothingException() && (
 						<div className={classes.exclusionTips}>
 							<p>* Tops & Bottoms are not compatible with One Piece options</p>
 						</div>
