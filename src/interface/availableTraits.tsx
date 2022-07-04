@@ -34,3 +34,4 @@ export type CategoryName =
 	| 'Pronouns'
 	| 'Birthday'
 	| 'Name'
+	| 'Shoes'
