@@ -1,5 +1,7 @@
-export interface Trait {
-	trait_type: string
+import { CategoryName } from './availableTraits'
+
+export type Trait = {
+	trait_type: CategoryName
 	value: string
 }
 
