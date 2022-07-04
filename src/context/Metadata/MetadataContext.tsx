@@ -25,7 +25,7 @@ interface Props {
 
 export const MetadataContext = createContext<CtxProps>({})
 const MetadataContextProvider: FC<Props> = ({ children }) => {
-	const [metadata, setMetadata] = useState<Trait[] | null>(defaultPeep)
+	const [metadata, setMetadata] = useState<Trait[] | null>([])
 	const [availableTraits, setAvailableTraits] = useState<Category[] | null>([])
 
 	const getAvailableTraits = async () => {
@@ -43,6 +43,7 @@ const MetadataContextProvider: FC<Props> = ({ children }) => {
 
 	useEffect(() => {
 		getAvailableTraits()
+		setMetadata(JSON.parse(JSON.stringify(defaultPeep)))
 	}, [])
 
 	return (
