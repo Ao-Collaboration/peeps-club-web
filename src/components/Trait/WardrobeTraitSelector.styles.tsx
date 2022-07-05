@@ -131,14 +131,26 @@ const styles = {
 		alignContent: 'center',
 		justifyContent: 'center',
 	},
+	icon: {
+		width: '70px',
+		height: '70px',
+		backgroundSize: 'contain',
+		backgroundRepeat: 'no-repeat',
+		backgroundPosition: 'center',
+	},
 	hangerText: {
 		position: 'absolute',
 		display: 'flex',
 		width: '80%',
 		height: '100%',
 		alignItems: 'center',
-		justifyContent: 'center',
 		textAlign: 'center',
+		flexDirection: 'column',
+		paddingTop: '2em',
+		'& p': {
+			margin: '0em',
+			fontSize: '0.8em',
+		},
 	},
 	moreTraitsArrow: {
 		position: 'absolute',

@@ -289,6 +289,12 @@ const WardrobeTraitSelector: React.FC<Props> = ({ categories }) => {
 							selectTraitHangar(trait, category, exclusions)
 					}}
 				>
+					<div
+						style={{
+							backgroundImage: `url("/assets/${category}/${traitName}.png")`,
+						}}
+						className={classes.icon}
+					></div>
 					<p>{traitName}</p>
 				</div>
 				<img
