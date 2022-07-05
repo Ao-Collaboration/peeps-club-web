@@ -32,9 +32,11 @@ function Wardrobe() {
 		'Rear Accessory',
 		'Pose',
 	]
+	type CategorySelection = 'Area' | 'Peep' | 'Outfit'
 
 	const { metadata } = useContext(MetadataContext)
 	const [currentTraits, setCurrentTraits] = useState(sunIconTraits)
+	const [selectionString, setSelectionString] = useState('Area   Selections')
 	const [peepImage, setPeepImage] = useState('')
 
 	useEffect(() => {
@@ -51,6 +53,21 @@ function Wardrobe() {
 		setPeepImage(URL.createObjectURL(svg))
 	}
 
+	const changeSelection = (selection: CategorySelection) => {
+		setSelectionString(`${selection}   Selections`)
+		switch (selection) {
+		case 'Area':
+			setCurrentTraits(sunIconTraits)
+			break
+		case 'Outfit':
+			setCurrentTraits(shirtIconTraits)
+			break
+		case 'Peep':
+			setCurrentTraits(personIconTraits)
+			break
+		}
+	}
+
 	return (
 		<>
 			<FadeTo color={black} isFadeOut={false} isFading={true} />
@@ -59,26 +76,26 @@ function Wardrobe() {
 				<div className={classes.navpanel}>
 					<img
 						onClick={() => {
-							setCurrentTraits(sunIconTraits)
+							changeSelection('Area')
 						}}
 						className={classes.icon}
 						src="/assets/Icon Sun Asset.svg"
 					/>
 					<img
 						onClick={() => {
-							setCurrentTraits(personIconTraits)
+							changeSelection('Peep')
 						}}
 						className={classes.icon}
 						src="/assets/Icon Person Asset.svg"
 					/>
 					<img
 						onClick={() => {
-							setCurrentTraits(shirtIconTraits)
+							changeSelection('Outfit')
 						}}
 						className={classes.icon}
 						src="/assets/Icon Shirt Asset.svg"
 					/>
-					<span className={classes.title}>Outfit Selection</span>
+					<span className={classes.title}>{selectionString}</span>
 				</div>
 				<WardrobeTraitSelector categories={currentTraits} />
 				<div

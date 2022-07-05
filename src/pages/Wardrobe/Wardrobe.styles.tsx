@@ -59,6 +59,7 @@ const styles = {
 		color: peeps_darkblue,
 		fontSize: '2.6em',
 		padding: '1em 0.1em',
+		height: '280px',
 	},
 	mirrorPeep: {
 		width: '310px',
