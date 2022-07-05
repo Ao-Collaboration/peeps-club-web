@@ -26,8 +26,10 @@ function Wardrobe() {
 		'Bottoms',
 		'One Piece',
 		'Outerwear',
+		'Shoes',
 		'Front Accessory',
 		'Rear Accessory',
+		'Pose',
 	]
 
 	const { metadata } = useContext(MetadataContext)

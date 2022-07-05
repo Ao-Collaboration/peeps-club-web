@@ -1,5 +1,11 @@
 import { createUseStyles } from 'react-jss'
-import { black, peepBlue } from '../../config/colors'
+import {
+	black,
+	peepBlue,
+	peeps_darkblue,
+	red_red,
+	white,
+} from '../../config/colors'
 import { standardFontFamily } from '../../config/jss-vars'
 
 const styles = {
@@ -105,7 +111,7 @@ const styles = {
 	hangerContainer: {
 		display: 'grid',
 		padding: '0.5em',
-		gridGap: '0.5em',
+		gridGap: '2em 0.5em',
 		gridTemplateColumns: '48% 48%',
 		height: '500px',
 		overflow: 'scroll',
@@ -144,6 +150,49 @@ const styles = {
 		animationFillMode: 'both',
 		animationTimingFunction: 'linear',
 		animationIterationCount: 'infinite',
+	},
+	exclusion: {
+		position: 'absolute',
+		bottom: '5px',
+		'& svg': {
+			color: peeps_darkblue,
+		},
+		'&:hover div': {
+			display: 'block',
+			textAlign: 'center',
+		},
+	},
+	exclusiveItem: {
+		composes: '$exclusion',
+		'& svg': {
+			color: red_red,
+		},
+	},
+	popup: {
+		display: 'none',
+		position: 'absolute',
+		backgroundColor: white,
+		border: `1px ${peeps_darkblue} solid`,
+		borderRadius: '6px',
+		width: '8em',
+		fontSize: '0.8em',
+		padding: '0.3em',
+		marginLeft: '-3.5em',
+		bottom: '0',
+	},
+	exclusionTips: {
+		position: 'absolute',
+		bottom: '2em',
+		width: '18em',
+		color: peeps_darkblue,
+	},
+	disabled: {
+		filter: 'brightness(0.7)',
+		zIndex: '-100',
+	},
+	exclusive: {
+		filter: 'sepia(1) saturate(6)',
+		zIndex: '-100',
 	},
 }
 

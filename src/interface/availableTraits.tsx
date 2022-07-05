@@ -5,7 +5,7 @@ export interface Category {
 
 export interface TraitOption {
 	name: string
-	exclusive?: boolean
+	exclusive?: string
 }
 
 export type CategoryName =
@@ -34,3 +34,4 @@ export type CategoryName =
 	| 'Pronouns'
 	| 'Birthday'
 	| 'Name'
+	| 'Shoes'

@@ -1,5 +1,7 @@
-export interface Trait {
-	trait_type: string
+import { CategoryName } from './availableTraits'
+
+export type Trait = {
+	trait_type: CategoryName
 	value: string
 }
 
@@ -99,5 +101,9 @@ export const defaultPeep: Trait[] = [
 	{
 		trait_type: 'Name',
 		value: '',
+	},
+	{
+		trait_type: 'Shoes',
+		value: 'Crocs',
 	},
 ]
