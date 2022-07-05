@@ -20,6 +20,7 @@ function Wardrobe() {
 		'Eye Colour',
 		'Eye Style',
 		'Eye Outline',
+		'Expression',
 	]
 	const shirtIconTraits: CategoryName[] = [
 		'Tops',

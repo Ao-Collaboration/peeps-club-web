@@ -43,10 +43,6 @@ export const defaultPeep: Trait[] = [
 		value: 'Bow',
 	},
 	{
-		trait_type: 'Eye Whites',
-		value: 'Base',
-	},
-	{
 		trait_type: 'Facial Hair',
 		value: 'None',
 	},

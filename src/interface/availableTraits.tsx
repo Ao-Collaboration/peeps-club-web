@@ -29,8 +29,6 @@ export type CategoryName =
 	| 'Top Facial Hair'
 	| 'Front Accessory'
 	| 'Skin'
-	| 'Head'
-	| 'Eye Whites'
 	| 'Pronouns'
 	| 'Birthday'
 	| 'Name'
