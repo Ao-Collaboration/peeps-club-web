@@ -3,7 +3,7 @@ import {
 	black,
 	peepBlue,
 	peeps_darkblue,
-	red_red,
+	red,
 	white,
 } from '../../config/colors'
 import { standardFontFamily } from '../../config/jss-vars'
@@ -165,7 +165,7 @@ const styles = {
 	exclusiveItem: {
 		composes: '$exclusion',
 		'& svg': {
-			color: red_red,
+			color: red,
 		},
 	},
 	popup: {
