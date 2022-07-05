@@ -1,5 +1,11 @@
 import { createUseStyles } from 'react-jss'
-import { black, peepBlue, peeps_darkblue, white } from '../../config/colors'
+import {
+	black,
+	peepBlue,
+	peeps_darkblue,
+	red_red,
+	white,
+} from '../../config/colors'
 import { standardFontFamily } from '../../config/jss-vars'
 
 const styles = {
@@ -148,12 +154,21 @@ const styles = {
 	exclusion: {
 		position: 'absolute',
 		bottom: '5px',
-		color: peeps_darkblue,
+		'& svg': {
+			color: peeps_darkblue,
+		},
 		'&:hover div': {
 			display: 'block',
+			textAlign: 'center',
 		},
 	},
-	exclusionReason: {
+	exclusiveItem: {
+		composes: '$exclusion',
+		'& svg': {
+			color: red_red,
+		},
+	},
+	popup: {
 		display: 'none',
 		position: 'absolute',
 		backgroundColor: white,
@@ -173,6 +188,10 @@ const styles = {
 	},
 	disabled: {
 		filter: 'brightness(0.7)',
+		zIndex: '-100',
+	},
+	exclusive: {
+		filter: 'sepia(1) saturate(6)',
 		zIndex: '-100',
 	},
 }

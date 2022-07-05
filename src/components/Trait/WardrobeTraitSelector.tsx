@@ -1,7 +1,12 @@
-import { faQuestionCircle, faSortDown } from '@fortawesome/free-solid-svg-icons'
+import {
+	faCrown,
+	faQuestionCircle,
+	faSortDown,
+} from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useContext, useEffect, useState } from 'react'
 import { host } from '../../config/api'
+import { getPartnerInfo, PartnerInfo } from '../../config/partners'
 import { MetadataContext } from '../../context/Metadata/MetadataContext'
 import { CategoryName, TraitOption } from '../../interface/availableTraits'
 import { defaultPeep, Trait } from '../../interface/metadata'
@@ -18,6 +23,7 @@ const WardrobeTraitSelector: React.FC<Props> = ({ categories }) => {
 	const [isWardrobeOpen, setIsWardrobeOpen] = useState(false)
 	const [selectableTraits, setSelectableTraits] = useState<TraitOption[]>([])
 	const [exclusionList, setExclusionList] = useState<string[][]>([])
+	const [partnerTokens] = useState<string[]>(['The Kindness Project'])
 
 	const { metadata, setMetadata, availableTraits } = useContext(MetadataContext)
 
@@ -197,23 +203,23 @@ const WardrobeTraitSelector: React.FC<Props> = ({ categories }) => {
 	}
 
 	const selectTraitHangar = (
-		traitName: string,
+		trait: TraitOption,
 		category: CategoryName,
 		exclusions: Trait[],
 	) => {
 		if (exclusions.length < 1) {
-			updateSelectedTrait(selectedCategoryIndex, traitName)
+			updateSelectedTrait(selectedCategoryIndex, trait.name)
 		} else if (
 			exclusions.length === 1 &&
 			canBeResolved(exclusions[0].trait_type, {
 				trait_type: category,
-				value: traitName,
+				value: trait.name,
 			})
 		) {
-			updateSelectedTrait(selectedCategoryIndex, traitName)
+			updateSelectedTrait(selectedCategoryIndex, trait.name)
 			const newMeta = resolve(exclusions[0].trait_type, {
 				trait_type: category,
-				value: traitName,
+				value: trait.name,
 			})
 			setMetadata(newMeta)
 		}
@@ -222,9 +228,12 @@ const WardrobeTraitSelector: React.FC<Props> = ({ categories }) => {
 	// is a hangar disabled
 	const isDisabled = (
 		exclusions: Trait[],
-		traitName: string,
+		trait: TraitOption,
 		category: CategoryName,
 	) => {
+		if (trait.exclusive && !partnerTokens.includes(trait.exclusive)) {
+			return true
+		}
 		if (exclusions.length > 1) {
 			return true
 		}
@@ -232,7 +241,7 @@ const WardrobeTraitSelector: React.FC<Props> = ({ categories }) => {
 			exclusions.length === 1 &&
 			!canBeResolved(exclusions[0].trait_type, {
 				trait_type: category,
-				value: traitName,
+				value: trait.name,
 			})
 		) {
 			{
@@ -242,8 +251,20 @@ const WardrobeTraitSelector: React.FC<Props> = ({ categories }) => {
 		return false
 	}
 
-	const traitHangar = (traitName: string) => {
+	const partnerInfo = (partnerInfo: PartnerInfo) => {
+		return (
+			<div>
+				<p>Exclusive to..</p>
+				<a href={partnerInfo.link} target={'_blank'}>
+					{partnerInfo.name}
+				</a>
+			</div>
+		)
+	}
+
+	const traitHangar = (trait: TraitOption) => {
 		const category = categories[selectedCategoryIndex]
+		const traitName = trait.name
 		const exclusions: Trait[] = getExclusions(traitName)
 
 		// hide None options on tops/bottoms/one-piece
@@ -264,24 +285,33 @@ const WardrobeTraitSelector: React.FC<Props> = ({ categories }) => {
 						traitName === getSelectedTrait(category) ? classes.underlined : ''
 					}`}
 					onClick={() => {
-						selectTraitHangar(traitName, category, exclusions)
+						!isDisabled(exclusions, trait, category) &&
+							selectTraitHangar(trait, category, exclusions)
 					}}
 				>
 					<p>{traitName}</p>
 				</div>
 				<img
 					className={`${classes.hangerImage} ${
-						isDisabled(exclusions, traitName, category) && classes.disabled
+						isDisabled(exclusions, trait, category) && classes.disabled
 					}`}
 					src={'/assets/Trait Hanger Asset.svg'}
 				/>
 				{exclusions.length > 0 && traitName !== getSelectedTrait(category) && (
 					<div className={classes.exclusion}>
 						<FontAwesomeIcon icon={faQuestionCircle} />
-						<div className={classes.exclusionReason}>
+						<div className={classes.popup}>
 							{`Not compatible with ${exclusions.map(item => {
 								return `${item.trait_type}: ${item.value}`
 							})}`}
+						</div>
+					</div>
+				)}
+				{trait.exclusive && (
+					<div className={classes.exclusiveItem}>
+						<FontAwesomeIcon icon={faCrown} />
+						<div className={classes.popup}>
+							{partnerInfo(getPartnerInfo(trait.exclusive))}
 						</div>
 					</div>
 				)}
@@ -335,7 +365,7 @@ const WardrobeTraitSelector: React.FC<Props> = ({ categories }) => {
 					<>
 						{selectedCategoryIndex >= 0 &&
 							categories[selectedCategoryIndex] &&
-							selectableTraits.map(item => traitHangar(item.name))}
+							selectableTraits.map(item => traitHangar(item))}
 					</>
 				</div>
 			</div>
