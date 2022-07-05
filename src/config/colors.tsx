@@ -13,4 +13,4 @@ export const off_white = 'rgba(255,255,255,0.85)'
 
 export const dark_grey = '#464646'
 export const translucent_white = '#ffffffcc'
-export const red_red = '#ff0000'
+export const red = '#ff0000'
