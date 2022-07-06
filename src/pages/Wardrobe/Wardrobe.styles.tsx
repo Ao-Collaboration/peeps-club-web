@@ -16,6 +16,7 @@ const styles = {
 		backgroundImage: 'url("assets/Room Base Asset.svg")',
 		zIndex: '-2000',
 		pointerEvents: 'none',
+		backgroundPositionY: 'bottom',
 	},
 	midLayer: {
 		composes: '$layer',
@@ -39,7 +40,7 @@ const styles = {
 	},
 	container: {
 		margin: 'auto',
-		marginTop: '5em',
+		marginTop: '1.5em',
 		display: 'flex',
 		justifyContent: 'center',
 	},
@@ -59,6 +60,7 @@ const styles = {
 		color: peeps_darkblue,
 		fontSize: '2.6em',
 		padding: '1em 0.1em',
+		height: '280px',
 	},
 	mirrorPeep: {
 		width: '310px',
