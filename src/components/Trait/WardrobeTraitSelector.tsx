@@ -271,7 +271,7 @@ const WardrobeTraitSelector: React.FC<Props> = ({ categories }) => {
 
 		// hide None options on tops/bottoms/one-piece
 		if (
-			['Tops', 'Bottoms', 'One Piece'].includes(category) &&
+			['Tops', 'Bottoms', 'One Piece', 'District', 'Time'].includes(category) &&
 			traitName === 'None'
 		) {
 			return <></>
