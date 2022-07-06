@@ -42,6 +42,7 @@ function Wardrobe() {
 	const [selectionString, setSelectionString] = useState('Area   Selections')
 	const [peepImage, setPeepImage] = useState('')
 	const [isBackgroundDisplayed, setIsBackgroundDisplayed] = useState(true)
+	const [isToggleHidden, setIsToggleHidden] = useState(true)
 
 	useEffect(() => {
 		getPeepImage()
@@ -74,12 +75,15 @@ function Wardrobe() {
 		case 'Area':
 			setCurrentTraits(sunIconTraits)
 			setIsBackgroundDisplayed(true) // show background by default on this tab
+			setIsToggleHidden(true)
 			break
 		case 'Outfit':
 			setCurrentTraits(shirtIconTraits)
+			setIsToggleHidden(false)
 			break
 		case 'Peep':
 			setCurrentTraits(personIconTraits)
+			setIsToggleHidden(false)
 			break
 		}
 	}
@@ -120,13 +124,15 @@ function Wardrobe() {
 				>
 					<img src="/assets/mirror.svg" className={classes.mirrorRear} />
 					<img src="/assets/mirror_front.svg" className={classes.mirrorFront} />
-					<FontAwesomeIcon
-						icon={isBackgroundDisplayed ? faEyeSlash : faEye}
-						onClick={() => {
-							setIsBackgroundDisplayed(!isBackgroundDisplayed)
-						}}
-						className={classes.backgroundToggle}
-					/>
+					{!isToggleHidden && (
+						<FontAwesomeIcon
+							icon={isBackgroundDisplayed ? faEyeSlash : faEye}
+							onClick={() => {
+								setIsBackgroundDisplayed(!isBackgroundDisplayed)
+							}}
+							className={classes.backgroundToggle}
+						/>
+					)}
 				</div>
 			</div>
 		</>
