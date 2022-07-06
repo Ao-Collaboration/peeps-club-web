@@ -298,6 +298,25 @@ const WardrobeTraitSelector: React.FC<Props> = ({ categories }) => {
 						className={classes.icon}
 					></div>
 					<p>{traitName}</p>
+
+					{exclusions.length > 0 && traitName !== getSelectedTrait(category) && (
+						<div className={classes.exclusion}>
+							<FontAwesomeIcon icon={faQuestionCircle} />
+							<div className={classes.popup}>
+								{`Not compatible with ${exclusions.map(item => {
+									return `${item.trait_type}: ${item.value}`
+								})}`}
+							</div>
+						</div>
+					)}
+					{trait.exclusive && (
+						<div className={classes.exclusiveItem}>
+							<FontAwesomeIcon icon={faCrown} />
+							<div className={classes.popup}>
+								{partnerInfo(getPartnerInfo(trait.exclusive))}
+							</div>
+						</div>
+					)}
 				</div>
 				<img
 					className={`${classes.hangerImage} ${
@@ -305,24 +324,6 @@ const WardrobeTraitSelector: React.FC<Props> = ({ categories }) => {
 					}`}
 					src={'/assets/Trait Hanger Asset.svg'}
 				/>
-				{exclusions.length > 0 && traitName !== getSelectedTrait(category) && (
-					<div className={classes.exclusion}>
-						<FontAwesomeIcon icon={faQuestionCircle} />
-						<div className={classes.popup}>
-							{`Not compatible with ${exclusions.map(item => {
-								return `${item.trait_type}: ${item.value}`
-							})}`}
-						</div>
-					</div>
-				)}
-				{trait.exclusive && (
-					<div className={classes.exclusiveItem}>
-						<FontAwesomeIcon icon={faCrown} />
-						<div className={classes.popup}>
-							{partnerInfo(getPartnerInfo(trait.exclusive))}
-						</div>
-					</div>
-				)}
 			</div>
 		)
 	}
