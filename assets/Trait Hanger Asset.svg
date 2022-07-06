@@ -2,13 +2,13 @@
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 
 <svg
-   width="400mm"
-   height="480mm"
-   viewBox="0 0 400 480"
+   width="392.56439mm"
+   height="681.79608mm"
+   viewBox="0 0 392.56439 681.79608"
    version="1.1"
    id="svg26893"
-   inkscape:version="1.1.1 (3bf5ae0d25, 2021-09-20)"
-   sodipodi:docname="Wardrobe Trait Background Asset.svg"
+   inkscape:version="1.2 (dc2aedaf03, 2022-05-15)"
+   sodipodi:docname="Trait Hanger Asset.svg"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -16,23 +16,23 @@
    xmlns:svg="http://www.w3.org/2000/svg">
   <sodipodi:namedview
      id="namedview26895"
-     pagecolor="#ffffff"
+     pagecolor="#78efd1"
      bordercolor="#666666"
      borderopacity="1.0"
      inkscape:pageshadow="2"
-     inkscape:pageopacity="0.0"
+     inkscape:pageopacity="0"
      inkscape:pagecheckerboard="0"
      inkscape:document-units="mm"
      showgrid="false"
      inkscape:zoom="0.28495471"
-     inkscape:cx="826.44711"
-     inkscape:cy="991.3856"
-     inkscape:window-width="1536"
-     inkscape:window-height="801"
-     inkscape:window-x="-8"
-     inkscape:window-y="-8"
+     inkscape:cx="1152.8148"
+     inkscape:cy="1333.5453"
+     inkscape:window-width="1920"
+     inkscape:window-height="1115"
+     inkscape:window-x="0"
+     inkscape:window-y="48"
      inkscape:window-maximized="1"
-     inkscape:current-layer="layer2"
+     inkscape:current-layer="g97560-5"
      showguides="true"
      inkscape:guide-bbox="true"
      inkscape:snap-global="false"
@@ -40,7 +40,9 @@
      fit-margin-left="0"
      fit-margin-right="0"
      fit-margin-bottom="0"
-     height="580mm" />
+     height="580mm"
+     inkscape:showpageshadow="2"
+     inkscape:deskcolor="#d1d1d1" />
   <defs
      id="defs26890">
     <filter
@@ -563,7 +565,7 @@
      id="layer2"
      inkscape:label="Traits Images"
      style="display:inline;opacity:1"
-     transform="translate(-2076.2915,-289.40974)">
+     transform="translate(-2080.0055,-292.19527)">
     <g
        id="g97560-5"
        style="display:inline"
@@ -577,7 +579,7 @@
          style="display:inline;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:#ffffff;stroke-width:17.8813;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
          id="rect94364-6-7"
          width="374.68311"
-         height="374.68311"
+         height="582.37091"
          x="1638.6439"
          y="451.55646" />
       <rect
