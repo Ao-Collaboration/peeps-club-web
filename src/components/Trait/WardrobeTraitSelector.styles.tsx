@@ -133,10 +133,11 @@ const styles = {
 	hanger: {
 		opacity: '0',
 		position: 'relative',
-		maxHeight: '150px',
+		maxHeight: '180px',
 		display: 'flex',
 		alignContent: 'center',
 		justifyContent: 'center',
+		paddingTop: '1em',
 	},
 	icon: {
 		width: '70px',
@@ -153,10 +154,11 @@ const styles = {
 		alignItems: 'center',
 		textAlign: 'center',
 		flexDirection: 'column',
-		paddingTop: '2em',
+		justifyContent: 'center',
 		'& p': {
 			margin: '0em',
 			fontSize: '0.8em',
+			padding: '0.5em 1em',
 		},
 	},
 	hangerText: {
@@ -180,8 +182,6 @@ const styles = {
 		animationIterationCount: 'infinite',
 	},
 	exclusion: {
-		position: 'absolute',
-		bottom: '5px',
 		'& svg': {
 			color: peeps_darkblue,
 		},
