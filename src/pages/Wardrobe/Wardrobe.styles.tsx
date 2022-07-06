@@ -63,8 +63,8 @@ const styles = {
 		height: '280px',
 	},
 	mirrorPeep: {
-		width: '310px',
-		height: '560px',
+		width: '308px',
+		height: '550px',
 		backgroundPositionX: '45%',
 		backgroundPositionY: '100%',
 		backgroundSize: '600px',
@@ -75,7 +75,7 @@ const styles = {
 		width: '22.5em',
 		position: 'absolute',
 		marginLeft: '-2.1em',
-		marginTop: '-0.8em',
+		marginTop: '-1.1em',
 	},
 	mirrorFront: {
 		composes: '$mirror',
@@ -84,6 +84,22 @@ const styles = {
 	mirrorRear: {
 		composes: '$mirror',
 		zIndex: '-1000',
+	},
+	backgroundToggle: {
+		zIndex: 1000,
+		position: 'relative',
+		color: white,
+		backgroundColor: peeps_darkblue,
+		width: '2em',
+		height: '2em',
+		padding: '0.5em',
+		borderRadius: '50%',
+		top: '0.5em',
+		left: '0.5em',
+		cursor: 'pointer',
+		'&:hover': {
+			transform: 'scale(1.05)',
+		},
 	},
 }
 

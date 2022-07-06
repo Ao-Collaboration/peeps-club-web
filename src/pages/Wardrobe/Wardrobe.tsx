@@ -1,3 +1,5 @@
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useContext, useEffect, useState } from 'react'
 import FadeTo from '../../components/Scene/FadeTo'
 import WardrobeTraitSelector from '../../components/Trait/WardrobeTraitSelector'
@@ -5,6 +7,7 @@ import { host } from '../../config/api'
 import { black } from '../../config/colors'
 import { MetadataContext } from '../../context/Metadata/MetadataContext'
 import { CategoryName } from '../../interface/availableTraits'
+import { Trait } from '../../interface/metadata'
 import doFetch from '../../utils/doFetch'
 import useStyles from './Wardrobe.styles'
 
@@ -38,16 +41,28 @@ function Wardrobe() {
 	const [currentTraits, setCurrentTraits] = useState(sunIconTraits)
 	const [selectionString, setSelectionString] = useState('Area   Selections')
 	const [peepImage, setPeepImage] = useState('')
+	const [isBackgroundDisplayed, setIsBackgroundDisplayed] = useState(true)
 
 	useEffect(() => {
 		getPeepImage()
-	}, [metadata])
+	}, [metadata, isBackgroundDisplayed])
 
 	const getPeepImage = async () => {
+		const requestMetadata: Trait[] = JSON.parse(JSON.stringify(metadata))
+		if (!isBackgroundDisplayed) {
+			requestMetadata.forEach(category => {
+				if (category.trait_type === 'District') {
+					category.value = 'None'
+				} else if (category.trait_type === 'Time') {
+					category.value = 'None'
+				}
+			})
+		}
+
 		const svg = await doFetch(
 			`${host}/peep/`,
 			'POST',
-			{ attributes: metadata },
+			{ attributes: requestMetadata },
 			'image/svg+xml',
 		)
 		setPeepImage(URL.createObjectURL(svg))
@@ -58,6 +73,7 @@ function Wardrobe() {
 		switch (selection) {
 		case 'Area':
 			setCurrentTraits(sunIconTraits)
+			setIsBackgroundDisplayed(true) // show background by default on this tab
 			break
 		case 'Outfit':
 			setCurrentTraits(shirtIconTraits)
@@ -104,6 +120,13 @@ function Wardrobe() {
 				>
 					<img src="/assets/mirror.svg" className={classes.mirrorRear} />
 					<img src="/assets/mirror_front.svg" className={classes.mirrorFront} />
+					<FontAwesomeIcon
+						icon={isBackgroundDisplayed ? faEyeSlash : faEye}
+						onClick={() => {
+							setIsBackgroundDisplayed(!isBackgroundDisplayed)
+						}}
+						className={classes.backgroundToggle}
+					/>
 				</div>
 			</div>
 		</>
