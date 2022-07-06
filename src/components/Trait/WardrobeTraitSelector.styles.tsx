@@ -123,6 +123,13 @@ const styles = {
 	hangerImage: {
 		width: '80%',
 	},
+	shoppingImage: {
+		width: '80%',
+		cursor: 'pointer',
+		'&:hover': {
+			transform: 'scale(1.05)',
+		},
+	},
 	hanger: {
 		opacity: '0',
 		position: 'relative',
@@ -138,7 +145,7 @@ const styles = {
 		backgroundRepeat: 'no-repeat',
 		backgroundPosition: 'center',
 	},
-	hangerText: {
+	hangerTextBase: {
 		position: 'absolute',
 		display: 'flex',
 		width: '80%',
@@ -150,6 +157,15 @@ const styles = {
 		'& p': {
 			margin: '0em',
 			fontSize: '0.8em',
+		},
+	},
+	hangerText: {
+		composes: '$hangerTextBase',
+	},
+	requestText: {
+		composes: '$hangerTextBase',
+		'& p': {
+			padding: '1em',
 		},
 	},
 	moreTraitsArrow: {

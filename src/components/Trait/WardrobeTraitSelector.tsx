@@ -11,6 +11,7 @@ import { MetadataContext } from '../../context/Metadata/MetadataContext'
 import { CategoryName, TraitOption } from '../../interface/availableTraits'
 import { defaultPeep, Trait } from '../../interface/metadata'
 import doFetch from '../../utils/doFetch'
+import TraitRequest from './TraitRequest'
 import useStyles from './WardrobeTraitSelector.styles'
 
 interface Props {
@@ -24,6 +25,7 @@ const WardrobeTraitSelector: React.FC<Props> = ({ categories }) => {
 	const [selectableTraits, setSelectableTraits] = useState<TraitOption[]>([])
 	const [exclusionList, setExclusionList] = useState<string[][]>([])
 	const [partnerTokens] = useState<string[]>(['The Kindness Project'])
+	const [isRequestDisplayed, setIsRequestDisplayed] = useState(false)
 
 	const { metadata, setMetadata, availableTraits } = useContext(MetadataContext)
 
@@ -327,6 +329,13 @@ const WardrobeTraitSelector: React.FC<Props> = ({ categories }) => {
 
 	return (
 		<>
+			{isRequestDisplayed && (
+				<TraitRequest
+					onClose={() => {
+						setIsRequestDisplayed(false)
+					}}
+				/>
+			)}
 			<div className={classes.container}>
 				<img
 					src="/assets/wardrobe_rear.svg"
@@ -368,11 +377,23 @@ const WardrobeTraitSelector: React.FC<Props> = ({ categories }) => {
 					</div>
 				)}
 				<div className={classes.hangerContainer}>
-					<>
-						{selectedCategoryIndex >= 0 &&
-							categories[selectedCategoryIndex] &&
-							selectableTraits.map(item => traitHangar(item))}
-					</>
+					{selectedCategoryIndex >= 0 && categories[selectedCategoryIndex] && (
+						<>
+							{selectableTraits.map(item => traitHangar(item))}
+							<div
+								key={selectedCategoryIndex}
+								className={`${classes.hanger}  ${classes.fadeInHangars}`}
+								onClick={() => {
+									setIsRequestDisplayed(true)
+								}}
+							>
+								<img
+									className={`${classes.shoppingImage}`}
+									src={'/assets/Shopping Bag Asset.svg'}
+								/>
+							</div>
+						</>
+					)}
 				</div>
 			</div>
 		</>
