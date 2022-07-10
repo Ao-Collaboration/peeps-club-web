@@ -2,14 +2,16 @@ import { ethers } from 'ethers'
 import { useContext, useEffect, useState } from 'react'
 import Button from '../../components/Button/Button'
 import { host } from '../../config/api'
+import { passportContractId } from '../../config/contract'
 import { ProfileContext } from '../../context/Profile/ProfileContext'
 import { Web3Context } from '../../context/Web3/Web3Context'
+import passportABI from '../../abi/passportABI.json'
 import doFetch from '../../utils/doFetch'
 
 function Mint() {
 	const [quantity, setQuantity] = useState(1)
 	const [price, setPrice] = useState('')
-	const [expires, setExpires] = useState(-1)
+	const [expires, setExpires] = useState(0)
 	const [isLoading, setIsLoading] = useState(false)
 	const { profile } = useContext(ProfileContext)
 	const { web3Provider } = useContext(Web3Context)
@@ -48,6 +50,26 @@ function Mint() {
 		setQuantity(parseInt(updatedQuantity))
 	}
 
+	const mint = async () => {
+		setIsLoading(true)
+		const signer = web3Provider?.getSigner()
+		const address = await signer.getAddress()
+		const passportContract = new ethers.Contract(
+			passportContractId,
+			passportABI,
+			signer,
+		)
+
+		const options = { value: price }
+
+		try {
+			const tx = await passportContract.mintPublic(address, quantity, options)
+			await tx.wait()
+		} finally {
+			setIsLoading(false)
+		}
+	}
+
 	return (
 		<div>
 			<input
@@ -57,18 +79,15 @@ function Mint() {
 				defaultValue={1}
 				min={1}
 			></input>
-			{price.length > 0 && expires > 0 && (
-				<>
-					<p>Price : {price}</p>
-					<p>Expires in {formatExpires(expires)} hours</p>
-					<Button
-						onClick={() => {
-							alert()
-						}}
-					>
-						Mint {quantity} for {price} eth
+			{!isLoading && expires > 0 ? (
+				<div>
+					<Button onClick={mint}>
+						Mint {quantity} for {parseInt(price) / 10 ** 18} eth
 					</Button>
-				</>
+					<p>Expires in {formatExpires(expires)} hours</p>
+				</div>
+			) : (
+				<p>...loading</p>
 			)}
 		</div>
 	)

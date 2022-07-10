@@ -1,0 +1,1 @@
+export const passportContractId = '0x33E0fF47866389311795deF4478c824540771fF9'
