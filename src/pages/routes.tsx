@@ -9,6 +9,11 @@ export const HomeRoute: Route = {
 	path: '/',
 }
 
+export const MintRoute: Route = {
+	name: 'Mint',
+	path: '/mint',
+}
+
 export const AirplaneRoute: Route = {
 	name: 'Airplane',
 	path: '/airplane',

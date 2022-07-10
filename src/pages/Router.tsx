@@ -5,6 +5,7 @@ import {
 	ImmigrationGateRoute,
 	ImmigrationIntroRoute,
 	ImmigrationRoute,
+	MintRoute,
 	WardrobeRoute,
 } from './routes'
 import Home from './Home/Home'
@@ -17,6 +18,7 @@ import Header from '../components/Header/Header'
 import Wardrobe from './Wardrobe/Wardrobe'
 import ImmigrationIntro from './Immigration/ImmigrationIntro'
 import ImmigrationGate from './Immigration/ImmigrationGate'
+import Mint from './Mint/Mint'
 
 function Router() {
 	const { web3Provider } = useContext(Web3Context)
@@ -31,6 +33,7 @@ function Router() {
 			<BrowserRouter>
 				<Routes>
 					<Route path={HomeRoute.path} element={<Home />} />
+					<Route path={MintRoute.path} element={<Mint />} />
 					<Route path={AirplaneRoute.path} element={<Airplane />} />
 					<Route path={ImmigrationRoute.path} element={<Immigration />} />
 					<Route
