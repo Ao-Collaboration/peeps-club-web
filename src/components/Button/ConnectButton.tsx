@@ -6,13 +6,15 @@ import Web3Modal from 'web3modal'
 import Button from './Button'
 import { ethers } from 'ethers'
 import { Web3Context } from '../../context/Web3/Web3Context'
+import { ProfileContext } from '../../context/Profile/ProfileContext'
 
 // import { host } from '../../config/api'
 // import doFetch from '../../utils/doFetch'
 
 function ConnectButton() {
 	const { account, setAccount, setWeb3Provider } = useContext(Web3Context)
-	if (!setAccount || !setWeb3Provider) {
+	const { setProfile } = useContext(ProfileContext)
+	if (!setAccount || !setWeb3Provider || !setProfile) {
 		return <></>
 	}
 
@@ -50,6 +52,8 @@ function ConnectButton() {
 			// This is fine
 			// console.log(err)
 		}
+
+		setProfile({ address: addr })
 
 		setAccount(
 			`${addr.substring(0, 5)}...${addr.substring(
