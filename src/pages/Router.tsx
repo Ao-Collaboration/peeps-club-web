@@ -19,9 +19,11 @@ import Wardrobe from './Wardrobe/Wardrobe'
 import ImmigrationIntro from './Immigration/ImmigrationIntro'
 import ImmigrationGate from './Immigration/ImmigrationGate'
 import Mint from './Mint/Mint'
+import { ProfileContext } from '../context/Profile/ProfileContext'
 
 function Router() {
 	const { web3Provider } = useContext(Web3Context)
+	const { profile } = useContext(ProfileContext)
 
 	if (!web3Provider) {
 		// Require wallet connection
@@ -34,17 +36,21 @@ function Router() {
 				<Routes>
 					<Route path={HomeRoute.path} element={<Home />} />
 					<Route path={MintRoute.path} element={<Mint />} />
-					<Route path={AirplaneRoute.path} element={<Airplane />} />
-					<Route path={ImmigrationRoute.path} element={<Immigration />} />
-					<Route
-						path={ImmigrationIntroRoute.path}
-						element={<ImmigrationIntro />}
-					/>
-					<Route
-						path={ImmigrationGateRoute.path}
-						element={<ImmigrationGate />}
-					/>
-					<Route path={WardrobeRoute.path} element={<Wardrobe />} />
+					{profile?.id && (
+						<>
+							<Route path={AirplaneRoute.path} element={<Airplane />} />
+							<Route path={ImmigrationRoute.path} element={<Immigration />} />
+							<Route
+								path={ImmigrationIntroRoute.path}
+								element={<ImmigrationIntro />}
+							/>
+							<Route
+								path={ImmigrationGateRoute.path}
+								element={<ImmigrationGate />}
+							/>
+							<Route path={WardrobeRoute.path} element={<Wardrobe />} />
+						</>
+					)}
 				</Routes>
 			</BrowserRouter>
 		</>
