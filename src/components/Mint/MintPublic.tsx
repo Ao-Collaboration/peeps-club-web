@@ -1,4 +1,4 @@
-import { ContractTransaction, ethers } from 'ethers'
+import { BigNumber, ContractTransaction, ethers, utils } from 'ethers'
 import { useContext, useState } from 'react'
 import { passportContractId } from '../../config/contract'
 import { Web3Context } from '../../context/Web3/Web3Context'
@@ -7,7 +7,7 @@ import Button from '../Button/Button'
 import { defaultLoadingMessage } from '../../config/text'
 
 interface Props {
-	price: number
+	price: BigNumber
 	txLimit: number
 	tokensLeft: number
 }
@@ -41,7 +41,7 @@ const MintPublic: React.FC<Props> = ({ price, txLimit, tokensLeft }) => {
 		setIsLoading(true)
 
 		const address = await signer.getAddress()
-		const options = { value: price * quantity }
+		const options = { value: price.mul(quantity).toString() }
 
 		try {
 			const tx: ContractTransaction = await passportContract.mintPublic(
@@ -67,7 +67,7 @@ const MintPublic: React.FC<Props> = ({ price, txLimit, tokensLeft }) => {
 					{isMintDone ? (
 						<p>
 							Congrats you minted {quantity} Passport for{' '}
-							{(price / 10 ** 18) * quantity} eth
+							{utils.formatEther(price.mul(quantity))} eth
 						</p>
 					) : (
 						<>
@@ -81,7 +81,8 @@ const MintPublic: React.FC<Props> = ({ price, txLimit, tokensLeft }) => {
 							></input>
 							<div>
 								<Button onClick={mint}>
-									Mint {quantity} for {(price / 10 ** 18) * quantity} eth
+									Mint {quantity} for {utils.formatEther(price.mul(quantity))}{' '}
+									eth
 								</Button>
 							</div>
 						</>

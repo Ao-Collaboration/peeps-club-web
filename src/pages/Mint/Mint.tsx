@@ -1,4 +1,4 @@
-import { ethers } from 'ethers'
+import { BigNumber, ethers } from 'ethers'
 import { useContext, useEffect, useState } from 'react'
 import { passportContractId } from '../../config/contract'
 import { Web3Context } from '../../context/Web3/Web3Context'
@@ -50,7 +50,7 @@ function Mint() {
 						<MintPublic
 							txLimit={saleInfo.txLimit}
 							tokensLeft={publicTokensLeft}
-							price={saleInfo.tokenPrice}
+							price={BigNumber.from(saleInfo.tokenPrice)}
 						/>
 					) : (
 						<MintSigned />

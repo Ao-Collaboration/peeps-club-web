@@ -1,4 +1,4 @@
-import { ContractTransaction, ethers } from 'ethers'
+import { ContractTransaction, ethers, utils } from 'ethers'
 import { useContext, useEffect, useState } from 'react'
 import { passportContractId } from '../../config/contract'
 import { ProfileContext } from '../../context/Profile/ProfileContext'
@@ -35,6 +35,7 @@ const MintSigned: React.FC = () => {
 			setIsLoading(true)
 			const req = {
 				address: profile.address,
+				quantity: quantity,
 			}
 			const results = await doFetch(`${host}/mint/passport/price/`, 'POST', req)
 			setPrice(results.price)
@@ -44,13 +45,15 @@ const MintSigned: React.FC = () => {
 		}
 
 		getPrices()
-	}, [])
+	}, [quantity])
 
 	const updateQuantity = () => {
-		const updatedQuantity = (
-			document.getElementById('quantityInput') as HTMLInputElement
-		).value
-		setQuantity(parseInt(updatedQuantity))
+		const updatedQuantity = parseInt(
+			(document.getElementById('quantityInput') as HTMLInputElement).value,
+		)
+		if (updatedQuantity >= 1 && updatedQuantity <= maxQuantity) {
+			setQuantity(updatedQuantity)
+		}
 	}
 
 	const getAuthorisation = async () => {
@@ -64,7 +67,7 @@ const MintSigned: React.FC = () => {
 	const mint = async () => {
 		setIsLoading(true)
 
-		const options = { value: price * quantity }
+		const options = { value: price }
 
 		const authorisation = await getAuthorisation()
 
@@ -95,13 +98,13 @@ const MintSigned: React.FC = () => {
 						id="quantityInput"
 						onChange={updateQuantity}
 						type="number"
-						defaultValue={1}
+						defaultValue={quantity}
 						min={1}
 						max={maxQuantity}
 					></input>
 					<div>
 						<Button onClick={mint}>
-							Mint {quantity} for {(price / 10 ** 18) * quantity} eth
+							Mint {quantity} for {utils.formatEther(price)} eth
 						</Button>
 						<p>Available until {new Date(expiry).toString()}</p>
 					</div>
