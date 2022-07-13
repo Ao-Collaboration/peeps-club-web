@@ -2,6 +2,7 @@ import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useContext, useEffect, useState } from 'react'
 import FadeTo from '../../components/Scene/FadeTo'
+import WardrobeConfirm from '../../components/Trait/WardrobeConfirm'
 import WardrobeTraitSelector from '../../components/Trait/WardrobeTraitSelector'
 import { host } from '../../config/api'
 import { black } from '../../config/colors'
@@ -43,6 +44,7 @@ function Wardrobe() {
 	const [peepImage, setPeepImage] = useState('')
 	const [isBackgroundDisplayed, setIsBackgroundDisplayed] = useState(true)
 	const [isToggleHidden, setIsToggleHidden] = useState(true)
+	const [isShowingDone, setIsShowingDone] = useState(false)
 
 	useEffect(() => {
 		getPeepImage()
@@ -70,7 +72,8 @@ function Wardrobe() {
 	}
 
 	const changeSelection = (selection: CategorySelection) => {
-		setSelectionString(`${selection}   Selections`)
+		setSelectionString(`${selection}  Selections`)
+		setIsShowingDone(false)
 		switch (selection) {
 		case 'Area':
 			setCurrentTraits(sunIconTraits)
@@ -86,6 +89,11 @@ function Wardrobe() {
 			setIsToggleHidden(false)
 			break
 		}
+	}
+
+	const showDone = () => {
+		setIsShowingDone(true)
+		setSelectionString('')
 	}
 
 	return (
@@ -115,9 +123,18 @@ function Wardrobe() {
 						className={classes.icon}
 						src="/assets/Icon Shirt Asset.svg"
 					/>
+					<img
+						onClick={showDone}
+						className={classes.icon}
+						src="/assets/Icon Tick Asset.svg"
+					/>
 					<span className={classes.title}>{selectionString}</span>
 				</div>
-				<WardrobeTraitSelector categories={currentTraits} />
+				{!isShowingDone ? (
+					<WardrobeTraitSelector categories={currentTraits} />
+				) : (
+					<WardrobeConfirm />
+				)}
 				<div
 					style={{ backgroundImage: `url(${peepImage})` }}
 					className={classes.mirrorPeep}

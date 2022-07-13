@@ -58,9 +58,9 @@ const styles = {
 		fontFamily: headingFontFamily,
 		writingMode: 'sideways-lr',
 		color: peeps_darkblue,
-		fontSize: '2.6em',
-		padding: '1em 0.1em',
-		height: '280px',
+		fontSize: '2.5em',
+		padding: '0.3em 0.1em',
+		height: '260px',
 	},
 	mirrorPeep: {
 		width: '308px',

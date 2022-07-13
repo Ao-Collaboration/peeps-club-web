@@ -1,3 +1,5 @@
+import { host } from '../config/api'
+
 type Mimetypes = 'image/svg+xml'
 
 const doFetch = async (
@@ -10,6 +12,7 @@ const doFetch = async (
 		mode: 'cors',
 		method: method,
 		body: body && JSON.stringify(body),
+		credentials: path.includes(host) ? 'include' : 'omit',
 		headers: {
 			Accept: mimetype || 'application/json',
 		},
