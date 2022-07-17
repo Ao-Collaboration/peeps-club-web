@@ -87,18 +87,22 @@ const Airplane = () => {
 					<SVG src={'/assets/Cloud Button Asset.svg'} />
 					<div className={classes.landingLinks}>
 						{availableDistricts &&
-							availableDistricts.items.map(option => (
-								<a
-									href="#"
-									aria-label={option.name}
-									key={option.name}
-									onClick={() => {
-										startLanding(option.name)
-									}}
-								>
-									{option.name}
-								</a>
-							))}
+							availableDistricts.items
+								.filter(item => {
+									return item.name !== 'None'
+								})
+								.map(option => (
+									<a
+										href="#"
+										aria-label={option.name}
+										key={option.name}
+										onClick={() => {
+											startLanding(option.name)
+										}}
+									>
+										{option.name}
+									</a>
+								))}
 					</div>
 				</div>
 				<div className={`${classes.cloud} ${classes.initialCloud}`}>
