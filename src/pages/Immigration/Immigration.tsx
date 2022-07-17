@@ -22,10 +22,13 @@ function Immigration() {
 	}
 
 	const completePassport = () => {
-		setIsFlipped(true)
-		setInterval(() => {
-			setIsFadeOut(true)
-		}, 4000)
+		const form = document.getElementById('passportForm') as HTMLFormElement
+		if (form.reportValidity()) {
+			setIsFlipped(true)
+			setInterval(() => {
+				setIsFadeOut(true)
+			}, 3000)
+		}
 	}
 
 	const moveToClothing = () => {

@@ -80,13 +80,14 @@ const Passport: React.FC = () => {
 					className={classes.passportPhoto}
 				></div>
 			</div>
-			<div className={classes.passportForm}>
+			<form id="passportForm" className={classes.passportForm}>
 				<h2 className={classes.title}>Peeps Club</h2>
 				<div>
 					<label>Name</label>
 					<input
 						type="text"
 						id="nameInput"
+						required
 						onBlur={() => {
 							updateTraitViaInput('Name', 'nameInput')
 						}}
@@ -95,6 +96,7 @@ const Passport: React.FC = () => {
 				<div>
 					<label>District</label>
 					<select
+						required
 						onChange={() => {
 							updateTraitViaInput('District', 'districtSelect')
 						}}
@@ -118,6 +120,7 @@ const Passport: React.FC = () => {
 						onChange={() => {
 							updateTraitViaInput('Pronouns', 'pronounsSelect')
 						}}
+						required
 						id="pronounsSelect"
 						defaultValue={getSelectedTrait('Pronouns')}
 					>
@@ -132,7 +135,7 @@ const Passport: React.FC = () => {
 					}}
 				/>
 				<p>{getPassportCode()}</p>
-			</div>
+			</form>
 		</div>
 	)
 }
