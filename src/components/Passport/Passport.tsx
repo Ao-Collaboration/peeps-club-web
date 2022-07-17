@@ -82,11 +82,15 @@ const Passport: React.FC = () => {
 						id="districtSelect"
 						defaultValue={getSelectedTrait('District')}
 					>
-						{getDistricts()?.items.map(item => (
-							<option key={item.name} value={item.name}>
-								{item.name}
-							</option>
-						))}
+						{getDistricts()
+							?.items.filter(item => {
+								return item.name !== 'None'
+							})
+							.map(item => (
+								<option key={item.name} value={item.name}>
+									{item.name}
+								</option>
+							))}
 					</select>
 				</div>
 				<div>
