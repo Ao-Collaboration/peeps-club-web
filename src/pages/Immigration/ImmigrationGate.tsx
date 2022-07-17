@@ -28,7 +28,7 @@ function ImmigrationGate() {
 			<img className={classes.topLayer} src="assets/Immigration Desks.svg" />
 			<div className={classes.buttonGroup}>
 				<Button onClick={moveToPassport} className="primary">
-					I have my Passport
+					I'm ready
 				</Button>
 			</div>
 		</div>
