@@ -20,6 +20,7 @@ const TraitSelector: React.FC<Props> = ({ availableTraits }) => {
 		'Eye Colour',
 		'Eye Style',
 		'Eye Outline',
+		'Expression',
 	]
 	const categoryExampleImages = [
 		'Asymmetric Vitiligo',
@@ -30,6 +31,7 @@ const TraitSelector: React.FC<Props> = ({ availableTraits }) => {
 		'Blue',
 		'Bow',
 		'Eyelashes',
+		'Meow',
 	]
 	const [selectedCategoryIndex, setSelectedCategoryIndex] = useState(-1)
 
@@ -81,9 +83,11 @@ const TraitSelector: React.FC<Props> = ({ availableTraits }) => {
 								updateCategory(index)
 							}}
 						>
-							<img
-								src={`/assets/${category}/${categoryExampleImages[index]}.png`}
-							/>
+							<div className={classes.icon}>
+								<img
+									src={`/assets/${category}/${categoryExampleImages[index]}.png`}
+								/>
+							</div>
 							<p>{category}</p>
 						</div>
 					))
@@ -106,9 +110,11 @@ const TraitSelector: React.FC<Props> = ({ availableTraits }) => {
 									updateSelectedTraits(selectedCategoryIndex, item.name)
 								}}
 							>
-								<img
-									src={`/assets/${categories[selectedCategoryIndex]}/${item.name}.png`}
-								/>
+								<div className={classes.icon}>
+									<img
+										src={`/assets/${categories[selectedCategoryIndex]}/${item.name}.png`}
+									/>
+								</div>
 								<p>{item.name}</p>
 							</div>
 						))}

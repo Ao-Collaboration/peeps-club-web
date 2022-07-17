@@ -58,6 +58,15 @@ const styles = {
 		backgroundColor: white,
 		borderRadius: '1em',
 	},
+	icon: {
+		width: '90px',
+		height: '90px',
+		display: 'flex',
+		'& img':{
+			maxWidth: '100%',
+			maxHeight: '100%',
+		}
+	},
 }
 
 export default createUseStyles(styles)
