@@ -5,7 +5,7 @@ function Header() {
 	const classes = useStyles()
 
 	return (
-		<div className={classes.header}>
+		<div aria-hidden className={classes.header}>
 			<span>Peeps Club</span>
 			<ConnectButton />
 		</div>
