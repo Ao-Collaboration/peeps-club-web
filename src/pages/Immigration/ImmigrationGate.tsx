@@ -24,7 +24,7 @@ function ImmigrationGate() {
 
 	const updateSpeechText = async () => {
 		if (currentText.length < speech.length) {
-			await new Promise(r => setTimeout(r, 100))
+			await new Promise(r => setTimeout(r, 50))
 			const newText = currentText + speech[currentText.length]
 			setCurrentText(newText)
 		}

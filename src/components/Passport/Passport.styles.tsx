@@ -54,6 +54,9 @@ const styles = {
 		textTransform: 'uppercase',
 		fontSize: '1.2em',
 	},
+	mono: {
+		fontFamily: 'mono',
+	}
 }
 
 export default createUseStyles(styles)

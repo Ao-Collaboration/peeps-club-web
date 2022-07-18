@@ -5,6 +5,28 @@ export type Trait = {
 	value: string
 }
 
+export const getTrait = (metadata: Trait[], category: CategoryName) => {
+	return metadata.filter(trait => {
+		return trait.trait_type === category
+	})[0].value
+}
+
+export const getTextDescription = (metadata : Trait[]) => {
+	let description = `Looking at your peep's face you see a ${getTrait(metadata, 'Skin')} complexion,`
+	if(getTrait(metadata, 'Skin Condition') !== 'None'){
+		description+= ` with ${getTrait(metadata, 'Skin Condition')}`
+	}
+	description += ` and big ${getTrait(metadata, 'Eye Colour')} ${getTrait(metadata, 'Eye Style')} eyes.`
+	description += ' Their face is framed by their'
+	if(getTrait(metadata, 'Facial Hair') !== 'None'){
+		description+= ` ${getTrait(metadata, 'Facial Hair')} and`
+	}
+	description += ` ${getTrait(metadata, 'Hair Colour')} ${getTrait(metadata, 'Hair')}.`
+	
+	description += ` They have an ${getTrait(metadata, 'Expression')} expression on their face.`
+	return description
+}
+
 export const defaultPeep: Trait[] = [
 	{
 		trait_type: 'Tops',

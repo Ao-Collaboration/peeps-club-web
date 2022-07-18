@@ -42,7 +42,7 @@ const styles = {
 		overflow: 'scroll',
 		'& div': {
 			width: '100%',
-			'& img': {
+			'& input': {
 				width: '80%',
 				margin: 'auto',
 				display: 'block',
@@ -62,7 +62,7 @@ const styles = {
 		width: '90px',
 		height: '90px',
 		display: 'flex',
-		'& img':{
+		'& input':{
 			maxWidth: '100%',
 			maxHeight: '100%',
 		}
