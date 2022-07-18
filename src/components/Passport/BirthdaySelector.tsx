@@ -62,6 +62,7 @@ const BirthdaySelector: React.FC<Props> = ({ onChange }) => {
 					onChange={updateBirthday}
 					defaultValue=""
 					required
+					aria-label="Day"
 				>
 					<option disabled hidden value="">
 						Day
@@ -77,6 +78,7 @@ const BirthdaySelector: React.FC<Props> = ({ onChange }) => {
 					onChange={updateBirthday}
 					defaultValue=""
 					required
+					aria-label="Month"
 				>
 					<option disabled hidden value="">
 						Month

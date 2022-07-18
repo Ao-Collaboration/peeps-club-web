@@ -26,6 +26,9 @@ const styles = {
 		textAlign: 'center',
 		display: 'inline-block',
 		outline: 'none',
+		'&:focus': {
+			boxShadow: '0px 0px 3px 3px #777777',
+		},
 	},
 	button: {
 		composes: '$base',
@@ -48,9 +51,6 @@ const styles = {
 		color: off_white,
 		'&:hover': {
 			color: white,
-		},
-		'&:focus': {
-			boxShadow: '0px 0px 3px 3px #777777',
 		},
 	},
 	secondary: {

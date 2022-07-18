@@ -101,6 +101,9 @@ const styles = {
 		padding: '0.2em',
 		textAlign: 'right',
 		cursor: 'pointer',
+		background: 'none',
+		border: 'none',
+		display: 'block',
 	},
 	selected: {
 		outline: `2px solid ${peepBlue}`,
@@ -147,6 +150,8 @@ const styles = {
 		backgroundPosition: 'center',
 	},
 	hangerTextBase: {
+		background: 'none',
+		border: 'none',
 		position: 'absolute',
 		display: 'flex',
 		width: '80%',

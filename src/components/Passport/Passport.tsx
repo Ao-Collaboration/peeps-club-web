@@ -3,7 +3,7 @@ import { host } from '../../config/api'
 import { MetadataContext } from '../../context/Metadata/MetadataContext'
 import { ProfileContext } from '../../context/Profile/ProfileContext'
 import { CategoryName } from '../../interface/availableTraits'
-import { getTextDescription } from '../../interface/metadata'
+import { getTopDescription } from '../../interface/metadata'
 import doFetch from '../../utils/doFetch'
 import BirthdaySelector from './BirthdaySelector'
 import useStyles from './Passport.styles'
@@ -77,8 +77,8 @@ const Passport: React.FC = () => {
 			<div>
 				<p className={classes.text}>Passport</p>
 				<div
-					title={getTextDescription(metadata)}
-					aria-label={getTextDescription(metadata)}
+					title={getTopDescription(metadata)}
+					aria-label={getTopDescription(metadata)}
 					style={{ backgroundImage: `url(${peepImage})` }}
 					className={classes.passportPhoto}
 				></div>
@@ -137,7 +137,9 @@ const Passport: React.FC = () => {
 						updateTrait('Birthday', birthday)
 					}}
 				/>
-				<p className={classes.mono}>{getPassportCode()}</p>
+				<p aria-label="Passport Number" className={classes.mono}>
+					{getPassportCode()}
+				</p>
 			</form>
 		</div>
 	)

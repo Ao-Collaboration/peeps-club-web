@@ -86,6 +86,7 @@ const styles = {
 		zIndex: '-1000',
 	},
 	backgroundToggle: {
+		border: 'none',
 		zIndex: 1000,
 		position: 'relative',
 		color: white,

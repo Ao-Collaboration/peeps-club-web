@@ -52,10 +52,12 @@ function Immigration() {
 				{isFlipped && (
 					<>
 						<img
+							aria-hidden
 							className={`${classes.arm} ${classes.stampPosition} ${classes.stampArmAnimation}`}
 							src={'/assets/stamp_arm.svg'}
 						/>
 						<img
+							aria-hidden
 							className={`${classes.stamp} ${classes.stampPosition} ${classes.stampAnimation}`}
 							src={'/assets/stamp.svg'}
 						/>
@@ -74,8 +76,9 @@ function Immigration() {
 						</div>
 					)}
 					<div className={classes.passportContainer}>
-						<img src={'/assets/passport_top.svg'} />
+						<img aria-hidden src={'/assets/passport_top.svg'} />
 						<img
+							aria-hidden
 							id="pageToFlip"
 							className={`${classes.pageToFlip} ${
 								isFlipped && classes.flipAnimation
@@ -83,10 +86,14 @@ function Immigration() {
 							src={'/assets/passport_page.svg'}
 						/>
 						<div className={classes.bottom}>
-							<img src={'/assets/passport_mid.svg'} />
+							<img aria-hidden src={'/assets/passport_mid.svg'} />
 							{metadata && <Passport />}
 						</div>
-						<img className={classes.hands} src={'/assets/passport_hands.svg'} />
+						<img
+							aria-hidden
+							className={classes.hands}
+							src={'/assets/passport_hands.svg'}
+						/>
 						<div className={classes.buttonGroup}>
 							{!isFlipped && (
 								<Button onClick={completePassport} className="primary">
