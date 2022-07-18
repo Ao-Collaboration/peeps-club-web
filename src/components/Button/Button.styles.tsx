@@ -49,6 +49,9 @@ const styles = {
 		'&:hover': {
 			color: white,
 		},
+		'&:focus': {
+			boxShadow: '0px 0px 3px 3px #777777',
+		},
 	},
 	secondary: {
 		composes: '$button',

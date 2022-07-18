@@ -45,7 +45,10 @@ function Immigration() {
 				isFadeOut={isFadeOut}
 				isFading={true}
 			/>
-			<div className={classes.page}>
+			<div
+				className={classes.page}
+				aria-description="You walk towards the immigration gates"
+			>
 				{isFlipped && (
 					<>
 						<img
