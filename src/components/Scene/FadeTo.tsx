@@ -23,6 +23,7 @@ const FadeTo: React.FC<Props> = ({
 
 	return (
 		<div
+			aria-hidden
 			className={`${classes.fadeTo} ${isFading ? animation : ''}`}
 			onAnimationEnd={onAnimationEnd}
 		></div>

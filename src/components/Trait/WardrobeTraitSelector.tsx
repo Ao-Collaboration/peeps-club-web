@@ -282,7 +282,7 @@ const WardrobeTraitSelector: React.FC<Props> = ({ categories }) => {
 				className={`${classes.hanger}  ${classes.fadeInHangars}`}
 				key={`${category}-${traitName}`}
 			>
-				<div
+				<button
 					className={`${classes.hangerText} ${
 						traitName === getSelectedTrait(category) ? classes.underlined : ''
 					}`}
@@ -290,14 +290,17 @@ const WardrobeTraitSelector: React.FC<Props> = ({ categories }) => {
 						!isDisabled(exclusions, trait, category) &&
 							selectTraitHangar(trait, category, exclusions)
 					}}
+					aria-disabled={isDisabled(exclusions, trait, category)}
+					aria-label={traitName}
 				>
 					<div
+						aria-hidden
 						style={{
 							backgroundImage: `url("/assets/${category}/${traitName}.png")`,
 						}}
 						className={classes.icon}
 					></div>
-					<p>{traitName}</p>
+					<p aria-hidden>{traitName}</p>
 
 					{exclusions.length > 0 && traitName !== getSelectedTrait(category) && (
 						<div className={classes.exclusion}>
@@ -317,8 +320,9 @@ const WardrobeTraitSelector: React.FC<Props> = ({ categories }) => {
 							</div>
 						</div>
 					)}
-				</div>
+				</button>
 				<img
+					aria-hidden
 					className={`${classes.hangerImage} ${
 						isDisabled(exclusions, trait, category) && classes.disabled
 					}`}
@@ -339,14 +343,17 @@ const WardrobeTraitSelector: React.FC<Props> = ({ categories }) => {
 			)}
 			<div className={classes.container}>
 				<img
+					aria-hidden
 					src="/assets/wardrobe_rear.svg"
 					className={classes.wardrobeContainer}
 				/>
 				<img
+					aria-hidden
 					src="/assets/wardrobe_front.svg"
 					className={classes.wardrobeContainerFront}
 				/>
 				<img
+					aria-hidden
 					src="/assets/wardrobe_door.svg"
 					className={`${classes.wardrobeDoor} ${
 						isWardrobeOpen ? classes.openWardrobe : classes.closeWardrobe
@@ -354,7 +361,7 @@ const WardrobeTraitSelector: React.FC<Props> = ({ categories }) => {
 				/>
 				<div className={classes.doorpanel}>
 					{categories.map((categoryName, index) => (
-						<div
+						<button
 							onClick={() => {
 								updateCategory(index)
 							}}
@@ -364,7 +371,7 @@ const WardrobeTraitSelector: React.FC<Props> = ({ categories }) => {
 							key={categoryName}
 						>
 							{categoryName}
-						</div>
+						</button>
 					))}
 					{showClothingException() && (
 						<div className={classes.exclusionTips}>
@@ -381,14 +388,13 @@ const WardrobeTraitSelector: React.FC<Props> = ({ categories }) => {
 					{selectedCategoryIndex >= 0 && categories[selectedCategoryIndex] && (
 						<>
 							{selectableTraits.map(item => traitHangar(item))}
-							<div
-								key={selectedCategoryIndex}
-								className={`${classes.hanger}  ${classes.fadeInHangars}`}
-								onClick={() => {
-									setIsRequestDisplayed(true)
-								}}
-							>
-								<img
+							<div className={`${classes.hanger}  ${classes.fadeInHangars}`}>
+								<input
+									type="image"
+									onClick={() => {
+										setIsRequestDisplayed(true)
+									}}
+									aria-label="Request a new trait"
 									className={`${classes.shoppingImage}`}
 									src={'/assets/Shopping Bag Asset.svg'}
 								/>

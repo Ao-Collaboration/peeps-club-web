@@ -137,12 +137,8 @@ const styles = {
 			width: '30vw',
 		},
 		cursor: 'pointer',
-		'&:hover $landingLinks': {
-			display: 'block',
-		},
 	},
 	landingLinks: {
-		display: 'none',
 		borderRadius: '0 0 2em 2em',
 		backgroundColor: white,
 		width: '60%',
@@ -159,6 +155,10 @@ const styles = {
 				borderRadius: '0 0 2em 2em',
 			},
 			'&:hover': {
+				backgroundColor: peepBlue,
+				color: 'white',
+			},
+			'&:focus': {
 				backgroundColor: peepBlue,
 				color: 'white',
 			},

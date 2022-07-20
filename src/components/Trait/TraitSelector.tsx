@@ -64,6 +64,7 @@ const TraitSelector: React.FC<Props> = ({ availableTraits }) => {
 				) : (
 					<>
 						<button
+							aria-label="Back"
 							onClick={() => {
 								setSelectedCategoryIndex(-1)
 							}}
@@ -77,18 +78,18 @@ const TraitSelector: React.FC<Props> = ({ availableTraits }) => {
 			<div className={classes.thumbnails}>
 				{selectedCategoryIndex < 0
 					? categories.map((category, index) => (
-						<div
-							key={category}
-							onClick={() => {
-								updateCategory(index)
-							}}
-						>
+						<div key={category}>
 							<div className={classes.icon}>
-								<img
+								<input
+									type="image"
+									onClick={() => {
+										updateCategory(index)
+									}}
+									aria-label={category}
 									src={`/assets/${category}/${categoryExampleImages[index]}.png`}
 								/>
 							</div>
-							<p>{category}</p>
+							<p aria-hidden>{category}</p>
 						</div>
 					))
 					: availableTraits
@@ -106,16 +107,18 @@ const TraitSelector: React.FC<Props> = ({ availableTraits }) => {
 										? classes.selected
 										: ''
 								}
-								onClick={() => {
-									updateSelectedTraits(selectedCategoryIndex, item.name)
-								}}
 							>
 								<div className={classes.icon}>
-									<img
+									<input
+										type="image"
+										onClick={() => {
+											updateSelectedTraits(selectedCategoryIndex, item.name)
+										}}
+										aria-label={item.name}
 										src={`/assets/${categories[selectedCategoryIndex]}/${item.name}.png`}
 									/>
 								</div>
-								<p>{item.name}</p>
+								<p aria-hidden>{item.name}</p>
 							</div>
 						))}
 			</div>

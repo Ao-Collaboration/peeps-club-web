@@ -12,6 +12,7 @@ const Airplane = () => {
 	const classes = useStyles()
 	const [isLanding, setIsLanding] = useState(false)
 	const [isFading, setisFading] = useState(false)
+	const [showList, setShowList] = useState(false)
 	const [availableDistricts, setAvailableDistricts] = useState<Category>()
 	const { metadata, setMetadata, availableTraits } = useContext(MetadataContext)
 	const navigate = useNavigate()
@@ -54,23 +55,27 @@ const Airplane = () => {
 	return (
 		<>
 			<FadeTo color={black} isFading={isFading} onAnimationEnd={isDone} />
-			<div className={classes.airplaneBackground}>
-				<div className={`${classes.cloud} ${classes.initialCloud}`}>
+			<div
+				className={classes.airplaneBackground}
+				aria-description="A plane flies through the sky.."
+			>
+				<div aria-hidden className={`${classes.cloud} ${classes.initialCloud}`}>
 					<SVG src={'/assets/Cloud 1 Asset.svg'} />
 				</div>
-				<div className={`${classes.cloud} ${classes.firstCloud}`}>
+				<div aria-hidden className={`${classes.cloud} ${classes.firstCloud}`}>
 					<SVG src={'/assets/Cloud 1 Asset.svg'} />
 				</div>
-				<div className={`${classes.cloud} ${classes.secondCloud}`}>
+				<div aria-hidden className={`${classes.cloud} ${classes.secondCloud}`}>
 					<SVG src={'/assets/Cloud 2 Asset.svg'} />
 				</div>
-				<div className={`${classes.cloud} ${classes.thirdCloud}`}>
+				<div aria-hidden className={`${classes.cloud} ${classes.thirdCloud}`}>
 					<SVG src={'/assets/Cloud 3 Asset.svg'} />
 				</div>
-				<div className={`${classes.cloud} ${classes.fourthCloud}`}>
+				<div aria-hidden className={`${classes.cloud} ${classes.fourthCloud}`}>
 					<SVG src={'/assets/Cloud 4 Asset.svg'} />
 				</div>
 				<div
+					aria-hidden
 					className={`${classes.airplane} ${
 						isLanding ? classes.landAnimation : classes.floatAnimation
 					}`}
@@ -79,33 +84,44 @@ const Airplane = () => {
 					<SVG src={'/assets/Plane Asset.svg'} />
 				</div>
 				<div
-					aria-label="Land the Plane"
 					className={`${classes.land} ${
 						isLanding ? classes.pullAwayAnimation : ''
 					}`}
 				>
-					<SVG src={'/assets/Cloud Button Asset.svg'} />
-					<div className={classes.landingLinks}>
-						{availableDistricts &&
-							availableDistricts.items
-								.filter(item => {
-									return item.name !== 'None'
-								})
-								.map(option => (
-									<a
-										href="#"
-										aria-label={option.name}
-										key={option.name}
-										onClick={() => {
-											startLanding(option.name)
-										}}
-									>
-										{option.name}
-									</a>
-								))}
-					</div>
+					<input
+						type="image"
+						aria-haspopup="true"
+						aria-expanded={showList}
+						src={'/assets/Cloud Button Asset.svg'}
+						alt="ready to land"
+						onClick={() => {
+							setShowList(!showList)
+						}}
+					/>
+					{showList && (
+						<div className={classes.landingLinks}>
+							{availableDistricts &&
+								availableDistricts.items
+									.filter(item => {
+										return item.name !== 'None'
+									})
+									.map(option => (
+										<a
+											href="#"
+											tabIndex={0}
+											aria-label={option.name}
+											key={option.name}
+											onClick={() => {
+												startLanding(option.name)
+											}}
+										>
+											{option.name}
+										</a>
+									))}
+						</div>
+					)}
 				</div>
-				<div className={`${classes.cloud} ${classes.initialCloud}`}>
+				<div aria-hidden className={`${classes.cloud} ${classes.initialCloud}`}>
 					<SVG src={'/assets/Cloud 1 Asset.svg'} />
 				</div>
 			</div>

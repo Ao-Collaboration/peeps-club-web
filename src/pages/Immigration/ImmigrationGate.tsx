@@ -24,31 +24,44 @@ function ImmigrationGate() {
 
 	const updateSpeechText = async () => {
 		if (currentText.length < speech.length) {
-			await new Promise(r => setTimeout(r, 100))
+			await new Promise(r => setTimeout(r, 50))
 			const newText = currentText + speech[currentText.length]
 			setCurrentText(newText)
 		}
 	}
 
 	return (
-		<div className={classes.page}>
+		<>
 			<FadeTo color={black} isFadeOut={false} isFading={true} />
-			<div className={classes.gate}>
-				<div className={classes.speech}>
-					<h2>{currentText}</h2>
+			<div
+				className={classes.page}
+				aria-description="You approach the immigration officer"
+			>
+				<div className={classes.gate}>
+					<div className={classes.speech}>
+						<h2>{currentText}</h2>
+					</div>
+					<img aria-hidden src="assets/Immigration Room.svg" />
+					<img
+						aria-hidden
+						className={classes.officer}
+						src="assets/Immigration Officer.svg"
+					/>
 				</div>
-				<img src="assets/Immigration Room.svg" />
-				<img className={classes.officer} src="assets/Immigration Officer.svg" />
+				<img
+					aria-hidden
+					className={classes.topLayer}
+					src="assets/Immigration Desks.svg"
+				/>
+				{currentText.length === speech.length && (
+					<div className={classes.buttonGroup}>
+						<Button onClick={moveToPassport} className="primary">
+							I'm ready
+						</Button>
+					</div>
+				)}
 			</div>
-			<img className={classes.topLayer} src="assets/Immigration Desks.svg" />
-			{currentText.length === speech.length && (
-				<div className={classes.buttonGroup}>
-					<Button onClick={moveToPassport} className="primary">
-						I'm ready
-					</Button>
-				</div>
-			)}
-		</div>
+		</>
 	)
 }
 

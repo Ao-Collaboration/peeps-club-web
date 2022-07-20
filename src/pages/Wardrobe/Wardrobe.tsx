@@ -8,7 +8,7 @@ import { host } from '../../config/api'
 import { black } from '../../config/colors'
 import { MetadataContext } from '../../context/Metadata/MetadataContext'
 import { CategoryName } from '../../interface/availableTraits'
-import { Trait } from '../../interface/metadata'
+import { getFullDescription, Trait } from '../../interface/metadata'
 import doFetch from '../../utils/doFetch'
 import useStyles from './Wardrobe.styles'
 
@@ -45,6 +45,10 @@ function Wardrobe() {
 	const [isBackgroundDisplayed, setIsBackgroundDisplayed] = useState(true)
 	const [isToggleHidden, setIsToggleHidden] = useState(true)
 	const [isShowingDone, setIsShowingDone] = useState(false)
+
+	if (!metadata) {
+		return <></>
+	}
 
 	useEffect(() => {
 		getPeepImage()
@@ -99,36 +103,46 @@ function Wardrobe() {
 	return (
 		<>
 			<FadeTo color={black} isFadeOut={false} isFading={true} />
-			<div className={classes.page}></div>
+			<div aria-hidden className={classes.page}></div>
 			<div className={classes.container}>
 				<div className={classes.navpanel}>
-					<img
+					<input
+						type="image"
 						onClick={() => {
 							changeSelection('Area')
 						}}
 						className={classes.icon}
 						src="/assets/Icon Sun Asset.svg"
+						aria-label="Area Trait Selection"
 					/>
-					<img
+					<input
+						type="image"
 						onClick={() => {
 							changeSelection('Peep')
 						}}
 						className={classes.icon}
 						src="/assets/Icon Person Asset.svg"
+						aria-label="Peep Trait Selection"
 					/>
-					<img
+					<input
+						type="image"
 						onClick={() => {
 							changeSelection('Outfit')
 						}}
 						className={classes.icon}
 						src="/assets/Icon Shirt Asset.svg"
+						aria-label="Outfit Selection"
 					/>
-					<img
+					<input
+						type="image"
 						onClick={showDone}
 						className={classes.icon}
 						src="/assets/Icon Tick Asset.svg"
+						aria-label="Done?"
 					/>
-					<span className={classes.title}>{selectionString}</span>
+					<span aria-hidden className={classes.title}>
+						{selectionString}
+					</span>
 				</div>
 				{!isShowingDone ? (
 					<WardrobeTraitSelector categories={currentTraits} />
@@ -136,19 +150,32 @@ function Wardrobe() {
 					<WardrobeConfirm />
 				)}
 				<div
+					aria-label={`${getFullDescription(metadata)}`}
 					style={{ backgroundImage: `url(${peepImage})` }}
 					className={classes.mirrorPeep}
 				>
-					<img src="/assets/mirror.svg" className={classes.mirrorRear} />
-					<img src="/assets/mirror_front.svg" className={classes.mirrorFront} />
+					<img
+						aria-hidden
+						src="/assets/mirror.svg"
+						className={classes.mirrorRear}
+					/>
+					<img
+						aria-hidden
+						src="/assets/mirror_front.svg"
+						className={classes.mirrorFront}
+					/>
 					{!isToggleHidden && (
-						<FontAwesomeIcon
-							icon={isBackgroundDisplayed ? faEyeSlash : faEye}
+						<button
 							onClick={() => {
 								setIsBackgroundDisplayed(!isBackgroundDisplayed)
 							}}
 							className={classes.backgroundToggle}
-						/>
+							aria-label="Toggle Background Display on Peep"
+						>
+							<FontAwesomeIcon
+								icon={isBackgroundDisplayed ? faEyeSlash : faEye}
+							/>
+						</button>
 					)}
 				</div>
 			</div>
