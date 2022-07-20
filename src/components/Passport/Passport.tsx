@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from 'react'
 import { host } from '../../config/api'
 import { MetadataContext } from '../../context/Metadata/MetadataContext'
+import { ProfileContext } from '../../context/Profile/ProfileContext'
 import { CategoryName } from '../../interface/availableTraits'
 import doFetch from '../../utils/doFetch'
 import BirthdaySelector from './BirthdaySelector'
@@ -9,11 +10,12 @@ import useStyles from './Passport.styles'
 const Passport: React.FC = () => {
 	const { metadata, setMetadata, availableTraits, getSelectedTrait } =
 		useContext(MetadataContext)
+	const { profile } = useContext(ProfileContext)
 	const [peepImage, setPeepImage] = useState('')
 
 	const classes = useStyles()
 
-	if (!metadata || !setMetadata || !getSelectedTrait) {
+	if (!metadata || !setMetadata || !getSelectedTrait || !profile) {
 		return <></>
 	}
 
@@ -52,6 +54,23 @@ const Passport: React.FC = () => {
 		updateTrait(category, input.value)
 	}
 
+	const getPassportCode = () => {
+		if (!profile.id) {
+			return 'P<PC#####<####<######'
+		}
+		// 5 4 10
+		const id = profile.id?.toString()
+		const l = id.length
+		let code = 'P<PC<'
+		code += id.slice(l - 19, l - 19 + 5)
+		code += '<'
+		code += id.slice(l - 14, l - 14 + 4)
+		code += '<'
+		code += id.slice(-10)
+		code += '<<'
+		return code
+	}
+
 	return (
 		<div className={classes.container}>
 			<div>
@@ -61,13 +80,14 @@ const Passport: React.FC = () => {
 					className={classes.passportPhoto}
 				></div>
 			</div>
-			<div className={classes.passportForm}>
+			<form id="passportForm" className={classes.passportForm}>
 				<h2 className={classes.title}>Peeps Club</h2>
 				<div>
 					<label>Name</label>
 					<input
 						type="text"
 						id="nameInput"
+						required
 						onBlur={() => {
 							updateTraitViaInput('Name', 'nameInput')
 						}}
@@ -76,17 +96,22 @@ const Passport: React.FC = () => {
 				<div>
 					<label>District</label>
 					<select
+						required
 						onChange={() => {
 							updateTraitViaInput('District', 'districtSelect')
 						}}
 						id="districtSelect"
 						defaultValue={getSelectedTrait('District')}
 					>
-						{getDistricts()?.items.map(item => (
-							<option key={item.name} value={item.name}>
-								{item.name}
-							</option>
-						))}
+						{getDistricts()
+							?.items.filter(item => {
+								return item.name !== 'None'
+							})
+							.map(item => (
+								<option key={item.name} value={item.name}>
+									{item.name}
+								</option>
+							))}
 					</select>
 				</div>
 				<div>
@@ -95,6 +120,7 @@ const Passport: React.FC = () => {
 						onChange={() => {
 							updateTraitViaInput('Pronouns', 'pronounsSelect')
 						}}
+						required
 						id="pronounsSelect"
 						defaultValue={getSelectedTrait('Pronouns')}
 					>
@@ -108,8 +134,8 @@ const Passport: React.FC = () => {
 						updateTrait('Birthday', birthday)
 					}}
 				/>
-				<p>{'P<PC#####<####<######'}</p>
-			</div>
+				<p>{getPassportCode()}</p>
+			</form>
 		</div>
 	)
 }

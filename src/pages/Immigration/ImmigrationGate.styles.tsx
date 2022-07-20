@@ -46,7 +46,8 @@ const styles = {
 		width: '20em',
 		borderRadius: '2em 2em 2em 0em',
 		textAlign: 'center',
-		fontSize: '1.5em',
+		fontSize: '1.4em',
+		padding: '0.5em',
 		'& h2': {
 			fontFamily: headingFontFamily,
 		},
@@ -61,8 +62,8 @@ const styles = {
 	},
 	buttonGroup: {
 		position: 'absolute',
-		bottom: '5%',
-		left: '50%',
+		top: '55%',
+		right: '12%',
 		transform: 'translate(-50%, -50%)',
 		zIndex: '500',
 	},
