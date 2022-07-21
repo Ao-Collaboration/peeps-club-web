@@ -9,7 +9,11 @@ import { host } from '../../config/api'
 import Button from '../Button/Button'
 import { defaultLoadingMessage } from '../../config/text'
 
-const MintSigned: React.FC = () => {
+interface Props {
+	onMint: () => void
+}
+
+const MintSigned: React.FC<Props> = ({ onMint }) => {
 	const [quantity, setQuantity] = useState(1)
 	const [price, setPrice] = useState(0)
 	const [expiry, setExpiry] = useState(0)
@@ -83,6 +87,7 @@ const MintSigned: React.FC = () => {
 			setLoadingMessage('Processing transaction ' + tx.hash)
 			await tx.wait()
 			setLoadingMessage(defaultLoadingMessage)
+			onMint()
 		} finally {
 			setIsLoading(false)
 		}

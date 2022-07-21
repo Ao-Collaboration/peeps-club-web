@@ -1,19 +1,38 @@
-import { useContext, useEffect } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { BigNumber, ethers } from 'ethers'
+import { useContext, useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import Button from '../../components/Button/Button'
 import { host } from '../../config/api'
+import { passportContractId } from '../../config/contract'
 import { ProfileContext } from '../../context/Profile/ProfileContext'
 import { Web3Context } from '../../context/Web3/Web3Context'
 import doFetch from '../../utils/doFetch'
-import { AirplaneRoute, MintRoute } from '../routes'
+import { AirplaneRoute } from '../routes'
+import passportABI from '../../abi/passportABI.json'
+import { SaleInfo } from '../../interface/saleInfo'
+import MintPublic from '../../components/Mint/MintPublic'
+import MintSigned from '../../components/Mint/MintSigned'
+import { defaultLoadingMessage } from '../../config/text'
 
 function Home() {
 	const { profile, setProfile } = useContext(ProfileContext)
 	const { web3Provider } = useContext(Web3Context)
 
-	const navigate = useNavigate()
+	const [isLoading, setIsLoading] = useState(false)
+	const [saleInfo, setSaleInfo] = useState<SaleInfo | null>(null)
+	const [isPublicSaleActive, setPublicSaleActive] = useState(false)
+	const [publicTokensLeft, setPublicTokensLeft] = useState(0)
+	const [ownsPassport, setOwnsPassport] = useState(false)
 
-	if (!profile || !setProfile || !web3Provider) {
+	const navigate = useNavigate()
+	const signer = web3Provider?.getSigner()
+	const passportContract = new ethers.Contract(
+		passportContractId,
+		passportABI,
+		signer,
+	)
+
+	if (!profile || !setProfile || !web3Provider || !signer) {
 		return <></>
 	}
 
@@ -40,24 +59,64 @@ function Home() {
 
 	const signMessage = async () => {
 		const message = await getMessage()
-		const signer = web3Provider.getSigner()
 
 		const signature = await signer.signMessage(message)
 
 		await confirmOwnership(signature)
 	}
 
+	const getSaleInfo = async () => {
+		setIsLoading(true)
+		const saleInfo = new SaleInfo(await passportContract.saleInfo())
+		setSaleInfo(saleInfo)
+
+		const now = Math.floor(Date.now() / 1000)
+		setPublicSaleActive(saleInfo.endTimestamp > now)
+		setPublicTokensLeft(saleInfo.maxMint - saleInfo.totalMinted)
+
+		setIsLoading(false)
+	}
+
+	const getOwnsPassport = async () => {
+		const tokenCount = await passportContract.balanceOf(
+			await signer.getAddress(),
+			0,
+		)
+		if (tokenCount > 0) {
+			await getMessage()
+			setOwnsPassport(true)
+		}
+	}
+
 	useEffect(() => {
-		getMessage()
+		getSaleInfo()
+		getOwnsPassport()
 	}, [])
 
 	return (
 		<>
-			<Button onClick={signMessage}>
-				I have a passport, let's make a peep!
-			</Button>
+			{!isLoading ? (
+				<div>
+					{isPublicSaleActive && saleInfo ? (
+						<MintPublic
+							txLimit={saleInfo.txLimit}
+							tokensLeft={publicTokensLeft}
+							price={BigNumber.from(saleInfo.tokenPrice)}
+							onMint={getOwnsPassport}
+						/>
+					) : (
+						<MintSigned onMint={getOwnsPassport} />
+					)}
+				</div>
+			) : (
+				<p>{defaultLoadingMessage}</p>
+			)}
 
-			<Link to={MintRoute.path}>Mint a passport</Link>
+			{ownsPassport && (
+				<Button onClick={signMessage}>
+					I have a passport, let's make a peep!
+				</Button>
+			)}
 		</>
 	)
 }

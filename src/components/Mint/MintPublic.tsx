@@ -10,9 +10,15 @@ interface Props {
 	price: BigNumber
 	txLimit: number
 	tokensLeft: number
+	onMint: () => void
 }
 
-const MintPublic: React.FC<Props> = ({ price, txLimit, tokensLeft }) => {
+const MintPublic: React.FC<Props> = ({
+	price,
+	txLimit,
+	tokensLeft,
+	onMint,
+}) => {
 	const [quantity, setQuantity] = useState(1)
 	const [isLoading, setIsLoading] = useState(false)
 	const [isMintDone, setIsMintDone] = useState(false)
@@ -53,6 +59,7 @@ const MintPublic: React.FC<Props> = ({ price, txLimit, tokensLeft }) => {
 			await tx.wait()
 			setLoadingMessage(defaultLoadingMessage)
 			setIsMintDone(true)
+			onMint()
 		} finally {
 			setIsLoading(false)
 		}
@@ -64,28 +71,26 @@ const MintPublic: React.FC<Props> = ({ price, txLimit, tokensLeft }) => {
 				<p>{loadingMessage}</p>
 			) : (
 				<>
-					{isMintDone ? (
+					<>
+						<input
+							id="quantityInput"
+							onChange={updateQuantity}
+							type="number"
+							defaultValue={1}
+							min={1}
+							max={Math.min(txLimit, tokensLeft)}
+						></input>
+						<div>
+							<Button onClick={mint}>
+								Mint {quantity} for {utils.formatEther(price.mul(quantity))} eth
+							</Button>
+						</div>
+					</>
+					{isMintDone && (
 						<p>
 							Congrats you minted {quantity} Passport for{' '}
 							{utils.formatEther(price.mul(quantity))} eth
 						</p>
-					) : (
-						<>
-							<input
-								id="quantityInput"
-								onChange={updateQuantity}
-								type="number"
-								defaultValue={1}
-								min={1}
-								max={Math.min(txLimit, tokensLeft)}
-							></input>
-							<div>
-								<Button onClick={mint}>
-									Mint {quantity} for {utils.formatEther(price.mul(quantity))}{' '}
-									eth
-								</Button>
-							</div>
-						</>
 					)}
 				</>
 			)}
