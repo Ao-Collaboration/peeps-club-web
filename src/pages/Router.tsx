@@ -5,7 +5,6 @@ import {
 	ImmigrationGateRoute,
 	ImmigrationIntroRoute,
 	ImmigrationRoute,
-	MintRoute,
 	WardrobeRoute,
 } from './routes'
 import Home from './Home/Home'
@@ -18,7 +17,6 @@ import Header from '../components/Header/Header'
 import Wardrobe from './Wardrobe/Wardrobe'
 import ImmigrationIntro from './Immigration/ImmigrationIntro'
 import ImmigrationGate from './Immigration/ImmigrationGate'
-import Mint from './Mint/Mint'
 import { ProfileContext } from '../context/Profile/ProfileContext'
 
 function Router() {
@@ -35,7 +33,6 @@ function Router() {
 			<BrowserRouter>
 				<Routes>
 					<Route path={HomeRoute.path} element={<Home />} />
-					<Route path={MintRoute.path} element={<Mint />} />
 					{profile?.id && (
 						<>
 							<Route path={AirplaneRoute.path} element={<Airplane />} />
