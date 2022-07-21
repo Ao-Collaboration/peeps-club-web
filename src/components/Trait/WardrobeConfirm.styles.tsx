@@ -1,11 +1,4 @@
 import { createUseStyles } from 'react-jss'
-import {
-	black,
-	peepBlue,
-	peeps_darkblue,
-	red,
-	white,
-} from '../../config/colors'
 import { standardFontFamily } from '../../config/jss-vars'
 
 const styles = {

@@ -32,7 +32,8 @@ const WardrobeConfirm = () => {
 
 	const mintPeep = async () => {
 		setIsLoading(true)
-		const response = await doFetch(`${host}/mint/peep/authorise/`, 'POST')
+		const req = { attributes: metadata }
+		const response = await doFetch(`${host}/mint/peep/authorise/`, 'POST', req)
 
 		try {
 			const tx: ContractTransaction = await peepsContract.passportMint(
