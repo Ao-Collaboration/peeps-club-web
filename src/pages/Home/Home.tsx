@@ -13,8 +13,13 @@ import { SaleInfo } from '../../interface/saleInfo'
 import MintPublic from '../../components/Mint/MintPublic'
 import MintSigned from '../../components/Mint/MintSigned'
 import { defaultLoadingMessage } from '../../config/text'
+import useStyles from './Home.styles'
+import Spinner from '../../components/Spinner/Spinner'
+
+type ScreenType = 'walletConnect' | 'passportCheck' | 'mint'
 
 function Home() {
+	const classes = useStyles()
 	const { profile, setProfile } = useContext(ProfileContext)
 	const { web3Provider } = useContext(Web3Context)
 
@@ -22,7 +27,8 @@ function Home() {
 	const [saleInfo, setSaleInfo] = useState<SaleInfo | null>(null)
 	const [isPublicSaleActive, setPublicSaleActive] = useState(false)
 	const [publicTokensLeft, setPublicTokensLeft] = useState(0)
-	const [ownsPassport, setOwnsPassport] = useState(false)
+	const [passportsOwned, setPassportsOwned] = useState(0)
+	const [screen, setScreen] = useState<ScreenType>('passportCheck')
 
 	const navigate = useNavigate()
 	const signer = web3Provider?.getSigner()
@@ -78,13 +84,95 @@ function Home() {
 	}
 
 	const getOwnsPassport = async () => {
+		setScreen('passportCheck')
 		const tokenCount = await passportContract.balanceOf(
 			await signer.getAddress(),
 			0,
 		)
 		if (tokenCount > 0) {
 			await getMessage()
-			setOwnsPassport(true)
+			setPassportsOwned(tokenCount)
+		}
+	}
+
+	const getRemainingTime = () => {
+		if (!saleInfo?.endTimestamp) {
+			return
+		}
+		const left = saleInfo.endTimestamp - Math.floor(Date.now() / 1000)
+		const hours = Math.floor(left / 60 / 60)
+		const minutes = Math.floor((left - hours * 60 * 60) / 60)
+
+		return `${hours}h ${minutes}m`
+	}
+
+	const getPreMintDisplay = () => {
+		return (
+			<>
+				<h2 className={classes.title}>PEEPS AIRLINE BOARDING NOW</h2>
+				<p className={classes.text}>Gates close in {getRemainingTime()}</p>
+				<ul className={classes.list}>
+					<li>Oven switched Off</li>
+					<li>Keys</li>
+					<li>Luggage</li>
+					<li>Ticket</li>
+					<li>Phew... Wallet</li>
+					<li>PASSPORT?!</li>
+				</ul>
+				<div className={classes.buttonGroup}>
+					<Button
+						onClick={() => {
+							setScreen('mint')
+						}}
+						className="blue"
+					>
+						Purchase Passport
+					</Button>
+					{passportsOwned > 0 && (
+						<Button onClick={signMessage} className="blue">
+							{passportsOwned.toString()} Passports Ready!
+						</Button>
+					)}
+				</div>
+			</>
+		)
+	}
+
+	const getMintDisplay = () => {
+		return (
+			<>
+				{!isLoading ? (
+					<>
+						{isPublicSaleActive && saleInfo ? (
+							<MintPublic
+								txLimit={saleInfo.txLimit}
+								tokensLeft={publicTokensLeft}
+								price={BigNumber.from(saleInfo.tokenPrice)}
+								onMint={getOwnsPassport}
+								endTimestamp={saleInfo.endTimestamp}
+							/>
+						) : (
+							<MintSigned onMint={getOwnsPassport} />
+						)}
+					</>
+				) : (
+					<>
+						<Spinner />
+						<p>{defaultLoadingMessage}</p>
+					</>
+				)}
+			</>
+		)
+	}
+
+	const getScreen = () => {
+		switch (screen) {
+		case 'passportCheck':
+			return getPreMintDisplay()
+			break
+		case 'mint':
+			return getMintDisplay()
+			break
 		}
 	}
 
@@ -93,32 +181,7 @@ function Home() {
 		getOwnsPassport()
 	}, [])
 
-	return (
-		<>
-			{!isLoading ? (
-				<div>
-					{isPublicSaleActive && saleInfo ? (
-						<MintPublic
-							txLimit={saleInfo.txLimit}
-							tokensLeft={publicTokensLeft}
-							price={BigNumber.from(saleInfo.tokenPrice)}
-							onMint={getOwnsPassport}
-						/>
-					) : (
-						<MintSigned onMint={getOwnsPassport} />
-					)}
-				</div>
-			) : (
-				<p>{defaultLoadingMessage}</p>
-			)}
-
-			{ownsPassport && (
-				<Button onClick={signMessage}>
-					I have a passport, let's make a peep!
-				</Button>
-			)}
-		</>
-	)
+	return <div className={classes.page}>{getScreen()}</div>
 }
 
 export default Home

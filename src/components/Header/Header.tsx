@@ -1,4 +1,3 @@
-import ConnectButton from '../Button/ConnectButton'
 import useStyles from './Header.styles'
 
 function Header() {
@@ -6,8 +5,21 @@ function Header() {
 
 	return (
 		<div aria-hidden className={classes.header}>
-			<span>Peeps Club</span>
-			<ConnectButton />
+			<span className={classes.title}>Peeps Club</span>
+			<nav>
+				<a href="#" className={classes.link}>
+					Passport
+				</a>
+				<a href="#" className={classes.link}>
+					Peep
+				</a>
+				<a href="#" className={classes.link}>
+					Academy
+				</a>
+				<a href="#" className={classes.link}>
+					Coming Soon
+				</a>
+			</nav>
 		</div>
 	)
 }
