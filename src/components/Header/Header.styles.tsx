@@ -1,5 +1,6 @@
 import { createUseStyles } from 'react-jss'
-import { off_white } from '../../config/colors'
+import { peepBlue, white } from '../../config/colors'
+import { headingFontFamily } from '../../config/jss-vars'
 
 const styles = {
 	header: {
@@ -8,7 +9,23 @@ const styles = {
 		justifyContent: 'space-between',
 		alignItems: 'center',
 		padding: '0.5em',
-		background: off_white,
+		background: peepBlue,
+		color: white,
+	},
+	title: {
+		fontFamily: headingFontFamily,
+		fontSize: '2rem',
+	},
+	link: {
+		color: white,
+		textDecoration: 'none',
+		textTransform: 'uppercase',
+		fontWeight: '900',
+		fontSize: '1.5rem',
+		paddingLeft: '2rem',
+		'&:hover': {
+			textDecoration: 'underline',
+		},
 	},
 }
 

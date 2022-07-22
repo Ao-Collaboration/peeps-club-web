@@ -1,15 +1,17 @@
-import { BigNumber, ContractTransaction, ethers, utils } from 'ethers'
+import { BigNumber, ContractTransaction, ethers } from 'ethers'
 import { useContext, useState } from 'react'
 import { passportContractId } from '../../config/contract'
 import { Web3Context } from '../../context/Web3/Web3Context'
 import passportABI from '../../abi/passportABI.json'
-import Button from '../Button/Button'
 import { defaultLoadingMessage } from '../../config/text'
+import Spinner from '../Spinner/Spinner'
+import Mint from './Mint'
 
 interface Props {
 	price: BigNumber
 	txLimit: number
 	tokensLeft: number
+	endTimestamp: number
 	onMint: () => void
 }
 
@@ -18,10 +20,10 @@ const MintPublic: React.FC<Props> = ({
 	txLimit,
 	tokensLeft,
 	onMint,
+	endTimestamp,
 }) => {
 	const [quantity, setQuantity] = useState(1)
 	const [isLoading, setIsLoading] = useState(false)
-	const [isMintDone, setIsMintDone] = useState(false)
 	const [loadingMessage, setLoadingMessage] = useState(defaultLoadingMessage)
 	const { web3Provider } = useContext(Web3Context)
 
@@ -36,11 +38,12 @@ const MintPublic: React.FC<Props> = ({
 		signer,
 	)
 
-	const updateQuantity = () => {
-		const updatedQuantity = (
-			document.getElementById('quantityInput') as HTMLInputElement
-		).value
-		setQuantity(parseInt(updatedQuantity))
+	const getRemainingTime = () => {
+		const left = endTimestamp - Math.floor(Date.now() / 1000)
+		const hours = Math.floor(left / 60 / 60)
+		const minutes = Math.floor((left - hours * 60 * 60) / 60)
+
+		return `${hours}h ${minutes}m`
 	}
 
 	const mint = async () => {
@@ -58,7 +61,6 @@ const MintPublic: React.FC<Props> = ({
 			setLoadingMessage('Processing transaction ' + tx.hash)
 			await tx.wait()
 			setLoadingMessage(defaultLoadingMessage)
-			setIsMintDone(true)
 			onMint()
 		} finally {
 			setIsLoading(false)
@@ -68,31 +70,20 @@ const MintPublic: React.FC<Props> = ({
 	return (
 		<>
 			{isLoading ? (
-				<p>{loadingMessage}</p>
-			) : (
 				<>
-					<>
-						<input
-							id="quantityInput"
-							onChange={updateQuantity}
-							type="number"
-							defaultValue={1}
-							min={1}
-							max={Math.min(txLimit, tokensLeft)}
-						></input>
-						<div>
-							<Button onClick={mint}>
-								Mint {quantity} for {utils.formatEther(price.mul(quantity))} eth
-							</Button>
-						</div>
-					</>
-					{isMintDone && (
-						<p>
-							Congrats you minted {quantity} Passport for{' '}
-							{utils.formatEther(price.mul(quantity))} eth
-						</p>
-					)}
+					<Spinner />
+					<p>{loadingMessage}</p>
 				</>
+			) : (
+				<Mint
+					isPublic={true}
+					max={Math.min(txLimit, tokensLeft)}
+					onMint={mint}
+					price={price}
+					quantity={quantity}
+					remainingTime={getRemainingTime()}
+					setQuantity={setQuantity}
+				/>
 			)}
 		</>
 	)
