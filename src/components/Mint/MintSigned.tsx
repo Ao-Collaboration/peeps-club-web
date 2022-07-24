@@ -1,4 +1,4 @@
-import { ContractTransaction, ethers, utils } from 'ethers'
+import { BigNumber, ContractTransaction, ethers } from 'ethers'
 import { useContext, useEffect, useState } from 'react'
 import { passportContractId } from '../../config/contract'
 import { ProfileContext } from '../../context/Profile/ProfileContext'
@@ -6,8 +6,9 @@ import { Web3Context } from '../../context/Web3/Web3Context'
 import passportABI from '../../abi/passportABI.json'
 import doFetch from '../../utils/doFetch'
 import { host } from '../../config/api'
-import Button from '../Button/Button'
 import { defaultLoadingMessage } from '../../config/text'
+import Spinner from '../Spinner/Spinner'
+import Mint from './Mint'
 
 interface Props {
 	onMint: () => void
@@ -15,7 +16,7 @@ interface Props {
 
 const MintSigned: React.FC<Props> = ({ onMint }) => {
 	const [quantity, setQuantity] = useState(1)
-	const [price, setPrice] = useState(0)
+	const [price, setPrice] = useState<BigNumber>(BigNumber.from(0))
 	const [expiry, setExpiry] = useState(0)
 	const [maxQuantity, setMaxQuantity] = useState(0)
 	const [isLoading, setIsLoading] = useState(false)
@@ -42,7 +43,7 @@ const MintSigned: React.FC<Props> = ({ onMint }) => {
 				quantity: quantity,
 			}
 			const results = await doFetch(`${host}/mint/passport/price/`, 'POST', req)
-			setPrice(results.price)
+			setPrice(BigNumber.from(results.price))
 			setExpiry(results.expiry)
 			setMaxQuantity(results.maxQuantity)
 			setIsLoading(false)
@@ -51,21 +52,20 @@ const MintSigned: React.FC<Props> = ({ onMint }) => {
 		getPrices()
 	}, [quantity])
 
-	const updateQuantity = () => {
-		const updatedQuantity = parseInt(
-			(document.getElementById('quantityInput') as HTMLInputElement).value,
-		)
-		if (updatedQuantity >= 1 && updatedQuantity <= maxQuantity) {
-			setQuantity(updatedQuantity)
-		}
-	}
-
 	const getAuthorisation = async () => {
 		const req = {
 			address: profile.address,
 			quantity: quantity,
 		}
 		return await doFetch(`${host}/mint/passport/authorise/`, 'POST', req)
+	}
+
+	const getRemainingTime = () => {
+		const left = expiry - Math.floor(Date.now() / 1000)
+		const hours = Math.floor(left / 60 / 60)
+		const minutes = Math.floor((left - hours * 60 * 60) / 60)
+
+		return `${hours}h ${minutes}m`
 	}
 
 	const mint = async () => {
@@ -96,24 +96,20 @@ const MintSigned: React.FC<Props> = ({ onMint }) => {
 	return (
 		<>
 			{isLoading ? (
-				<p>{loadingMessage}</p>
-			) : (
 				<>
-					<input
-						id="quantityInput"
-						onChange={updateQuantity}
-						type="number"
-						defaultValue={quantity}
-						min={1}
-						max={maxQuantity}
-					></input>
-					<div>
-						<Button onClick={mint}>
-							Mint {quantity} for {utils.formatEther(price)} eth
-						</Button>
-						<p>Available until {new Date(expiry).toString()}</p>
-					</div>
+					<Spinner />
+					<p>{loadingMessage}</p>
 				</>
+			) : (
+				<Mint
+					isPublic={true}
+					max={maxQuantity}
+					onMint={mint}
+					price={price}
+					quantity={quantity}
+					remainingTime={getRemainingTime()}
+					setQuantity={setQuantity}
+				/>
 			)}
 		</>
 	)

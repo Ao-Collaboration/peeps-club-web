@@ -1,5 +1,9 @@
 import { createUseStyles } from 'react-jss'
-import { standardFontFamily, weightSemiBold } from '../../config/jss-vars'
+import {
+	headingFontFamily,
+	standardFontFamily,
+	weightSemiBold,
+} from '../../config/jss-vars'
 import {
 	black,
 	cyan,
@@ -7,6 +11,7 @@ import {
 	white,
 	off_black,
 	off_white,
+	transparent_blue,
 } from '../../config/colors'
 
 export type ClassNames =
@@ -16,6 +21,7 @@ export type ClassNames =
 	| 'success'
 	| 'error'
 	| 'info'
+	| 'blue'
 
 const styles = {
 	base: {
@@ -55,6 +61,17 @@ const styles = {
 	},
 	secondary: {
 		composes: '$button',
+	},
+	blue: {
+		composes: '$button',
+		background: transparent_blue,
+		fontFamily: headingFontFamily,
+		color: white,
+		fontSize: '2rem',
+		margin: '0.5em',
+		padding: '2rem',
+		borderRadius: '2em',
+		textTransform: 'uppercase',
 	},
 	link: {
 		composes: '$base',

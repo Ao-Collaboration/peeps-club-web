@@ -16,7 +16,6 @@ const styles = {
 		backgroundImage: 'url("assets/Room Base Asset.svg")',
 		zIndex: '-2000',
 		pointerEvents: 'none',
-		backgroundPositionY: 'bottom',
 	},
 	midLayer: {
 		composes: '$layer',
@@ -40,7 +39,7 @@ const styles = {
 	},
 	container: {
 		margin: 'auto',
-		marginTop: '1.5em',
+		marginTop: '5rem',
 		display: 'flex',
 		justifyContent: 'center',
 	},
@@ -56,7 +55,8 @@ const styles = {
 	},
 	title: {
 		fontFamily: headingFontFamily,
-		writingMode: 'sideways-lr',
+		writingMode: 'vertical-lr',
+		transform: 'rotate(180deg)',
 		color: peeps_darkblue,
 		fontSize: '2.5em',
 		padding: '0.3em 0.1em',
