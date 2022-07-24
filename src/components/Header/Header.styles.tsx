@@ -22,7 +22,7 @@ const styles = {
 		textTransform: 'uppercase',
 		fontWeight: '900',
 		fontSize: '1.5rem',
-		paddingLeft: '2rem',
+		padding: '1rem',
 		'&:hover': {
 			textDecoration: 'underline',
 		},
