@@ -9,7 +9,7 @@ interface Props {
 	remainingTime: string
 	quantity: number
 	setQuantity: (quantitiy: number) => void
-	onMint: () => void
+	onMint: (isNZ: boolean) => void
 	isPublic: boolean
 }
 
@@ -86,7 +86,12 @@ const Mint: React.FC<Props> = ({
 			</div>
 			<div className={classes.row}>
 				<button
-					onClick={onMint}
+					onClick={() => {
+						onMint(
+							(document.getElementById('nzCheckbox') as HTMLInputElement)
+								.checked,
+						)
+					}}
 					aria-disabled={!agreesToTerms}
 					disabled={!agreesToTerms}
 					className={classes.button}
