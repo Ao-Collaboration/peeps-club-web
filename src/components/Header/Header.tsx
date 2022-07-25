@@ -1,3 +1,4 @@
+import { HomeRoute } from '../../pages/routes'
 import DiscordLogo from '../Logo/DiscordLogo'
 import EtherscanLogo from '../Logo/EtherscanLogo'
 import OpenseaLogo from '../Logo/OpenseaLogo'
@@ -9,7 +10,9 @@ function Header() {
 
 	return (
 		<div aria-hidden className={classes.header}>
-			<span className={classes.title}>Peeps Club</span>
+			<a href={HomeRoute.path} className={classes.title}>
+				<span>Peeps Club</span>
+			</a>
 			<nav>
 				<a href="https://twitter.com/Peeps_Club" className={classes.link}>
 					<TwitterLogo className="small" />

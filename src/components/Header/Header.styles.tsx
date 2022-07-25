@@ -13,8 +13,18 @@ const styles = {
 		color: white,
 	},
 	title: {
-		fontFamily: headingFontFamily,
-		fontSize: '2rem',
+		color: white,
+		textDecoration: 'none',
+		textTransform: 'uppercase',
+		fontWeight: '900',
+		fontSize: '1.5rem',
+		'&:hover': {
+			textDecoration: 'underline',
+		},
+		'& span': {
+			fontFamily: headingFontFamily,
+			fontSize: '2rem',
+		},
 	},
 	link: {
 		color: white,
