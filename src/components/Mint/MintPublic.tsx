@@ -73,7 +73,7 @@ const MintPublic: React.FC<Props> = ({
 				affiliation: isNZ ? 'New Zealand Sale' : 'Other',
 				items: [
 					{
-						id: '1',
+						id: '0',
 						name: 'Passport',
 						quantity: quantity,
 					},

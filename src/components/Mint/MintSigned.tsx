@@ -99,7 +99,7 @@ const MintSigned: React.FC<Props> = ({ onMint }) => {
 				affiliation: isNZ ? 'New Zealand Sale' : 'Other',
 				items: [
 					{
-						id: '1',
+						id: '0',
 						name: 'Passport',
 						quantity: authorisation.quantity,
 					},
