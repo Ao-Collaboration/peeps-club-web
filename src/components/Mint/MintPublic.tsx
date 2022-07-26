@@ -61,13 +61,12 @@ const MintPublic: React.FC<Props> = ({
 			)
 			setLoadingMessage('Processing transaction ' + tx.hash)
 			await tx.wait()
-			// ReactGA.event({
-			// 	category: 'Minting',
-			// 	action: 'Mint Public',
-			// 	label: isNZ ? 'New Zealand' : 'Other',
-			// })
-			ReactGA.plugin.require('ecommerce')
-			ReactGA.plugin.execute('ecommerce', 'purchase', {
+			ReactGA.event({
+				category: 'Minting',
+				action: 'Mint Public',
+				label: isNZ ? 'New Zealand' : 'Other',
+			})
+			ReactGA.plugin.execute('ec', 'setAction', 'purchase', {
 				transaction_id: tx.hash,
 				value: price.mul(quantity).toString(),
 				currency: 'eth',

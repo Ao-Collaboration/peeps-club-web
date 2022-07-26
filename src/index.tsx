@@ -3,8 +3,14 @@ import ReactDOM from 'react-dom/client'
 import './index.css'
 import App from './App'
 import reportWebVitals from './reportWebVitals'
+import ReactGA from 'react-ga'
+import { TRACKING_ID } from './config/jss-vars'
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
+
+ReactGA.initialize(TRACKING_ID)
+ReactGA.plugin.require('ec')
+ReactGA.pageview(window.location.pathname + window.location.search)
 root.render(
 	<React.StrictMode>
 		<App />
