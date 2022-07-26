@@ -1,4 +1,4 @@
-import { BigNumber, ContractTransaction, ethers } from 'ethers'
+import { BigNumber, ContractTransaction, ethers, utils } from 'ethers'
 import { useContext, useEffect, useState } from 'react'
 import { passportContractId } from '../../config/contract'
 import { ProfileContext } from '../../context/Profile/ProfileContext'
@@ -94,7 +94,7 @@ const MintSigned: React.FC<Props> = ({ onMint }) => {
 			})
 			ReactGA.plugin.execute('ec', 'setAction', 'purchase', {
 				transaction_id: tx.hash,
-				value: authorisation.price,
+				value: utils.formatEther(authorisation.price),
 				currency: 'eth',
 				affiliation: isNZ ? 'New Zealand Sale' : 'Other',
 				items: [

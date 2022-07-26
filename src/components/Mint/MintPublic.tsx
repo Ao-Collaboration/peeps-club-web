@@ -1,4 +1,4 @@
-import { BigNumber, ContractTransaction, ethers } from 'ethers'
+import { BigNumber, ContractTransaction, ethers, utils } from 'ethers'
 import { useContext, useState } from 'react'
 import { passportContractId } from '../../config/contract'
 import { Web3Context } from '../../context/Web3/Web3Context'
@@ -68,7 +68,7 @@ const MintPublic: React.FC<Props> = ({
 			})
 			ReactGA.plugin.execute('ec', 'setAction', 'purchase', {
 				transaction_id: tx.hash,
-				value: price.mul(quantity).toString(),
+				value: utils.formatEther(price.mul(quantity).toString()),
 				currency: 'eth',
 				affiliation: isNZ ? 'New Zealand Sale' : 'Other',
 				items: [
