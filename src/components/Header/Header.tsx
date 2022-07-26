@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import { HomeRoute } from '../../pages/routes'
 import DiscordLogo from '../Logo/DiscordLogo'
 import EtherscanLogo from '../Logo/EtherscanLogo'
@@ -10,9 +11,9 @@ function Header() {
 
 	return (
 		<div aria-hidden className={classes.header}>
-			<a href={HomeRoute.path} className={classes.title}>
+			<Link to={HomeRoute.path} className={classes.title}>
 				<span>Peeps Club</span>
-			</a>
+			</Link>
 			<nav>
 				<a href="https://twitter.com/Peeps_Club" className={classes.link}>
 					<TwitterLogo className="small" />
