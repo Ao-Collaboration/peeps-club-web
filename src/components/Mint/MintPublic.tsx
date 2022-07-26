@@ -1,4 +1,4 @@
-import { BigNumber, ContractTransaction, ethers } from 'ethers'
+import { BigNumber, ContractTransaction, ethers, utils } from 'ethers'
 import { useContext, useState } from 'react'
 import { passportContractId } from '../../config/contract'
 import { Web3Context } from '../../context/Web3/Web3Context'
@@ -6,6 +6,7 @@ import passportABI from '../../abi/passportABI.json'
 import { defaultLoadingMessage } from '../../config/text'
 import Spinner from '../Spinner/Spinner'
 import Mint from './Mint'
+import ReactGA from 'react-ga'
 
 interface Props {
 	price: BigNumber
@@ -46,7 +47,7 @@ const MintPublic: React.FC<Props> = ({
 		return `${hours}h ${minutes}m`
 	}
 
-	const mint = async () => {
+	const mint = async (isNZ: boolean) => {
 		setIsLoading(true)
 
 		const address = await signer.getAddress()
@@ -60,6 +61,24 @@ const MintPublic: React.FC<Props> = ({
 			)
 			setLoadingMessage('Processing transaction ' + tx.hash)
 			await tx.wait()
+			ReactGA.event({
+				category: 'Minting',
+				action: 'Mint Public',
+				label: isNZ ? 'New Zealand' : 'Other',
+			})
+			ReactGA.plugin.execute('ec', 'setAction', 'purchase', {
+				transaction_id: tx.hash,
+				value: utils.formatEther(price.mul(quantity).toString()),
+				currency: 'eth',
+				affiliation: isNZ ? 'New Zealand Sale' : 'Other',
+				items: [
+					{
+						id: '0',
+						name: 'Passport',
+						quantity: quantity,
+					},
+				],
+			})
 			setLoadingMessage(defaultLoadingMessage)
 			onMint()
 		} finally {
