@@ -6,7 +6,6 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useContext, useEffect, useState } from 'react'
 import { host } from '../../config/api'
-import { getPartnerInfo, PartnerInfo } from '../../config/partners'
 import { MetadataContext } from '../../context/Metadata/MetadataContext'
 import { CategoryName, TraitOption } from '../../interface/availableTraits'
 import { defaultPeep, Trait } from '../../interface/metadata'
@@ -24,7 +23,6 @@ const WardrobeTraitSelector: React.FC<Props> = ({ categories }) => {
 	const [isWardrobeOpen, setIsWardrobeOpen] = useState(false)
 	const [selectableTraits, setSelectableTraits] = useState<TraitOption[]>([])
 	const [exclusionList, setExclusionList] = useState<string[][]>([])
-	const [partnerTokens] = useState<string[]>(['The Kindness Project'])
 	const [isRequestDisplayed, setIsRequestDisplayed] = useState(false)
 
 	const { metadata, setMetadata, availableTraits } = useContext(MetadataContext)
@@ -233,7 +231,7 @@ const WardrobeTraitSelector: React.FC<Props> = ({ categories }) => {
 		trait: TraitOption,
 		category: CategoryName,
 	) => {
-		if (trait.exclusive && !partnerTokens.includes(trait.exclusive)) {
+		if (trait.exclusive && !trait.isAvailable) {
 			return true
 		}
 		if (exclusions.length > 1) {
@@ -253,12 +251,12 @@ const WardrobeTraitSelector: React.FC<Props> = ({ categories }) => {
 		return false
 	}
 
-	const partnerInfo = (partnerInfo: PartnerInfo) => {
+	const partnerInfo = (name: string, link: string) => {
 		return (
 			<div>
 				<p>Exclusive to..</p>
-				<a href={partnerInfo.link} target={'_blank'}>
-					{partnerInfo.name}
+				<a href={link} target={'_blank'}>
+					{name}
 				</a>
 			</div>
 		)
@@ -312,11 +310,11 @@ const WardrobeTraitSelector: React.FC<Props> = ({ categories }) => {
 							</div>
 						</div>
 					)}
-					{trait.exclusive && (
+					{trait.exclusive && trait.link && (
 						<div className={classes.exclusiveItem}>
 							<FontAwesomeIcon icon={faCrown} />
 							<div className={classes.popup}>
-								{partnerInfo(getPartnerInfo(trait.exclusive))}
+								{partnerInfo(trait.name, trait.link)}
 							</div>
 						</div>
 					)}

@@ -5,13 +5,13 @@ import Router from './pages/Router'
 
 function App() {
 	return (
-		<Web3ContextProvider>
-			<MetadataContextProvider>
-				<ProfileContextProvider>
+		<ProfileContextProvider>
+			<Web3ContextProvider>
+				<MetadataContextProvider>
 					<Router />
-				</ProfileContextProvider>
-			</MetadataContextProvider>
-		</Web3ContextProvider>
+				</MetadataContextProvider>
+			</Web3ContextProvider>
+		</ProfileContextProvider>
 	)
 }
 

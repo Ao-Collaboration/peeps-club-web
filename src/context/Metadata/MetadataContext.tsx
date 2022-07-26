@@ -4,6 +4,7 @@ import {
 	FC,
 	ReactNode,
 	SetStateAction,
+	useContext,
 	useEffect,
 	useState,
 } from 'react'
@@ -11,6 +12,7 @@ import { host } from '../../config/api'
 import { Category, CategoryName } from '../../interface/availableTraits'
 import { defaultPeep, Trait } from '../../interface/metadata'
 import doFetch from '../../utils/doFetch'
+import { ProfileContext } from '../Profile/ProfileContext'
 
 interface CtxProps {
 	metadata?: Trait[] | null
@@ -27,9 +29,10 @@ export const MetadataContext = createContext<CtxProps>({})
 const MetadataContextProvider: FC<Props> = ({ children }) => {
 	const [metadata, setMetadata] = useState<Trait[] | null>([])
 	const [availableTraits, setAvailableTraits] = useState<Category[] | null>([])
+	const { profile } = useContext(ProfileContext)
 
-	const getAvailableTraits = async () => {
-		const results = await doFetch(`${host}/peep/traits`, 'GET')
+	const getAvailableTraits = async (address: string) => {
+		const results = await doFetch(`${host}/peep/traits/${address}/`, 'GET')
 		setAvailableTraits(results as Category[])
 	}
 
@@ -42,7 +45,12 @@ const MetadataContextProvider: FC<Props> = ({ children }) => {
 	}
 
 	useEffect(() => {
-		getAvailableTraits()
+		if (profile?.address) {
+			getAvailableTraits(profile?.address)
+		}
+	}, [profile])
+
+	useEffect(() => {
 		setMetadata(JSON.parse(JSON.stringify(defaultPeep)))
 	}, [])
 
