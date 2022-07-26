@@ -26,6 +26,7 @@ function Home() {
 	const [isLoading, setIsLoading] = useState(false)
 	const [saleInfo, setSaleInfo] = useState<SaleInfo | null>(null)
 	const [isPublicSaleActive, setPublicSaleActive] = useState(false)
+	const [isVIPeepActive, setVIPeepActive] = useState(false)
 	const [publicTokensLeft, setPublicTokensLeft] = useState(0)
 	const [passportsOwned, setPassportsOwned] = useState(0)
 	const [screen, setScreen] = useState<ScreenType>('passportCheck')
@@ -73,25 +74,49 @@ function Home() {
 
 	const getSaleInfo = async () => {
 		setIsLoading(true)
-		const saleInfo = new SaleInfo(await passportContract.saleInfo())
-		setSaleInfo(saleInfo)
+		let isPublic = false
 
-		const now = Math.floor(Date.now() / 1000)
-		setPublicSaleActive(saleInfo.endTimestamp > now)
-		setPublicTokensLeft(saleInfo.maxMint - saleInfo.totalMinted)
+		try {
+			const saleInfo = new SaleInfo(await passportContract.saleInfo())
+			setSaleInfo(saleInfo)
+
+			const now = Math.floor(Date.now() / 1000)
+			isPublic = saleInfo.endTimestamp > now
+			setPublicSaleActive(isPublic)
+			setPublicTokensLeft(saleInfo.maxMint - saleInfo.totalMinted)
+		} catch (err) {
+			setPublicSaleActive(false)
+			setPublicTokensLeft(0)
+		}
+
+		if (!isPublic) {
+			try {
+				const response = await doFetch(
+					`${host}/mint/passport/listed/${profile.address}`,
+					'GET',
+				)
+				setVIPeepActive(response.listed)
+			} catch (err) {
+				// Fine
+			}
+		}
 
 		setIsLoading(false)
 	}
 
 	const getOwnsPassport = async () => {
 		setScreen('passportCheck')
-		const tokenCount = await passportContract.balanceOf(
-			await signer.getAddress(),
-			0,
-		)
-		if (tokenCount > 0) {
-			await getMessage()
-			setPassportsOwned(tokenCount)
+		try {
+			const tokenCount = await passportContract.balanceOf(
+				await signer.getAddress(),
+				0,
+			)
+			if (tokenCount > 0) {
+				await getMessage()
+				setPassportsOwned(tokenCount)
+			}
+		} catch (err) {
+			setPassportsOwned(0)
 		}
 	}
 
@@ -110,7 +135,7 @@ function Home() {
 		return (
 			<>
 				<h2 className={classes.title}>PEEPS AIRLINE BOARDING NOW</h2>
-				<p className={classes.text}>Gates close in {getRemainingTime()}</p>
+				{isPublicSaleActive && <p className={classes.text}>Gates close in {getRemainingTime()}</p>}
 				<ul className={classes.list}>
 					<li>Oven switched Off</li>
 					<li>Keys</li>
@@ -120,14 +145,25 @@ function Home() {
 					<strong>PASSPORT?!</strong>
 				</ul>
 				<div className={classes.buttonGroup}>
-					<Button
-						onClick={() => {
-							setScreen('mint')
-						}}
-						className="blue"
-					>
-						Purchase Passport
-					</Button>
+					{(isPublicSaleActive || isVIPeepActive) ? (
+						<Button
+							onClick={() => {
+								setScreen('mint')
+							}}
+							className="blue"
+						>
+							Purchase Passport
+						</Button>
+					) : (
+						<Button
+							onClick={() => {
+								navigate('https://opensea.io/peepsclub')
+							}}
+							className="blue"
+						>
+							Passports on Opensea
+						</Button>
+					)}
 					{passportsOwned > 0 && (
 						<Button onClick={signMessage} className="blue">
 							{passportsOwned.toString()} Passports Ready!
