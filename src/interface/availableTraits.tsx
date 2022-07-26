@@ -6,6 +6,8 @@ export interface Category {
 export interface TraitOption {
 	name: string
 	exclusive?: string
+	isAvailable?: boolean
+	link?: string
 }
 
 export type CategoryName =
