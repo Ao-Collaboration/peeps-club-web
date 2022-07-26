@@ -9,13 +9,15 @@ import Button from '../Button/Button'
 import peepsABI from '../../abi/peepsABI.json'
 import useStyles from './WardrobeConfirm.styles'
 import { defaultLoadingMessage } from '../../config/text'
+import { useNavigate } from 'react-router-dom'
+import { YourPeepRoute } from '../../pages/routes'
 
 const WardrobeConfirm = () => {
 	const { metadata } = useContext(MetadataContext)
 	const { web3Provider } = useContext(Web3Context)
 	const [isLoading, setIsLoading] = useState(false)
 	const [loadingMessage, setLoadingMessage] = useState(defaultLoadingMessage)
-	const [isMintDone, setIsMintDone] = useState(false)
+	const navigate = useNavigate()
 
 	if (!metadata || !web3Provider) {
 		return <></>
@@ -44,7 +46,8 @@ const WardrobeConfirm = () => {
 			setLoadingMessage('Processing transaction ' + tx.hash)
 			await tx.wait()
 			setLoadingMessage(defaultLoadingMessage)
-			setIsMintDone(true)
+
+			navigate(YourPeepRoute.path)
 		} finally {
 			setIsLoading(false)
 		}
@@ -71,13 +74,7 @@ const WardrobeConfirm = () => {
 				{isLoading ? (
 					<p> {loadingMessage}</p>
 				) : (
-					<>
-						{isMintDone ? (
-							<p>Congratulations on your new Peep</p>
-						) : (
-							<Button onClick={mintPeep}>Mint {getName()}</Button>
-						)}
-					</>
+					<Button onClick={mintPeep}>Mint {getName()}</Button>
 				)}
 			</div>
 			<div className={classes.hangerContainer}></div>

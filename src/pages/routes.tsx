@@ -33,3 +33,8 @@ export const WardrobeRoute: Route = {
 	name: 'Wardrobe',
 	path: '/wardrobe',
 }
+
+export const YourPeepRoute: Route = {
+	name: 'YourPeep',
+	path: '/your-peep',
+}
