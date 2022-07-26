@@ -66,7 +66,6 @@ function Home() {
 
 	const signMessage = async () => {
 		const message = await getMessage()
-
 		const signature = await signer.signMessage(message)
 
 		await confirmOwnership(signature)
@@ -112,7 +111,6 @@ function Home() {
 				0,
 			)
 			if (tokenCount > 0) {
-				await getMessage()
 				setPassportsOwned(tokenCount)
 			}
 		} catch (err) {
@@ -135,7 +133,9 @@ function Home() {
 		return (
 			<>
 				<h2 className={classes.title}>PEEPS AIRLINE BOARDING NOW</h2>
-				{isPublicSaleActive && <p className={classes.text}>Gates close in {getRemainingTime()}</p>}
+				{isPublicSaleActive && (
+					<p className={classes.text}>Gates close in {getRemainingTime()}</p>
+				)}
 				<ul className={classes.list}>
 					<li>Oven switched Off</li>
 					<li>Keys</li>
@@ -145,7 +145,7 @@ function Home() {
 					<strong>PASSPORT?!</strong>
 				</ul>
 				<div className={classes.buttonGroup}>
-					{(isPublicSaleActive || isVIPeepActive) ? (
+					{isPublicSaleActive || isVIPeepActive ? (
 						<Button
 							onClick={() => {
 								setScreen('mint')
