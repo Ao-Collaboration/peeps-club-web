@@ -10,6 +10,7 @@ import { Link } from 'react-router-dom'
 import { HomeRoute } from '../routes'
 import TwitterLogo from '../../components/Logo/TwitterLogo'
 import DiscordLogo from '../../components/Logo/DiscordLogo'
+import { greetings } from '../../config/text'
 
 const YourPeep = () => {
 	const classes = useStyles()
@@ -21,73 +22,6 @@ const YourPeep = () => {
 	const [jonoGreeting, setJonoGreeting] = useState('Ciao')
 	const [grannyGreeting, setGrannyGreeting] = useState('Hello')
 	const [officerGreeting, setOfficerGreeting] = useState('Bonjour!')
-
-	const greetings = [
-		'Ahoy',
-		'Meow',
-		'What\'s Shakin\'',
-		'Hello',
-		'Hey',
-		'Welcome',
-		'Hi',
-		'\'Ello',
-		'Greetings',
-		'Hi There',
-		'Bonjour',
-		'Hola',
-		'Ciao',
-		'Olá',
-		'Kia Ora',
-		'G’day',
-		'Geia',
-		'Zdravo',
-		'Privet',
-		'Nǐ hǎo',
-		'Namaste',
-		'Merhaba',
-		'Kon’nichiwa',
-		'Anyeong Haseyo',
-		'Ahoj',
-		'Guten tag',
-		'Hallo',
-		'Cześć',
-		'S̄wạs̄dī',
-		'Cheers',
-		'Szia',
-		'Ahoj',
-		'Salve',
-		'Talofa',
-		'Haló',
-		'Hola',
-		'Hallo',
-		'Mirë dita',
-		'Marhabaa',
-		'salam',
-		'Салам',
-		'ታዲያስ',
-		'مرحبا',
-		'Kaixo',
-		'নমস্কার',
-		'Zdravo',
-		'Oi',
-		'Demat',
-		'Здравейте',
-		'Moni',
-		'Hej',
-		'Tere',
-		'Salaam',
-		'Bula',
-		'Kamusta',
-		'Aloha',
-		'Halo',
-		'Hai',
-		'안녕',
-		'こんにちは',
-		'你好',
-		'Chào bạn',
-		'Helo',
-		'Hallá',
-	]
 
 	if (!metadata || !web3Provider || !profile || !profile.id) {
 		return <></>
