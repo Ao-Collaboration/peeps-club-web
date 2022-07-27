@@ -262,7 +262,7 @@ const WardrobeTraitSelector: React.FC<Props> = ({ categories }) => {
 		)
 	}
 
-	const traitHangar = (trait: TraitOption) => {
+	const traitHangar = (trait: TraitOption, index: number) => {
 		const category = categories[selectedCategoryIndex]
 		const traitName = trait.name
 		const exclusions: Trait[] = getExclusions(traitName)
@@ -278,7 +278,7 @@ const WardrobeTraitSelector: React.FC<Props> = ({ categories }) => {
 		return (
 			<div
 				className={`${classes.hanger}  ${classes.fadeInHangars}`}
-				key={`${category}-${traitName}`}
+				key={`${category}-${traitName}-${index}`}
 			>
 				<button
 					className={`${classes.hangerText} ${
@@ -385,7 +385,7 @@ const WardrobeTraitSelector: React.FC<Props> = ({ categories }) => {
 				<div className={classes.hangerContainer}>
 					{selectedCategoryIndex >= 0 && categories[selectedCategoryIndex] && (
 						<>
-							{selectableTraits.map(item => traitHangar(item))}
+							{selectableTraits.map((item, index) => traitHangar(item, index))}
 							<div className={`${classes.hanger}  ${classes.fadeInHangars}`}>
 								<input
 									type="image"
