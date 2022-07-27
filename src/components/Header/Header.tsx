@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import { getPeepsContractId } from '../../config/contract'
 import { HomeRoute } from '../../pages/routes'
 import DiscordLogo from '../Logo/DiscordLogo'
 import EtherscanLogo from '../Logo/EtherscanLogo'
@@ -21,10 +22,10 @@ function Header() {
 				<a href="https://discord.gg/peepsclub" className={classes.link}>
 					<DiscordLogo className="small" />
 				</a>
-				<a href="#" className={classes.link}>
+				<a href={`https://etherscan.io/address/${getPeepsContractId(1)}`} className={classes.link}>
 					<EtherscanLogo className="small" />
 				</a>
-				<a href="#" className={classes.link}>
+				<a href="https://opensea.io/collection/peeps-club" className={classes.link}>
 					<OpenseaLogo className="small" />
 				</a>
 			</nav>
