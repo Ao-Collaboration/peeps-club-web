@@ -9,10 +9,18 @@ function ConnectWallet() {
 			<div className={classes.section}>
 				<h2 className={classes.title}>PEEPS AIRLINE</h2>
 				<ul className={classes.list}>
-					<li>Oven switched Off</li>
-					<li>Keys</li>
-					<li>Luggage</li>
-					<li>Ticket</li>
+					<li>
+						<s>Oven switched Off</s>
+					</li>
+					<li>
+						<s>Keys</s>
+					</li>
+					<li>
+						<s>Luggage</s>
+					</li>
+					<li>
+						<s>Ticket</s>
+					</li>
 					<li>
 						<strong>WHERE'S MY WALLET...?</strong>
 					</li>

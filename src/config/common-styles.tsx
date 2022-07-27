@@ -40,8 +40,9 @@ export const mint_title = {
 export const checklist = {
 	composes: '$text',
 	listStyle: 'none',
-	textAlign: 'right',
+	textAlign: 'center',
 	'& li:not(:last-child):after ': {
 		content: '"✓"',
+		padding: '0.5em',
 	},
 }
