@@ -18,7 +18,7 @@ const styles = {
 		textTransform: 'uppercase',
 	},
 	text: {
-		fontSize: '1.5rem',
+		fontSize: '1.2rem',
 		margin: '0.5rem',
 	},
 	boldText: {
@@ -28,8 +28,8 @@ const styles = {
 	section: translucent_section,
 	selectButton: {
 		margin: '0.5rem',
-		width: '4rem',
-		height: '4rem',
+		width: '3rem',
+		height: '3rem',
 		fontSize: '2rem',
 		borderRadius: '50%',
 		border: 'none',
@@ -44,6 +44,8 @@ const styles = {
 	row: {
 		display: 'flex',
 		justifyContent: 'space-evenly',
+		flexWrap: 'wrap',
+		maxWidth: '20em',
 	},
 	buttonRow: {
 		composes: '$row',
@@ -53,9 +55,9 @@ const styles = {
 		background: transparent_blue,
 		fontFamily: headingFontFamily,
 		color: white,
-		fontSize: '2rem',
+		fontSize: '1.8rem',
 		margin: '0.5em',
-		padding: '1rem 2rem',
+		padding: '0.5rem 1.5rem',
 		borderRadius: '2em',
 		textTransform: 'uppercase',
 		border: 'none',
@@ -66,8 +68,8 @@ const styles = {
 		},
 	},
 	termsCheck: {
-		margin: '0.5rem auto',
-		fontSize: '1.2rem',
+		margin: '0 auto',
+		fontSize: '1rem',
 		textAlign: 'left',
 		maxWidth: '20em',
 		'& input': {

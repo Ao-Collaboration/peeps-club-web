@@ -66,7 +66,7 @@ const Mint: React.FC<Props> = ({
 						<span>* exclusing GAS</span>
 					</div>
 				</div>
-				<br />
+				<hr />
 				<div className={classes.termsCheck}>
 					<input
 						type="checkbox"

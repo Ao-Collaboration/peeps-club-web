@@ -29,7 +29,7 @@ function ConnectWallet() {
 			<div className={classes.buttonGroup}>
 				<ConnectButton />
 			</div>
-			<p>
+			<p className={classes.text}>
 				Not sure about what a wallet is or how to connect? Find out more here
 			</p>
 		</div>

@@ -38,3 +38,8 @@ export const YourPeepRoute: Route = {
 	name: 'Welcome',
 	path: '/welcome',
 }
+
+export const AnotherDeviceRoute: Route = {
+	name: 'Try Another Device',
+	path: '/another-device',
+}
