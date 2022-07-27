@@ -167,7 +167,7 @@ function Home() {
 					) : (
 						<Button
 							onClick={() => {
-								navigate('https://opensea.io/peepsclub')
+								window.location.href = 'https://opensea.io/collection/peeps-club'
 							}}
 							className="blue"
 						>
