@@ -6,10 +6,9 @@ import { Web3Context } from '../../context/Web3/Web3Context'
 import passportABI from '../../abi/passportABI.json'
 import doFetch from '../../utils/doFetch'
 import { host } from '../../config/api'
-import { defaultLoadingMessage } from '../../config/text'
-import Spinner from '../Spinner/Spinner'
 import Mint from './Mint'
 import ReactGA from 'react-ga'
+import Loading from '../Loading/Loading'
 
 interface Props {
 	onMint: () => void
@@ -21,7 +20,7 @@ const MintSigned: React.FC<Props> = ({ onMint }) => {
 	const [expiry, setExpiry] = useState(0)
 	const [maxQuantity, setMaxQuantity] = useState(0)
 	const [isLoading, setIsLoading] = useState(false)
-	const [loadingMessage, setLoadingMessage] = useState(defaultLoadingMessage)
+	const [pendingHash, setPendingHash] = useState<string | null>(null)
 	const { profile } = useContext(ProfileContext)
 	const { web3Provider } = useContext(Web3Context)
 
@@ -85,8 +84,9 @@ const MintSigned: React.FC<Props> = ({ onMint }) => {
 				authorisation.signature,
 				options,
 			)
-			setLoadingMessage('Processing transaction ' + tx.hash)
+			setPendingHash(tx.hash)
 			await tx.wait()
+			setPendingHash(null)
 			ReactGA.event({
 				category: 'Minting',
 				action: 'Mint Public',
@@ -105,7 +105,6 @@ const MintSigned: React.FC<Props> = ({ onMint }) => {
 					},
 				],
 			})
-			setLoadingMessage(defaultLoadingMessage)
 			onMint()
 		} finally {
 			setIsLoading(false)
@@ -115,10 +114,7 @@ const MintSigned: React.FC<Props> = ({ onMint }) => {
 	return (
 		<>
 			{isLoading ? (
-				<>
-					<Spinner />
-					<p>{loadingMessage}</p>
-				</>
+				<Loading hash={pendingHash} />
 			) : (
 				<Mint
 					isPublic={true}

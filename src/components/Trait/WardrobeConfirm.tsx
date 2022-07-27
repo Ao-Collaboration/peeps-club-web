@@ -8,15 +8,15 @@ import doFetch from '../../utils/doFetch'
 import Button from '../Button/Button'
 import peepsABI from '../../abi/peepsABI.json'
 import useStyles from './WardrobeConfirm.styles'
-import { defaultLoadingMessage } from '../../config/text'
 import { useNavigate } from 'react-router-dom'
 import { YourPeepRoute } from '../../pages/routes'
+import Loading from '../Loading/Loading'
 
 const WardrobeConfirm = () => {
 	const { metadata } = useContext(MetadataContext)
 	const { web3Provider } = useContext(Web3Context)
 	const [isLoading, setIsLoading] = useState(false)
-	const [loadingMessage, setLoadingMessage] = useState(defaultLoadingMessage)
+	const [pendingHash, setPendingHash] = useState<string | null>(null)
 	const navigate = useNavigate()
 
 	if (!metadata || !web3Provider) {
@@ -43,9 +43,9 @@ const WardrobeConfirm = () => {
 				response.signature,
 				response.id,
 			)
-			setLoadingMessage('Processing transaction ' + tx.hash)
+			setPendingHash(tx.hash)
 			await tx.wait()
-			setLoadingMessage(defaultLoadingMessage)
+			setPendingHash(null)
 
 			navigate(YourPeepRoute.path)
 		} finally {
@@ -72,7 +72,7 @@ const WardrobeConfirm = () => {
 				<h1 className="">Mint your Peep</h1>
 				<p>Are you ready to burn your passport to mint your Peep?</p>
 				{isLoading ? (
-					<p> {loadingMessage}</p>
+					<Loading hash={pendingHash} />
 				) : (
 					<Button onClick={mintPeep}>Mint {getName()}</Button>
 				)}

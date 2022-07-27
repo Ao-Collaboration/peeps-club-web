@@ -3,10 +3,9 @@ import { useContext, useState } from 'react'
 import { passportContractId } from '../../config/contract'
 import { Web3Context } from '../../context/Web3/Web3Context'
 import passportABI from '../../abi/passportABI.json'
-import { defaultLoadingMessage } from '../../config/text'
-import Spinner from '../Spinner/Spinner'
 import Mint from './Mint'
 import ReactGA from 'react-ga'
+import Loading from '../Loading/Loading'
 
 interface Props {
 	price: BigNumber
@@ -25,7 +24,7 @@ const MintPublic: React.FC<Props> = ({
 }) => {
 	const [quantity, setQuantity] = useState(1)
 	const [isLoading, setIsLoading] = useState(false)
-	const [loadingMessage, setLoadingMessage] = useState(defaultLoadingMessage)
+	const [pendingHash, setPendingHash] = useState<string | null>(null)
 	const { web3Provider } = useContext(Web3Context)
 
 	if (!web3Provider) {
@@ -59,8 +58,9 @@ const MintPublic: React.FC<Props> = ({
 				quantity,
 				options,
 			)
-			setLoadingMessage('Processing transaction ' + tx.hash)
+			setPendingHash(tx.hash)
 			await tx.wait()
+			setPendingHash(null)
 			ReactGA.event({
 				category: 'Minting',
 				action: 'Mint Public',
@@ -79,7 +79,6 @@ const MintPublic: React.FC<Props> = ({
 					},
 				],
 			})
-			setLoadingMessage(defaultLoadingMessage)
 			onMint()
 		} finally {
 			setIsLoading(false)
@@ -89,10 +88,7 @@ const MintPublic: React.FC<Props> = ({
 	return (
 		<>
 			{isLoading ? (
-				<>
-					<Spinner />
-					<p>{loadingMessage}</p>
-				</>
+				<Loading hash={pendingHash} />
 			) : (
 				<Mint
 					isPublic={true}
