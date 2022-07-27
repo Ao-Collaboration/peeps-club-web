@@ -27,7 +27,12 @@ function Router() {
 
 	if (!web3Provider) {
 		// Require wallet connection
-		return <ConnectWallet />
+		return (
+			<BrowserRouter>
+				<Header />
+				<ConnectWallet />
+			</BrowserRouter>
+		)
 	}
 	return (
 		<>

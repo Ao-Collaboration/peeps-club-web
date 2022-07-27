@@ -137,11 +137,21 @@ function Home() {
 					<p className={classes.text}>Gates close in {getRemainingTime()}</p>
 				)}
 				<ul className={classes.list}>
-					<li>Oven switched Off</li>
-					<li>Keys</li>
-					<li>Luggage</li>
-					<li>Ticket</li>
-					<li>Phew... Wallet</li>
+					<li>
+						<s>Oven switched Off</s>
+					</li>
+					<li>
+						<s>Keys</s>
+					</li>
+					<li>
+						<s>Luggage</s>
+					</li>
+					<li>
+						<s>Ticket</s>
+					</li>
+					<li>
+						<s>Phew... Wallet</s>
+					</li>
 					<strong>PASSPORT?!</strong>
 				</ul>
 				<div className={classes.buttonGroup}>
