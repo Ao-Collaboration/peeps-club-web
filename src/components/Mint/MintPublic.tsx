@@ -1,6 +1,6 @@
 import { BigNumber, ContractTransaction, ethers, utils } from 'ethers'
 import { useContext, useState } from 'react'
-import { passportContractId } from '../../config/contract'
+import { getPassportContractId } from '../../config/contract'
 import { Web3Context } from '../../context/Web3/Web3Context'
 import passportABI from '../../abi/passportABI.json'
 import Mint from './Mint'
@@ -33,7 +33,7 @@ const MintPublic: React.FC<Props> = ({
 
 	const signer = web3Provider.getSigner()
 	const passportContract = new ethers.Contract(
-		passportContractId,
+		getPassportContractId(web3Provider.network?.chainId),
 		passportABI,
 		signer,
 	)

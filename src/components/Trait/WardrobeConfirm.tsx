@@ -1,7 +1,7 @@
 import { ContractTransaction, ethers } from 'ethers'
 import { useContext, useState } from 'react'
 import { host } from '../../config/api'
-import { peepsContractID } from '../../config/contract'
+import { getPeepsContractId } from '../../config/contract'
 import { MetadataContext } from '../../context/Metadata/MetadataContext'
 import { Web3Context } from '../../context/Web3/Web3Context'
 import doFetch from '../../utils/doFetch'
@@ -24,7 +24,11 @@ const WardrobeConfirm = () => {
 	}
 
 	const signer = web3Provider?.getSigner()
-	const peepsContract = new ethers.Contract(peepsContractID, peepsABI, signer)
+	const peepsContract = new ethers.Contract(
+		getPeepsContractId(web3Provider?.network?.chainId),
+		peepsABI,
+		signer,
+	)
 
 	const getName = () => {
 		return metadata.filter(trait => {

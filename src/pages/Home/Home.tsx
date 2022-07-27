@@ -3,7 +3,7 @@ import { useContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Button from '../../components/Button/Button'
 import { host } from '../../config/api'
-import { passportContractId } from '../../config/contract'
+import { getPassportContractId } from '../../config/contract'
 import { ProfileContext } from '../../context/Profile/ProfileContext'
 import { Web3Context } from '../../context/Web3/Web3Context'
 import doFetch from '../../utils/doFetch'
@@ -34,7 +34,7 @@ function Home() {
 	const navigate = useNavigate()
 	const signer = web3Provider?.getSigner()
 	const passportContract = new ethers.Contract(
-		passportContractId,
+		getPassportContractId(web3Provider?.network?.chainId),
 		passportABI,
 		signer,
 	)
