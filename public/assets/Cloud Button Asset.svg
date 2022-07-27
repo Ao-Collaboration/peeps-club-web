@@ -23,13 +23,13 @@
      inkscape:pagecheckerboard="0"
      inkscape:document-units="mm"
      showgrid="false"
-     inkscape:zoom="0.76435185"
-     inkscape:cx="121.01757"
-     inkscape:cy="109.24288"
+     inkscape:zoom="3.0574074"
+     inkscape:cx="143.09509"
+     inkscape:cy="70.15748"
      inkscape:window-width="1920"
-     inkscape:window-height="1017"
-     inkscape:window-x="-8"
-     inkscape:window-y="-8"
+     inkscape:window-height="1001"
+     inkscape:window-x="-9"
+     inkscape:window-y="-9"
      inkscape:window-maximized="1"
      inkscape:current-layer="layer4"
      fit-margin-top="0"
@@ -56,30 +56,30 @@
      transform="translate(-106.93972,-89.873894)">
     <path
        style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0.25;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       d="m 187.83749,114.1596 -77.5636,0.49247 c -3.9693,-0.19694 -4.68372,-5.83393 0.29994,-5.88385 h 8.52584 c 0.0766,-6.3241 5.31791,-8.17832 10.70395,-7.25101 1.45127,-13.79856 30.79668,-16.6297 34.17952,-0.57195 7.23889,-2.0358 11.61907,3.18958 11.89629,8.07125 3.57011,-0.0813 10.08973,-0.25372 12.21131,-0.11358 3.63333,0.24003 3.84325,5.11509 -0.25325,5.25667 z"
+       d="m 187.65677,114.73775 -77.56233,-0.66378 c -3.96592,-0.25608 -4.59623,-5.9031 0.38762,-5.87872 l 8.52489,0.12709 c 0.17086,-6.32226 5.43923,-8.09814 10.81085,-7.09065 1.65679,-13.775393 31.04114,-16.168784 34.18425,-0.0624 7.26843,-1.92767 11.57023,3.36242 11.77465,8.24768 3.57093,-0.0281 10.09239,-0.10329 12.21165,0.0685 3.62935,0.29416 3.76657,5.17181 -0.33158,5.25231 z"
        id="path59427-1-3"
        sodipodi:nodetypes="cccccccsc" />
     <text
        xml:space="preserve"
-       style="font-size:10.5833px;line-height:1.25;font-family:'Showcard Gothic';-inkscape-font-specification:'Showcard Gothic';fill:#28b5ff;fill-opacity:1;stroke-width:0.264583"
-       x="132.44223"
-       y="110.63815"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.5833px;line-height:1.25;font-family:Ranchers;-inkscape-font-specification:Ranchers;fill:#28b5ff;fill-opacity:1;stroke-width:0.264583"
+       x="134.51917"
+       y="110.81123"
        id="text69694"><tspan
          sodipodi:role="line"
          id="tspan69692"
-         style="fill:#28b5ff;fill-opacity:1;stroke-width:0.264583"
-         x="132.44223"
-         y="110.63815">land?</tspan></text>
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Ranchers;-inkscape-font-specification:Ranchers;fill:#28b5ff;fill-opacity:1;stroke-width:0.264583"
+         x="134.51917"
+         y="110.81123">LAND?</tspan></text>
     <text
        xml:space="preserve"
-       style="font-size:5.38687px;line-height:1.25;font-family:'Showcard Gothic';-inkscape-font-specification:'Showcard Gothic';stroke-width:0.134672"
-       x="135.08293"
-       y="102.85701"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.38687px;line-height:1.25;font-family:Roboto;-inkscape-font-specification:Roboto;stroke-width:0.134672"
+       x="137.33293"
+       y="100.60701"
        id="text84583"><tspan
          sodipodi:role="line"
          id="tspan84581"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'MV Boli';-inkscape-font-specification:'MV Boli';stroke-width:0.134672"
-         x="135.08293"
-         y="102.85701">ready to</tspan></text>
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Roboto;-inkscape-font-specification:Roboto;stroke-width:0.134672"
+         x="137.33293"
+         y="100.60701">ready to</tspan></text>
   </g>
 </svg>
