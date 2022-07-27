@@ -6,7 +6,8 @@ import { black } from '../../config/colors'
 import { useNavigate } from 'react-router-dom'
 import { MetadataContext } from '../../context/Metadata/MetadataContext'
 import { Category } from '../../interface/availableTraits'
-import { ImmigrationIntroRoute } from '../routes'
+import { AnotherDeviceRoute, ImmigrationIntroRoute } from '../routes'
+import { useMediaQuery } from 'react-responsive'
 
 const Airplane = () => {
 	const classes = useStyles()
@@ -20,6 +21,14 @@ const Airplane = () => {
 	if (!metadata || !setMetadata || !availableTraits) {
 		return <></>
 	}
+
+	const isTabletOrMobile = useMediaQuery({ query: '(max-width: 1224px)' })
+
+	useEffect(() => {
+		if (isTabletOrMobile) {
+			navigate(AnotherDeviceRoute.path)
+		}
+	}, [isTabletOrMobile])
 
 	const getAvailableDistricts = async () => {
 		const districts = availableTraits.filter(item => {
