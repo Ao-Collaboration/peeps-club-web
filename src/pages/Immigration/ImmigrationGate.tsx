@@ -8,25 +8,44 @@ import { useEffect, useState } from 'react'
 
 function ImmigrationGate() {
 	const classes = useStyles()
-	const [currentText, setCurrentText] = useState('')
+	const [firstText, setFirstText] = useState('')
+	const [secondText, setSecondText] = useState('')
 	const navigate = useNavigate()
+	const [firstLineDone, setFirstLineDone] = useState(false)
 
 	const moveToPassport = () => {
 		navigate(ImmigrationRoute.path)
 	}
 
-	const speech =
-		'Welcome to Peeps Club World! Please have your passport ready for inspection.'
+	const speech1 = 'Welcome to Peeps Club World!'
+	const speech2 = 'Please have your passport ready for inspection.'
 
 	useEffect(() => {
-		updateSpeechText()
-	}, [currentText])
+		updateFirstLine()
+	}, [firstText])
 
-	const updateSpeechText = async () => {
-		if (currentText.length < speech.length) {
+	const updateFirstLine = async () => {
+		if (firstText.length < speech1.length) {
 			await new Promise(r => setTimeout(r, 50))
-			const newText = currentText + speech[currentText.length]
-			setCurrentText(newText)
+			const newText = firstText + speech1[firstText.length]
+			setFirstText(newText)
+		} else if (!firstLineDone) {
+			setFirstLineDone(true)
+			setSecondText(speech2[0])
+		}
+	}
+
+	useEffect(() => {
+		if (firstLineDone) {
+			updateSecondLine()
+		}
+	}, [secondText])
+
+	const updateSecondLine = async () => {
+		if (secondText.length < speech2.length) {
+			await new Promise(r => setTimeout(r, 50))
+			const newText = secondText + speech2[secondText.length]
+			setSecondText(newText)
 		}
 	}
 
@@ -39,7 +58,8 @@ function ImmigrationGate() {
 			>
 				<div className={classes.gate}>
 					<div className={classes.speech}>
-						<h2>{currentText}</h2>
+						<h2>{firstText}</h2>
+						<p>{secondText}</p>
 					</div>
 					<img aria-hidden src="assets/Immigration Room.svg" />
 					<img
@@ -53,7 +73,7 @@ function ImmigrationGate() {
 					className={classes.topLayer}
 					src="assets/Immigration Desks.svg"
 				/>
-				{currentText.length === speech.length && (
+				{secondText.length === speech2.length && (
 					<div className={classes.buttonGroup}>
 						<Button onClick={moveToPassport} className="primary">
 							I'm ready
