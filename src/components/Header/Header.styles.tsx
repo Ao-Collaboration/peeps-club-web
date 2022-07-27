@@ -32,7 +32,7 @@ const styles = {
 		textTransform: 'uppercase',
 		fontWeight: '900',
 		fontSize: '1.5rem',
-		padding: '1rem',
+		padding: '0 1rem',
 		'&:hover': {
 			textDecoration: 'underline',
 		},
