@@ -63,11 +63,11 @@ export const getFullDescription = (metadata: Trait[]) => {
 export const defaultPeep: Trait[] = [
 	{
 		trait_type: 'Tops',
-		value: 'Tucked Tank',
+		value: 'Black Tank Top',
 	},
 	{
 		trait_type: 'Bottoms',
-		value: 'Skinny Black Jeans',
+		value: 'Skinny Jeans',
 	},
 	{
 		trait_type: 'One Piece',
@@ -91,7 +91,7 @@ export const defaultPeep: Trait[] = [
 	},
 	{
 		trait_type: 'Eye Outline',
-		value: 'Eyelashes',
+		value: 'Classic Eyelashes',
 	},
 	{
 		trait_type: 'Eye Style',
@@ -155,6 +155,6 @@ export const defaultPeep: Trait[] = [
 	},
 	{
 		trait_type: 'Shoes',
-		value: 'Crocs',
+		value: 'None',
 	},
 ]
