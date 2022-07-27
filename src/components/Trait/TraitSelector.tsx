@@ -25,12 +25,12 @@ const TraitSelector: React.FC<Props> = ({ availableTraits }) => {
 	const categoryExampleImages = [
 		'Asymmetric Vitiligo',
 		'Almond',
-		'Moustache',
+		'Full Beard',
 		'Twin Braids',
 		'Mid Brown',
 		'Blue',
 		'Bow',
-		'Eyelashes',
+		'Classic Eyelashes',
 		'Meow',
 	]
 	const [selectedCategoryIndex, setSelectedCategoryIndex] = useState(-1)
