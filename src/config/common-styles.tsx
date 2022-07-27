@@ -6,7 +6,6 @@ export const translucent_section = {
 	padding: '0.8rem 2.5rem',
 	borderRadius: '5rem',
 	textAlign: 'center',
-	width: '40em',
 	display: 'flex',
 	flexDirection: 'column',
 	justifyContent: 'center',
@@ -35,6 +34,8 @@ export const mint_title = {
 	fontSize: '2.5rem',
 	padding: '1rem 2.5rem',
 	borderRadius: '5rem',
+	margin: '0.5em',
+	textAlign: 'center',
 }
 
 export const checklist = {

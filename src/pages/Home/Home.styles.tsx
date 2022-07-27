@@ -10,6 +10,8 @@ const styles = {
 	list: checklist,
 	buttonGroup: {
 		display: 'flex',
+		flexWrap: 'wrap',
+		justifyContent: 'center',
 	},
 }
 

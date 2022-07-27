@@ -15,11 +15,11 @@ const styles = {
 		fontSize: '2.5rem',
 		margin: '0.2rem',
 		padding: '0rem 2.5rem',
-
 		borderRadius: '5rem',
 	},
 	text: {
 		fontSize: '1.5rem',
+		padding: '1em',
 	},
 	list: checklist,
 	section: translucent_section,
