@@ -29,8 +29,8 @@ function Router() {
 	}
 	return (
 		<>
-			<Header />
 			<BrowserRouter>
+				<Header />
 				<Routes>
 					<Route path={HomeRoute.path} element={<Home />} />
 					{profile?.id && (
