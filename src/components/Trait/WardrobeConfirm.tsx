@@ -11,15 +11,18 @@ import useStyles from './WardrobeConfirm.styles'
 import { useNavigate } from 'react-router-dom'
 import { YourPeepRoute } from '../../pages/routes'
 import Loading from '../Loading/Loading'
+import { profile } from 'console'
+import { ProfileContext } from '../../context/Profile/ProfileContext'
 
 const WardrobeConfirm = () => {
 	const { metadata } = useContext(MetadataContext)
+	const { profile } = useContext(ProfileContext)
 	const { web3Provider } = useContext(Web3Context)
 	const [isLoading, setIsLoading] = useState(false)
 	const [pendingHash, setPendingHash] = useState<string | null>(null)
 	const navigate = useNavigate()
 
-	if (!metadata || !web3Provider) {
+	if (!metadata || !web3Provider || !profile) {
 		return <></>
 	}
 
@@ -51,7 +54,7 @@ const WardrobeConfirm = () => {
 			await tx.wait()
 			setPendingHash(null)
 
-			navigate(YourPeepRoute.path)
+			navigate(YourPeepRoute.path, { state: { uri: profile.id } })
 		} finally {
 			setIsLoading(false)
 		}

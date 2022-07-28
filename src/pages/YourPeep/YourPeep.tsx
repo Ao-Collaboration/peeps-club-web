@@ -6,11 +6,15 @@ import useStyles from './YourPeep.styles'
 import { ProfileContext } from '../../context/Profile/ProfileContext'
 import doFetch from '../../utils/doFetch'
 import { host } from '../../config/api'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { HomeRoute } from '../routes'
 import TwitterLogo from '../../components/Logo/TwitterLogo'
 import DiscordLogo from '../../components/Logo/DiscordLogo'
 import { greetings } from '../../config/text'
+
+interface propState {
+	uri: string
+}
 
 const YourPeep = () => {
 	const classes = useStyles()
@@ -23,7 +27,14 @@ const YourPeep = () => {
 	const [grannyGreeting, setGrannyGreeting] = useState('Hello')
 	const [officerGreeting, setOfficerGreeting] = useState('Bonjour!')
 
-	if (!metadata || !setMetadata || !web3Provider || !profile || !setProfile) {
+	if (
+		!metadata ||
+		!setMetadata ||
+		!web3Provider ||
+		!profile ||
+		!setProfile ||
+		!useLocation().state
+	) {
 		return <></>
 	}
 
@@ -31,6 +42,7 @@ const YourPeep = () => {
 		const i = Math.floor(Math.random() * greetings.length)
 		return greetings[i]
 	}
+	const { uri } = useLocation().state as propState
 
 	const changePhrase = (setGreeting: (text: string) => void) => {
 		setGreeting(getRandomGreeting())
@@ -38,12 +50,13 @@ const YourPeep = () => {
 
 	useEffect(() => {
 		const getYourPeep = async () => {
-			if (profile?.id) {
-				const peepImage = await getPeepFromURI(profile.id)
+			if (uri) {
+				const peepImage = await getPeepFromURI(uri)
 				setYourPeepImage(peepImage)
 
 				// reset metadata in case they want to mint another
 				setMetadata(JSON.parse(JSON.stringify(defaultPeep)))
+				setProfile({ address: profile.address })
 			}
 		}
 		getYourPeep()
