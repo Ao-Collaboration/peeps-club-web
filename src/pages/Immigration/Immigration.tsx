@@ -93,11 +93,6 @@ function Immigration() {
 							<img aria-hidden src={'/assets/passport_mid.svg'} />
 							{metadata && <Passport />}
 						</div>
-						<img
-							aria-hidden
-							className={classes.hands}
-							src={'/assets/passport_hands.svg'}
-						/>
 						<div className={classes.buttonGroup}>
 							{!isFlipped && (
 								<Button onClick={completePassport} className="primary">
@@ -105,6 +100,11 @@ function Immigration() {
 								</Button>
 							)}
 						</div>
+						<img
+							aria-hidden
+							className={classes.hands}
+							src={'/assets/passport_hands.svg'}
+						/>
 					</div>
 				</div>
 			</div>

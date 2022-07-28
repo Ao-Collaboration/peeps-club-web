@@ -90,13 +90,12 @@ const styles = {
 	hands: {
 		marginTop: '-3em',
 		zIndex: '100',
+		pointerEvents: 'none',
 	},
 	buttonGroup: {
-		position: 'absolute',
-		bottom: '3em',
-		left: '50%',
-		width: '400px',
 		zIndex: '1000',
+		display: 'flex',
+		justifyContent: 'center',
 	},
 	pageToFlip: {
 		position: 'absolute',
