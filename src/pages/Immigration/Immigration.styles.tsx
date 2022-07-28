@@ -8,7 +8,7 @@ const styles = {
 				transform: 'translate(0%, 150%)',
 			},
 			to: {
-				transform: 'translate(0%,  0%)',
+				transform: 'translate(0%, 0%)',
 			},
 		},
 		'@keyframes flip': {
@@ -21,27 +21,27 @@ const styles = {
 		},
 		'@keyframes stamp': {
 			'0%': {
-				transform: 'translate(0%,  -200%)',
+				transform: 'translate(0%, -200%)',
 			},
 			'50%': {
-				transform: 'translate(0%,  0%)',
+				transform: 'translate(0%, 0%)',
 			},
 			'100%': {
-				transform: 'translate(0%,  0%)',
+				transform: 'translate(0%, 0%)',
 			},
 		},
 		'@keyframes stamp_arm': {
 			'0%': {
-				transform: 'translate(0%,  -200%)',
+				transform: 'translate(0%, -200%)',
 			},
 			'50%': {
-				transform: 'translate(0%,  0%)',
+				transform: 'translate(0%, 0%)',
 			},
 			'55%': {
-				transform: 'translate(0%,  0%)',
+				transform: 'translate(0%, 0%)',
 			},
 			'100%': {
-				transform: 'translate(0%,  -300%)',
+				transform: 'translate(0%, -300%)',
 			},
 		},
 		'@keyframes squash_traits': {
@@ -130,8 +130,8 @@ const styles = {
 		width: '400px',
 		display: 'block',
 		marginLeft: '35%',
-		top: '-20%',
-		transform: 'translate(0%,  -200%)',
+		bottom: '15vh',
+		transform: 'translate(0%, -200%)',
 	},
 	pullUpPassportAnimation: {
 		animationName: 'passport',
