@@ -17,12 +17,16 @@ interface Props {
 	categories: CategoryName[]
 }
 
+interface StringMap {
+	[key: string]: string[]
+}
+
 const WardrobeTraitSelector: React.FC<Props> = ({ categories }) => {
 	const classes = useStyles()
 	const [selectedCategoryIndex, setSelectedCategoryIndex] = useState(-1)
 	const [isWardrobeOpen, setIsWardrobeOpen] = useState(false)
 	const [selectableTraits, setSelectableTraits] = useState<TraitOption[]>([])
-	const [exclusionList, setExclusionList] = useState<any>(null)
+	const [exclusionList, setExclusionList] = useState<StringMap>({})
 	const [isRequestDisplayed, setIsRequestDisplayed] = useState(false)
 
 	const { metadata, setMetadata, availableTraits } = useContext(MetadataContext)
