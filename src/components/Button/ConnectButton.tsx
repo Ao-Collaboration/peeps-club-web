@@ -45,15 +45,23 @@ function ConnectButton() {
 
 		const addr = accounts[0]
 
+		let name = null
 		try {
-			const name = await provider.lookupAddress(addr)
-			if (name) {
-				setAccount(name)
-				return
-			}
+			// ENS
+			name = await provider.lookupAddress(addr)
 		} catch (err) {
 			// This is fine
 			// console.log(err)
+		}
+		if (name) {
+			setAccount(name)
+		} else {
+			setAccount(
+				`${addr.substring(0, 5)}...${addr.substring(
+					addr.length - 4,
+					addr.length,
+				)}`,
+			)
 		}
 
 		if (profile) {
@@ -64,13 +72,6 @@ function ConnectButton() {
 		} else {
 			setProfile({ address: addr })
 		}
-
-		setAccount(
-			`${addr.substring(0, 5)}...${addr.substring(
-				addr.length - 4,
-				addr.length,
-			)}`,
-		)
 		setWeb3Provider(provider)
 	}
 
