@@ -64,33 +64,36 @@ const WardrobeTraitSelector: React.FC<Props> = ({ categories }) => {
 		}
 	}
 
+	const updateTrait = (category: CategoryName, value: string) => {
+		const updatedMetadata = [...metadata]
+		updatedMetadata.forEach(traitItem => {
+			if (traitItem.trait_type === category) {
+				traitItem.value = value
+			}
+		})
+		setMetadata(updatedMetadata)
+	}
+
 	// takes into account clothing types
 	const updateSelectedTrait = (categoryIndex: number, value: string) => {
 		const category = categories[categoryIndex]
-		const updatedMetadata = [...metadata]
-		const setValue = (c: string, v: string) => {
-			updatedMetadata.filter(item => {
-				return item.trait_type === c
-			})[0].value = v
-		}
-
 		if (['Tops', 'Bottoms', 'One Piece'].includes(category)) {
 			if (getSelectedTrait(category) === 'None') {
 				if (category === 'One Piece') {
-					setValue('Tops', 'None')
-					setValue('Bottoms', 'None')
+					updateTrait('Tops', 'None')
+					updateTrait('Bottoms', 'None')
 				} else {
-					setValue('One Piece', 'None')
+					updateTrait('One Piece', 'None')
 					if (category === 'Tops') {
-						setValue('Bottoms', 'Skinny Black Jeans')
+						updateTrait('Bottoms', 'Skinny Black Jeans')
 					} else {
-						setValue('Tops', 'Purple Tank')
+						updateTrait('Tops', 'Tucked Tank')
 					}
 				}
 			}
 		}
-		setValue(category, value)
-		setMetadata(updatedMetadata)
+
+		updateTrait(category, value)
 	}
 
 	const getSelectedTrait = (category: string) => {
@@ -110,8 +113,22 @@ const WardrobeTraitSelector: React.FC<Props> = ({ categories }) => {
 
 	// check metadata against exclusions list to ensure they are valid
 	const validateMetadata = (testMetadata: Trait[]) => {
+		let tops = false,
+			bottoms = false,
+			onePiece = false
 		for (let i = 0; i < testMetadata.length; i++) {
 			const trait = testMetadata[i]
+
+			// count tops/bottoms
+			if (trait.trait_type === 'Tops' && trait.value !== 'None') {
+				tops = true
+			} else if (trait.trait_type === 'Bottoms' && trait.value !== 'None') {
+				bottoms = true
+			} else if (trait.trait_type === 'One Piece' && trait.value !== 'None') {
+				onePiece = true
+			}
+
+			// check exclusions
 			if (exclusionList[trait.value]) {
 				const rule = exclusionList[trait.value]
 				for (let j = 0; j < rule.length; j++) {
@@ -127,7 +144,8 @@ const WardrobeTraitSelector: React.FC<Props> = ({ categories }) => {
 				}
 			}
 		}
-		return true
+
+		return (tops && bottoms && !onePiece) || (!tops && !bottoms && onePiece)
 	}
 
 	// attempt to place and new trait and reset an offending category (must be tested to ensure validity)
