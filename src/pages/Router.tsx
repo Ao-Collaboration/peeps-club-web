@@ -14,7 +14,8 @@ import Airplane from './Airplane/Airplane'
 import Immigration from './Immigration/Immigration'
 import { useContext } from 'react'
 import { Web3Context } from '../context/Web3/Web3Context'
-import ConnectWallet from './ConnectWallet/ConnectWallet'
+// import ConnectWallet from './ConnectWallet/ConnectWallet'
+import ComingSoon from './ConnectWallet/ComingSoon'
 import Header from '../components/Header/Header'
 import Wardrobe from './Wardrobe/Wardrobe'
 import ImmigrationIntro from './Immigration/ImmigrationIntro'
@@ -32,7 +33,8 @@ function Router() {
 		return (
 			<BrowserRouter>
 				<Header />
-				<ConnectWallet />
+				{/* <ConnectWallet /> */}
+				<ComingSoon />
 			</BrowserRouter>
 		)
 	}
