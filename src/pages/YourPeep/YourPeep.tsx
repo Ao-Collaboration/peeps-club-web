@@ -82,7 +82,7 @@ const YourPeep = () => {
 				<Link className={classes.button} to={HomeRoute.path}>
 					Mint another?
 				</Link>
-				<span>Come join us at...</span>
+				<span className={classes.enlarge}>Come join us at...</span>
 				<a
 					href="https://discord.gg/peepsclub"
 					target="_blank"
