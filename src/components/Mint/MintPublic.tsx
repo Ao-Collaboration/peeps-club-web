@@ -6,6 +6,7 @@ import passportABI from '../../abi/passportABI.json'
 import Mint from './Mint'
 import ReactGA from 'react-ga'
 import Loading from '../Loading/Loading'
+import { toast } from 'react-toastify'
 
 interface Props {
 	price: BigNumber
@@ -80,6 +81,13 @@ const MintPublic: React.FC<Props> = ({
 				],
 			})
 			onMint()
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		} catch (err: any) {
+			if (err?.error?.code === -32000) {
+				toast.error('You don\'t have enough ETH!')
+			} else {
+				toast.error('Unable to mint!')
+			}
 		} finally {
 			setIsLoading(false)
 		}

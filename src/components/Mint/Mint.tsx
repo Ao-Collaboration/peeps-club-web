@@ -66,22 +66,29 @@ const Mint: React.FC<Props> = ({
 						<span>* exclusing GAS</span>
 					</div>
 				</div>
-				<hr />
-				<div className={classes.termsCheck}>
-					<input
-						type="checkbox"
-						onChange={event => {
-							setAgreesToTerms(event.currentTarget.checked)
-						}}
-						id="termsCheckbox"
-					/>
-					<label htmlFor="termsCheckbox">
-						I have read the terms and conditions
-					</label>
-				</div>
-				<div className={classes.termsCheck}>
-					<input type="checkbox" id="nzCheckbox" />
-					<label htmlFor="nzCheckbox">I am purchasing from New Zealand</label>
+				<div className={classes.checkBoxList}>
+					<div className={classes.termsCheck}>
+						<input
+							type="checkbox"
+							onChange={event => {
+								setAgreesToTerms(event.currentTarget.checked)
+							}}
+							id="termsCheckbox"
+						/>
+						<label htmlFor="termsCheckbox">
+							I have read the{' '}
+							<a
+								href="https://peeps.club/terms-and-conditions"
+								target={'_blank'}
+							>
+								terms and conditions
+							</a>
+						</label>
+					</div>
+					<div className={classes.termsCheck}>
+						<input type="checkbox" id="nzCheckbox" />
+						<label htmlFor="nzCheckbox">I am purchasing from New Zealand</label>
+					</div>
 				</div>
 			</div>
 			<div className={classes.row}>

@@ -19,3 +19,5 @@ export const translucent_white = '#ffffffc9'
 export const red = '#ff0000'
 
 export const spinnerColour = black
+
+export const TOAST_THEME = 'dark'

@@ -58,6 +58,7 @@ function ConnectButton() {
 
 		if (profile) {
 			if (profile.address !== addr) {
+				setProfile({ address: addr })
 				navigate(HomeRoute.path)
 			}
 		} else {
