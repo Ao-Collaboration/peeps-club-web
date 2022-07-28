@@ -117,7 +117,7 @@ const MintSigned: React.FC<Props> = ({ onMint }) => {
 				<Loading hash={pendingHash} />
 			) : (
 				<Mint
-					isPublic={true}
+					isPublic={false}
 					max={maxQuantity}
 					onMint={mint}
 					price={price}
