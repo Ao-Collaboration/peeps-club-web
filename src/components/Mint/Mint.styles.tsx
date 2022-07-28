@@ -67,6 +67,9 @@ const styles = {
 			cursor: 'default',
 		},
 	},
+	checkBoxList: {
+		padding: '1em',
+	},
 	termsCheck: {
 		margin: '0 auto',
 		fontSize: '1rem',
