@@ -1,7 +1,6 @@
 import { HashRouter, Route, Routes } from 'react-router-dom'
 import {
 	AirplaneRoute,
-	AnotherDeviceRoute,
 	HomeRoute,
 	ImmigrationGateRoute,
 	ImmigrationIntroRoute,
@@ -21,7 +20,6 @@ import ImmigrationIntro from './Immigration/ImmigrationIntro'
 import ImmigrationGate from './Immigration/ImmigrationGate'
 import { ProfileContext } from '../context/Profile/ProfileContext'
 import YourPeep from './YourPeep/YourPeep'
-import AnotherDevice from './AnotherDevice/AnotherDevice'
 
 function Router() {
 	const { web3Provider } = useContext(Web3Context)
@@ -42,7 +40,6 @@ function Router() {
 				<Header />
 				<Routes>
 					<Route path={HomeRoute.path} element={<Home />} />
-					<Route path={AnotherDeviceRoute.path} element={<AnotherDevice />} />
 					<Route path={YourPeepRoute.path} element={<YourPeep />} />
 					{profile?.id && (
 						<>
