@@ -17,12 +17,16 @@ interface Props {
 	categories: CategoryName[]
 }
 
+interface StringMap {
+	[key: string]: string[]
+}
+
 const WardrobeTraitSelector: React.FC<Props> = ({ categories }) => {
 	const classes = useStyles()
 	const [selectedCategoryIndex, setSelectedCategoryIndex] = useState(-1)
 	const [isWardrobeOpen, setIsWardrobeOpen] = useState(false)
 	const [selectableTraits, setSelectableTraits] = useState<TraitOption[]>([])
-	const [exclusionList, setExclusionList] = useState<string[][]>([])
+	const [exclusionList, setExclusionList] = useState<StringMap>({})
 	const [isRequestDisplayed, setIsRequestDisplayed] = useState(false)
 
 	const { metadata, setMetadata, availableTraits } = useContext(MetadataContext)
@@ -32,12 +36,12 @@ const WardrobeTraitSelector: React.FC<Props> = ({ categories }) => {
 	}
 
 	useEffect(() => {
-		const getExclusions = async () => {
+		const getExclusionsList = async () => {
 			const exclusions = await doFetch(`${host}/peep/exclusions`, 'GET')
 			setExclusionList(exclusions)
 		}
 
-		getExclusions()
+		getExclusionsList()
 	}, [])
 
 	useEffect(() => {
@@ -111,21 +115,16 @@ const WardrobeTraitSelector: React.FC<Props> = ({ categories }) => {
 	const validateMetadata = (testMetadata: Trait[]) => {
 		for (let i = 0; i < testMetadata.length; i++) {
 			const trait = testMetadata[i]
-			for (let j = 0; j < exclusionList.length; j++) {
-				const traitPair = exclusionList[j]
-
-				let valueToFind = ''
-				if (traitPair[0] === trait.value) {
-					valueToFind = traitPair[1]
-				} else if (traitPair[1] === trait.value) {
-					valueToFind = traitPair[0]
-				}
-
-				if (valueToFind.length > 0) {
+			if (exclusionList[trait.value]) {
+				const rule = exclusionList[trait.value]
+				for (let j = 0; j < rule.length; j++) {
+					const x = rule[j]
 					for (let k = 0; k < testMetadata.length; k++) {
-						const traitAgain = testMetadata[k]
-						if (traitAgain.value === valueToFind) {
-							return false
+						const otherTraits = testMetadata[k]
+						if (otherTraits.trait_type !== trait.trait_type) {
+							if (x === otherTraits.value) {
+								return false
+							}
 						}
 					}
 				}
@@ -137,32 +136,32 @@ const WardrobeTraitSelector: React.FC<Props> = ({ categories }) => {
 	// attempt to place and new trait and reset an offending category (must be tested to ensure validity)
 	const resolve = (categoryToReset: CategoryName, updatedTrait: Trait) => {
 		const updatedMetadata: Trait[] = JSON.parse(JSON.stringify(metadata))
+		//set ideal trait
 		updatedMetadata.forEach(item => {
-			//set new trait
 			if (item.trait_type === updatedTrait.trait_type) {
 				item.value = updatedTrait.value
 			}
-			//test the default replacement
+		})
+		updatedMetadata.forEach(item => {
 			if (item.trait_type === categoryToReset) {
+				//test the default replacement
 				const defaultValue = defaultPeep.filter(trait => {
 					return trait.trait_type === categoryToReset
 				})[0].value
 				item.value = defaultValue
 
 				// try all others from category if replacement doesn't work
-				if (!validateMetadata(updatedMetadata)) {
-					let exhaustedOptions = false
-					let index = 0
-					while (!validateMetadata(updatedMetadata) || exhaustedOptions) {
-						try {
-							item.value = availableTraits.filter(traitCategory => {
-								return traitCategory.category === categoryToReset
-							})[0].items[index].name
-						} catch {
-							exhaustedOptions = true
-						}
-						index++
+				let exhaustedOptions = false
+				let index = 0
+				while (!validateMetadata(updatedMetadata) && !exhaustedOptions) {
+					try {
+						item.value = availableTraits.filter(traitCategory => {
+							return traitCategory.category === categoryToReset
+						})[0].items[index].name
+					} catch {
+						exhaustedOptions = true
 					}
+					index++
 				}
 			}
 		})
@@ -180,25 +179,18 @@ const WardrobeTraitSelector: React.FC<Props> = ({ categories }) => {
 	// find exclusions on a particular trait
 	const getExclusions = (traitName: string) => {
 		const exclusions: Trait[] = []
-		exclusionList.forEach(traitPair => {
-			if (traitPair.includes(traitName)) {
+		if (exclusionList[traitName]) {
+			exclusionList[traitName].forEach((exclude: string) => {
 				metadata.forEach(trait => {
-					if (traitPair.includes(trait.value)) {
-						if (traitPair[0] === traitName) {
-							exclusions.push({
-								trait_type: trait.trait_type,
-								value: traitPair[1],
-							})
-						} else {
-							exclusions.push({
-								trait_type: trait.trait_type,
-								value: traitPair[0],
-							})
-						}
+					if (exclude === trait.value) {
+						exclusions.push({
+							trait_type: trait.trait_type,
+							value: exclude,
+						})
 					}
 				})
-			}
-		})
+			})
+		}
 		return exclusions
 	}
 
@@ -267,6 +259,8 @@ const WardrobeTraitSelector: React.FC<Props> = ({ categories }) => {
 		const traitName = trait.name
 		const exclusions: Trait[] = getExclusions(traitName)
 
+		const disabled = isDisabled(exclusions, trait, category)
+
 		// hide None options on tops/bottoms/one-piece
 		if (
 			['Tops', 'Bottoms', 'One Piece', 'District', 'Time'].includes(category) &&
@@ -285,10 +279,9 @@ const WardrobeTraitSelector: React.FC<Props> = ({ categories }) => {
 						traitName === getSelectedTrait(category) ? classes.underlined : ''
 					}`}
 					onClick={() => {
-						!isDisabled(exclusions, trait, category) &&
-							selectTraitHangar(trait, category, exclusions)
+						!disabled && selectTraitHangar(trait, category, exclusions)
 					}}
-					aria-disabled={isDisabled(exclusions, trait, category)}
+					aria-disabled={disabled}
 					aria-label={traitName}
 				>
 					<div
@@ -321,9 +314,7 @@ const WardrobeTraitSelector: React.FC<Props> = ({ categories }) => {
 				</button>
 				<img
 					aria-hidden
-					className={`${classes.hangerImage} ${
-						isDisabled(exclusions, trait, category) && classes.disabled
-					}`}
+					className={`${classes.hangerImage} ${disabled && classes.disabled}`}
 					src={'/assets/Trait Hanger Asset.svg'}
 				/>
 			</div>
