@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom'
 import { MetadataContext } from '../../context/Metadata/MetadataContext'
 import { Category } from '../../interface/availableTraits'
 import { AnotherDeviceRoute, ImmigrationIntroRoute } from '../routes'
+import { tableOrMobileQuery } from '../../utils/mediaQuery'
 import { useMediaQuery } from 'react-responsive'
 import Button from '../../components/Button/Button'
 
@@ -23,7 +24,7 @@ const Airplane = () => {
 		return <></>
 	}
 
-	const isTabletOrMobile = useMediaQuery({ query: '(max-width: 1224px)' })
+	const isTabletOrMobile = useMediaQuery({ query: tableOrMobileQuery })
 
 	useEffect(() => {
 		if (isTabletOrMobile) {
