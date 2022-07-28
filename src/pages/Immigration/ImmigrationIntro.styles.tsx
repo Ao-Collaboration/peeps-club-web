@@ -63,6 +63,12 @@ const styles = {
 		animationTimingFunction: 'linear',
 		onIterationCount: '1',
 	},
+	skipButton: {
+		position: 'absolute',
+		bottom: '1em',
+		right: '1em',
+		zIndex: '1000',
+	},
 }
 
 export default createUseStyles(styles)

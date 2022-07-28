@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { HashRouter, Route, Routes } from 'react-router-dom'
 import {
 	AirplaneRoute,
 	AnotherDeviceRoute,
@@ -30,15 +30,15 @@ function Router() {
 	if (!web3Provider) {
 		// Require wallet connection
 		return (
-			<BrowserRouter>
+			<HashRouter>
 				<Header />
 				<ConnectWallet />
-			</BrowserRouter>
+			</HashRouter>
 		)
 	}
 	return (
 		<>
-			<BrowserRouter>
+			<HashRouter>
 				<Header />
 				<Routes>
 					<Route path={HomeRoute.path} element={<Home />} />
@@ -60,7 +60,7 @@ function Router() {
 						</>
 					)}
 				</Routes>
-			</BrowserRouter>
+			</HashRouter>
 		</>
 	)
 }

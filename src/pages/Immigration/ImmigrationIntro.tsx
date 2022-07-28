@@ -4,12 +4,17 @@ import useStyles from './ImmigrationIntro.styles'
 import { useNavigate } from 'react-router-dom'
 import { useState } from 'react'
 import { ImmigrationGateRoute } from '../routes'
+import Button from '../../components/Button/Button'
 
 function ImmigrationIntro() {
 	const classes = useStyles()
 	const [startZoom, setStartZoom] = useState(false)
 
 	const navigate = useNavigate()
+
+	const next = () => {
+		navigate(ImmigrationGateRoute.path)
+	}
 
 	return (
 		<>
@@ -23,11 +28,14 @@ function ImmigrationIntro() {
 			/>
 			<div
 				className={`${classes.gate} ${startZoom && classes.zoom}`}
-				onAnimationEnd={() => {
-					navigate(ImmigrationGateRoute.path)
-				}}
+				onAnimationEnd={next}
 			>
 				<img src="assets/Immigration Gate.svg" />
+			</div>
+			<div className={classes.skipButton}>
+				<Button onClick={next} className="primary">
+					Skip
+				</Button>
 			</div>
 		</>
 	)

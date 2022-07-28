@@ -8,6 +8,7 @@ import { MetadataContext } from '../../context/Metadata/MetadataContext'
 import { Category } from '../../interface/availableTraits'
 import { AnotherDeviceRoute, ImmigrationIntroRoute } from '../routes'
 import { useMediaQuery } from 'react-responsive'
+import Button from '../../components/Button/Button'
 
 const Airplane = () => {
 	const classes = useStyles()
@@ -116,12 +117,12 @@ const Airplane = () => {
 									})
 									.map(option => (
 										<a
-											href="#"
 											tabIndex={0}
 											aria-label={option.name}
 											key={option.name}
 											onClick={() => {
 												startLanding(option.name)
+												return false
 											}}
 										>
 											{option.name}
@@ -134,6 +135,13 @@ const Airplane = () => {
 					<SVG src={'/assets/Cloud 1 Asset.svg'} />
 				</div>
 			</div>
+			{ isLanding && 
+				<div className={classes.skipButton}>
+					<Button onClick={isDone} className="primary">
+						Skip
+					</Button>
+				</div>
+			}
 		</>
 	)
 }
