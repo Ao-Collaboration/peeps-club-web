@@ -51,8 +51,20 @@ const MetadataContextProvider: FC<Props> = ({ children }) => {
 	}, [profile])
 
 	useEffect(() => {
-		setMetadata(JSON.parse(JSON.stringify(defaultPeep)))
+		// load metadata from local storage if it exists
+		const local = localStorage.getItem('metadata')
+		if (local === null) {
+			setMetadata(JSON.parse(JSON.stringify(defaultPeep)))
+		} else {
+			setMetadata(JSON.parse(local))
+		}
 	}, [])
+
+	useEffect(() => {
+		if (metadata && metadata.length > 0) {
+			localStorage.setItem('metadata', JSON.stringify(metadata))
+		}
+	}, [metadata])
 
 	return (
 		<MetadataContext.Provider
