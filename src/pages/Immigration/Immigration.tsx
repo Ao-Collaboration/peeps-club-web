@@ -41,8 +41,18 @@ function Immigration() {
 		}
 	}
 
+	const finishButton = (
+		<div className={classes.buttonGroup}>
+			{!isFlipped && (
+				<Button onClick={completePassport} className="primary">
+					Finished
+				</Button>
+			)}
+		</div>
+	)
+
 	return (
-		<>
+		<div className={classes.background}>
 			<FadeTo
 				onAnimationEnd={moveToClothing}
 				color={black}
@@ -50,7 +60,7 @@ function Immigration() {
 				isFading={true}
 			/>
 			<div
-				className={isTabletOrMobile ? classes.page : classes.pageLarge}
+				className={classes.pageLarge}
 				aria-description="You walk towards the immigration gates"
 			>
 				{isFlipped && (
@@ -68,18 +78,17 @@ function Immigration() {
 					</>
 				)}
 				<div
-					className={`${classes.passport} ${classes.pullUpPassportAnimation}`}
+					className={
+						isTabletOrMobile ? classes.passportSmall : `${classes.passport} ${classes.pullUpPassportAnimation}`
+					}
 				>
-					{availableTraits && (
-						<div
-							className={`${classes.traitsContainer} ${
-								isFlipped && classes.squashTraitsAnimation
-							}`}
-						>
-							<TraitSelector availableTraits={availableTraits} />
-						</div>
-					)}
-					<div className={classes.passportContainer}>
+					<div
+						className={
+							isTabletOrMobile
+								? classes.passportContainerSmall
+								: classes.passportContainer
+						}
+					>
 						<img aria-hidden src={'/assets/passport_top.svg'} />
 						<img
 							aria-hidden
@@ -91,24 +100,37 @@ function Immigration() {
 						/>
 						<div className={classes.bottom}>
 							<img aria-hidden src={'/assets/passport_mid.svg'} />
-							{metadata && <Passport />}
-						</div>
-						<div className={classes.buttonGroup}>
-							{!isFlipped && (
-								<Button onClick={completePassport} className="primary">
-									Finished
-								</Button>
+							{metadata && (
+								<Passport
+									finishButton={isTabletOrMobile ? finishButton : null}
+								/>
 							)}
 						</div>
-						<img
-							aria-hidden
-							className={classes.hands}
-							src={'/assets/passport_hands.svg'}
-						/>
+						{!isTabletOrMobile && finishButton}
+						{!isTabletOrMobile && (
+							<img
+								aria-hidden
+								className={classes.hands}
+								src={'/assets/passport_hands.svg'}
+							/>
+						)}
 					</div>
 				</div>
 			</div>
-		</>
+			<div>
+				{availableTraits && (
+					<div
+						className={`${
+							isTabletOrMobile
+								? classes.traitsContainerSmall
+								: classes.traitsContainer
+						} ${isFlipped && classes.squashTraitsAnimation}`}
+					>
+						<TraitSelector availableTraits={availableTraits} />
+					</div>
+				)}
+			</div>
+		</div>
 	)
 }
 

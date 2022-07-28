@@ -57,14 +57,23 @@ const styles = {
 			},
 		},
 	},
-	page: {
+	background: {
 		backgroundColor: dark_grey,
 		backgroundSize: 'cover',
+		position: 'absolute',
+		top: 0,
+		width: '100vw',
+		height: '100vh',
+		zIndex: -100,
+		overflow: 'hidden',
+	},
+	page: {
 		minHeight: '100vh',
-		minWidth: '100vw',
 		position: 'absolute',
 		top: '0',
-		zIndex: '-100',
+		paddingTop: '50px',
+		boxSizing: 'border-box',
+		width: '100vw',
 	},
 	pageLarge: {
 		composes: '$page',
@@ -76,12 +85,19 @@ const styles = {
 		alignItems: 'center',
 		justifyContent: 'center',
 		height: '100vh',
-		transform: 'translate(0%, 150%)',
+	},
+	passportSmall: {
+		composes: '$passport',
+		height: '80px',
+		marginLeft: '150px',
 	},
 	passportContainer: {
 		display: 'flex',
 		flexDirection: 'column',
-		marginLeft: '-10em',
+	},
+	passportContainerSmall: {
+		composes: '$passportContainer',
+		transform: 'scale(0.7)',
 	},
 	bottom: {
 		width: 'auto',
@@ -146,8 +162,14 @@ const styles = {
 		onIterationCount: '1',
 	},
 	traitsContainer: {
+		position: 'absolute',
+		top: 0,
 		width: '250px',
 		zIndex: '1000',
+	},
+	traitsContainerSmall: {
+		composes: '$traitsContainer',
+		width: '150px',
 	},
 	squashTraitsAnimation: {
 		animationName: 'squash_traits',

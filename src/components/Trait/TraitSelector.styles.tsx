@@ -6,9 +6,14 @@ const styles = {
 	container: {
 		width: '100%',
 		backgroundColor: '#ffdb13',
-		marginTop: '10em',
 		zIndex: '1000',
 		border: `3px solid ${peeps_darkblue}`,
+		marginTop: '60px',
+		boxSizing: 'border-box',
+		maxHeight: 'calc(100vh - 61px)',
+		overflowY: 'hidden',
+		display: 'flex',
+		flexDirection: 'column',
 	},
 	tabs: {
 		display: 'flex',
@@ -38,7 +43,7 @@ const styles = {
 		padding: '0.5em',
 		gridGap: '0.5em',
 		gridTemplateColumns: '1fr 1fr',
-		height: '400px',
+		height: '100%',
 		overflowY: 'scroll',
 		'& div': {
 			width: '100%',
