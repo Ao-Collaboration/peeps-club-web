@@ -3,7 +3,6 @@ import { getPeepsContractId } from '../../config/contract'
 import { HomeRoute } from '../../pages/routes'
 import DiscordLogo from '../Logo/DiscordLogo'
 import EtherscanLogo from '../Logo/EtherscanLogo'
-import OpenseaLogo from '../Logo/OpenseaLogo'
 import TwitterLogo from '../Logo/TwitterLogo'
 import useStyles from './Header.styles'
 
