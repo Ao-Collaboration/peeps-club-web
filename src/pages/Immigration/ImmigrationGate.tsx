@@ -17,7 +17,7 @@ function ImmigrationGate() {
 		navigate(ImmigrationRoute.path)
 	}
 
-	const speech1 = 'Welcome to Peeps Club World!'
+	const speech1 = 'Welcome to Peeps Club!'
 	const speech2 = 'Please have your passport ready for inspection.'
 
 	useEffect(() => {
