@@ -25,9 +25,6 @@ function Header() {
 				<a href={`https://etherscan.io/address/${getPeepsContractId(1)}`} className={classes.link}>
 					<EtherscanLogo className="small" />
 				</a>
-				<a href="https://opensea.io/collection/peeps-club" className={classes.link}>
-					<OpenseaLogo className="small" />
-				</a>
 			</nav>
 		</div>
 	)
