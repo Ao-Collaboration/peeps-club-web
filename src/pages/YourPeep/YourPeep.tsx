@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from 'react'
 import { MetadataContext } from '../../context/Metadata/MetadataContext'
 import { Web3Context } from '../../context/Web3/Web3Context'
-import { getTrait } from '../../interface/metadata'
+import { defaultPeep, getTrait } from '../../interface/metadata'
 import useStyles from './YourPeep.styles'
 import { ProfileContext } from '../../context/Profile/ProfileContext'
 import doFetch from '../../utils/doFetch'
@@ -14,16 +14,16 @@ import { greetings } from '../../config/text'
 
 const YourPeep = () => {
 	const classes = useStyles()
-	const { metadata } = useContext(MetadataContext)
+	const { metadata, setMetadata } = useContext(MetadataContext)
 	const { web3Provider } = useContext(Web3Context)
-	const { profile } = useContext(ProfileContext)
+	const { profile, setProfile } = useContext(ProfileContext)
 	const [yourPeepImage, setYourPeepImage] = useState('')
 	const [milkyGreeting, setMilkyGreeting] = useState('Aloha')
 	const [jonoGreeting, setJonoGreeting] = useState('Ciao')
 	const [grannyGreeting, setGrannyGreeting] = useState('Hello')
 	const [officerGreeting, setOfficerGreeting] = useState('Bonjour!')
 
-	if (!metadata || !web3Provider || !profile || !profile.id) {
+	if (!metadata || !setMetadata || !web3Provider || !profile || !setProfile) {
 		return <></>
 	}
 
@@ -41,6 +41,9 @@ const YourPeep = () => {
 			if (profile?.id) {
 				const peepImage = await getPeepFromURI(profile.id)
 				setYourPeepImage(peepImage)
+
+				// reset metadata in case they want to mint another
+				setMetadata(JSON.parse(JSON.stringify(defaultPeep)))
 			}
 		}
 		getYourPeep()

@@ -7,13 +7,16 @@ import Button from './Button'
 import { ethers } from 'ethers'
 import { Web3Context } from '../../context/Web3/Web3Context'
 import { ProfileContext } from '../../context/Profile/ProfileContext'
+import { useNavigate } from 'react-router-dom'
+import { HomeRoute } from '../../pages/routes'
 
 // import { host } from '../../config/api'
 // import doFetch from '../../utils/doFetch'
 
 function ConnectButton() {
 	const { account, setAccount, setWeb3Provider } = useContext(Web3Context)
-	const { setProfile } = useContext(ProfileContext)
+	const { profile, setProfile } = useContext(ProfileContext)
+	const navigate = useNavigate()
 	if (!setAccount || !setWeb3Provider || !setProfile) {
 		return <></>
 	}
@@ -53,7 +56,13 @@ function ConnectButton() {
 			// console.log(err)
 		}
 
-		setProfile({ address: addr })
+		if (profile) {
+			if (profile.address !== addr) {
+				navigate(HomeRoute.path)
+			}
+		} else {
+			setProfile({ address: addr })
+		}
 
 		setAccount(
 			`${addr.substring(0, 5)}...${addr.substring(
