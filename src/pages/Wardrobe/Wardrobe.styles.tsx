@@ -11,9 +11,11 @@ const styles = {
 		top: '0',
 		overflow: 'hidden',
 	},
-	page: {
+	background: {
 		composes: '$layer',
 		backgroundImage: 'url("assets/Room Base Asset.svg")',
+		backgroundSize: 'auto 100%',
+		height: '100vh',
 		zIndex: '-2000',
 		pointerEvents: 'none',
 	},
@@ -38,10 +40,18 @@ const styles = {
 		},
 	},
 	container: {
+		position: 'absolute',
+		bottom: '35px',
+		left: '50%',
+		transform: 'translate(-50%, 0)',
 		margin: 'auto',
-		marginTop: '5rem',
 		display: 'flex',
 		justifyContent: 'center',
+	},
+	containerSmall: {
+		composes: '$container',
+		transform: 'translate(-50%, 25%) scale(0.5)',
+		bottom: '16.5px',
 	},
 	navpanel: {
 		width: '4em',
@@ -69,7 +79,7 @@ const styles = {
 		backgroundPositionY: '100%',
 		backgroundSize: '600px',
 		marginLeft: '5em',
-		marginTop: '2.6em',
+		marginTop: '15px',
 	},
 	mirror: {
 		width: '22.5em',
