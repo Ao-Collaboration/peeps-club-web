@@ -64,7 +64,7 @@ const YourPeep = () => {
 
 	const getPeepFromURI = async (peepURI: string) => {
 		const svg = await doFetch(
-			`${host}/peep/${peepURI}.svg/`,
+			`${host}/peep/${peepURI}.svg`,
 			'GET',
 			undefined,
 			'image/svg+xml',

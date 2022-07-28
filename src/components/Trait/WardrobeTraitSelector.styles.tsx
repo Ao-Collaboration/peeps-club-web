@@ -97,7 +97,7 @@ const styles = {
 		marginTop: '2em',
 	},
 	category: {
-		fontSize: '2em',
+		fontSize: '1.8em',
 		padding: '0.2em',
 		textAlign: 'right',
 		cursor: 'pointer',

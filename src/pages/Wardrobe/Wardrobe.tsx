@@ -35,6 +35,7 @@ function Wardrobe() {
 		'Front Accessory',
 		'Rear Accessory',
 		'Pose',
+		'Clothing Accessory',
 	]
 	type CategorySelection = 'Area' | 'Peep' | 'Outfit'
 
