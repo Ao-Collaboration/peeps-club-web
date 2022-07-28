@@ -30,7 +30,10 @@ function ConnectWallet() {
 				<ConnectButton />
 			</div>
 			<p className={classes.text}>
-				Not sure about what a wallet is or how to connect? Find out more here
+				Not sure about what a wallet is or how to connect? Find out more{' '}
+				<a href="https://peeps.club/faqs" target={'_blank'}>
+					here
+				</a>
 			</p>
 		</div>
 	)
