@@ -141,6 +141,8 @@ const styles = {
 	landingLinks: {
 		borderRadius: '0 0 2em 2em',
 		backgroundColor: white,
+		maxHeight: '50vh',
+		overflowY: 'auto',
 		width: '60%',
 		margin: 'auto',
 		marginTop: '-8px',
