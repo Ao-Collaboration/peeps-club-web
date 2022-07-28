@@ -8,6 +8,8 @@ import Passport from '../../components/Passport/Passport'
 import Button from '../../components/Button/Button'
 import { useNavigate } from 'react-router-dom'
 import { WardrobeRoute } from '../routes'
+import { useMediaQuery } from 'react-responsive'
+import { tableOrMobileQuery } from '../../utils/mediaQuery'
 
 function Immigration() {
 	const classes = useStyles()
@@ -20,6 +22,8 @@ function Immigration() {
 	if (!metadata || !setMetadata || !availableTraits) {
 		return <></>
 	}
+
+	const isTabletOrMobile = useMediaQuery({ query: tableOrMobileQuery })
 
 	const completePassport = () => {
 		const form = document.getElementById('passportForm') as HTMLFormElement
@@ -46,7 +50,7 @@ function Immigration() {
 				isFading={true}
 			/>
 			<div
-				className={classes.page}
+				className={isTabletOrMobile ? classes.page : classes.pageLarge}
 				aria-description="You walk towards the immigration gates"
 			>
 				{isFlipped && (

@@ -37,13 +37,13 @@ const styles = {
 		display: 'grid',
 		padding: '0.5em',
 		gridGap: '0.5em',
-		gridTemplateColumns: '48% 48%',
+		gridTemplateColumns: '1fr 1fr',
 		height: '400px',
-		overflow: 'scroll',
+		overflowY: 'scroll',
 		'& div': {
 			width: '100%',
 			'& input': {
-				width: '80%',
+				maxWidth: '80%',
 				margin: 'auto',
 				display: 'block',
 			},
@@ -53,6 +53,10 @@ const styles = {
 				margin: '0',
 			},
 		},
+	},
+	thumbnailsSmall: {
+		composes: '$thumbnails',
+		gridTemplateColumns: '1fr',
 	},
 	selected: {
 		backgroundColor: white,

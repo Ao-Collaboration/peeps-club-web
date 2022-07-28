@@ -60,11 +60,15 @@ const styles = {
 	page: {
 		backgroundColor: dark_grey,
 		backgroundSize: 'cover',
-		height: '100vh',
-		width: '100vw',
+		minHeight: '100vh',
+		minWidth: '100vw',
 		position: 'absolute',
 		top: '0',
 		zIndex: '-100',
+	},
+	pageLarge: {
+		composes: '$page',
+		height: '100vh',
 		overflow: 'hidden',
 	},
 	passport: {
