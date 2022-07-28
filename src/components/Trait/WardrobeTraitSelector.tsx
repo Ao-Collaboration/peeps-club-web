@@ -64,36 +64,33 @@ const WardrobeTraitSelector: React.FC<Props> = ({ categories }) => {
 		}
 	}
 
-	const updateTrait = (category: CategoryName, value: string) => {
-		const updatedMetadata = [...metadata]
-		updatedMetadata.forEach(traitItem => {
-			if (traitItem.trait_type === category) {
-				traitItem.value = value
-			}
-		})
-		setMetadata(updatedMetadata)
-	}
-
 	// takes into account clothing types
 	const updateSelectedTrait = (categoryIndex: number, value: string) => {
 		const category = categories[categoryIndex]
+		const updatedMetadata = [...metadata]
+		const setValue = (c: string, v: string) => {
+			updatedMetadata.filter(item => {
+				return item.trait_type === c
+			})[0].value = v
+		}
+
 		if (['Tops', 'Bottoms', 'One Piece'].includes(category)) {
 			if (getSelectedTrait(category) === 'None') {
 				if (category === 'One Piece') {
-					updateTrait('Tops', 'None')
-					updateTrait('Bottoms', 'None')
+					setValue('Tops', 'None')
+					setValue('Bottoms', 'None')
 				} else {
-					updateTrait('One Piece', 'None')
+					setValue('One Piece', 'None')
 					if (category === 'Tops') {
-						updateTrait('Bottoms', 'Skinny Black Jeans')
+						setValue('Bottoms', 'Skinny Black Jeans')
 					} else {
-						updateTrait('Tops', 'Tucked Tank')
+						setValue('Tops', 'Purple Tank')
 					}
 				}
 			}
 		}
-
-		updateTrait(category, value)
+		setValue(category, value)
+		setMetadata(updatedMetadata)
 	}
 
 	const getSelectedTrait = (category: string) => {

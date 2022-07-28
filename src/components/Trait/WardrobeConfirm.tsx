@@ -11,7 +11,6 @@ import useStyles from './WardrobeConfirm.styles'
 import { useNavigate } from 'react-router-dom'
 import { YourPeepRoute } from '../../pages/routes'
 import Loading from '../Loading/Loading'
-import { profile } from 'console'
 import { ProfileContext } from '../../context/Profile/ProfileContext'
 
 const WardrobeConfirm = () => {
