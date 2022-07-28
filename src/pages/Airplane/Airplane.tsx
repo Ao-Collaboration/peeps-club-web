@@ -8,6 +8,7 @@ import { MetadataContext } from '../../context/Metadata/MetadataContext'
 import { Category } from '../../interface/availableTraits'
 import { AnotherDeviceRoute, ImmigrationIntroRoute } from '../routes'
 import { useMediaQuery } from 'react-responsive'
+import Button from '../../components/Button/Button'
 
 const Airplane = () => {
 	const classes = useStyles()
@@ -134,6 +135,13 @@ const Airplane = () => {
 					<SVG src={'/assets/Cloud 1 Asset.svg'} />
 				</div>
 			</div>
+			{ isLanding && 
+				<div className={classes.skipButton}>
+					<Button onClick={isDone} className="primary">
+						Skip
+					</Button>
+				</div>
+			}
 		</>
 	)
 }

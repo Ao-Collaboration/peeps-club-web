@@ -67,6 +67,12 @@ const styles = {
 		transform: 'translate(-50%, -50%)',
 		zIndex: '500',
 	},
+	skipButton: {
+		position: 'absolute',
+		bottom: '1em',
+		right: '1em',
+		zIndex: '1000',
+	},
 }
 
 export default createUseStyles(styles)

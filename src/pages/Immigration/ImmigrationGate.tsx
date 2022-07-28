@@ -81,6 +81,13 @@ function ImmigrationGate() {
 					</div>
 				)}
 			</div>
+			{ secondText.length !== speech2.length  && 
+				<div className={classes.skipButton}>
+					<Button onClick={moveToPassport} className="primary">
+						Skip
+					</Button>
+				</div>
+			}
 		</>
 	)
 }
