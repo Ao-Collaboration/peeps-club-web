@@ -116,12 +116,12 @@ const Airplane = () => {
 									})
 									.map(option => (
 										<a
-											href="#"
 											tabIndex={0}
 											aria-label={option.name}
 											key={option.name}
 											onClick={() => {
 												startLanding(option.name)
+												return false
 											}}
 										>
 											{option.name}
