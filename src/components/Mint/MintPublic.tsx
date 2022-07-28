@@ -81,8 +81,8 @@ const MintPublic: React.FC<Props> = ({
 				],
 			})
 			onMint()
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		} catch (err: any) {
-			// eslint-disable-line @typescript-eslint/no-explicit-any
 			if (err?.error?.code === -32000) {
 				toast.error('You don\'t have enough ETH!')
 			} else {
