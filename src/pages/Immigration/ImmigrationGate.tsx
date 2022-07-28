@@ -5,6 +5,8 @@ import { useNavigate } from 'react-router-dom'
 import { ImmigrationRoute } from '../routes'
 import Button from '../../components/Button/Button'
 import { useEffect, useState } from 'react'
+import { useMediaQuery } from 'react-responsive'
+import { tableOrMobileQuery } from '../../utils/mediaQuery'
 
 function ImmigrationGate() {
 	const classes = useStyles()
@@ -16,6 +18,8 @@ function ImmigrationGate() {
 	const moveToPassport = () => {
 		navigate(ImmigrationRoute.path)
 	}
+
+	const isTabletOrMobile = useMediaQuery({ query: tableOrMobileQuery })
 
 	const speech1 = 'Welcome to Peeps Club!'
 	const speech2 = 'Please have your passport ready for inspection.'
@@ -57,10 +61,6 @@ function ImmigrationGate() {
 				aria-description="You approach the immigration officer"
 			>
 				<div className={classes.gate}>
-					<div className={classes.speech}>
-						<h2>{firstText}</h2>
-						<p>{secondText}</p>
-					</div>
 					<img aria-hidden src="assets/Immigration Room.svg" />
 					<img
 						aria-hidden
@@ -73,6 +73,10 @@ function ImmigrationGate() {
 					className={classes.topLayer}
 					src="assets/Immigration Desks.svg"
 				/>
+			</div>
+			<div className={isTabletOrMobile ? classes.speechSmall : classes.speech}>
+				<h2>{firstText}</h2>
+				<p>{secondText}</p>
 				{secondText.length === speech2.length && (
 					<div className={classes.buttonGroup}>
 						<Button onClick={moveToPassport} className="primary">
