@@ -45,7 +45,7 @@ const styles = {
 		display: 'flex',
 		justifyContent: 'space-evenly',
 		flexWrap: 'wrap',
-		maxWidth: '20em',
+		maxWidth: '100vw',
 	},
 	buttonRow: {
 		composes: '$row',
