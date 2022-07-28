@@ -9,6 +9,7 @@ import { host } from '../../config/api'
 import Mint from './Mint'
 import ReactGA from 'react-ga'
 import Loading from '../Loading/Loading'
+import { toast } from 'react-toastify'
 
 interface Props {
 	onMint: () => void
@@ -106,6 +107,13 @@ const MintSigned: React.FC<Props> = ({ onMint }) => {
 				],
 			})
 			onMint()
+		} catch (err: any) {
+			// eslint-disable-line @typescript-eslint/no-explicit-any
+			if (err?.error?.code === -32000) {
+				toast.error('You don\'t have enough ETH!')
+			} else {
+				toast.error('Unable to mint!')
+			}
 		} finally {
 			setIsLoading(false)
 		}
