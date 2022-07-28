@@ -43,6 +43,7 @@ function Router() {
 				<Routes>
 					<Route path={HomeRoute.path} element={<Home />} />
 					<Route path={AnotherDeviceRoute.path} element={<AnotherDevice />} />
+					<Route path={YourPeepRoute.path} element={<YourPeep />} />
 					{profile?.id && (
 						<>
 							<Route path={AirplaneRoute.path} element={<Airplane />} />
@@ -56,7 +57,6 @@ function Router() {
 								element={<ImmigrationGate />}
 							/>
 							<Route path={WardrobeRoute.path} element={<Wardrobe />} />
-							<Route path={YourPeepRoute.path} element={<YourPeep />} />
 						</>
 					)}
 				</Routes>
