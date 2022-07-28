@@ -17,7 +17,7 @@ const TraitRequest: React.FC<Props> = ({ onClose }) => {
 				<ol>
 					<li>
 						Join our{' '}
-						<a href="http://discord.gg/JwamQYuHBc" target={'_blank'}>
+						<a href="http://discord.gg/peepsclub" target={'_blank'}>
 							Discord Server!
 						</a>
 					</li>
