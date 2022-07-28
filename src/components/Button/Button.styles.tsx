@@ -68,6 +68,7 @@ const styles = {
 		fontFamily: headingFontFamily,
 		color: white,
 		fontSize: '2rem',
+		lineHeight: '1em',
 		margin: '0.5em',
 		padding: '2rem',
 		borderRadius: '2em',
