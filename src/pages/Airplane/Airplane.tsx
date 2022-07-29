@@ -6,7 +6,8 @@ import { black } from '../../config/colors'
 import { useNavigate } from 'react-router-dom'
 import { MetadataContext } from '../../context/Metadata/MetadataContext'
 import { Category } from '../../interface/availableTraits'
-import { ImmigrationIntroRoute } from '../routes'
+// import { ImmigrationIntroRoute } from '../routes'
+import { ImmigrationGateRoute } from '../routes'
 import Button from '../../components/Button/Button'
 import AnotherDevice from '../AnotherDevice/AnotherDevice'
 import { isPortrait } from '../../utils/mediaQuery'
@@ -57,7 +58,8 @@ const Airplane = () => {
 	}
 
 	const isDone = () => {
-		navigate(ImmigrationIntroRoute.path)
+		// FIXME PC-151 navigate(ImmigrationIntroRoute.path)
+		navigate(ImmigrationGateRoute.path)
 	}
 
 	return (
