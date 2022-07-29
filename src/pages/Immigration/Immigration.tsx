@@ -8,6 +8,8 @@ import Passport from '../../components/Passport/Passport'
 import Button from '../../components/Button/Button'
 import { useNavigate } from 'react-router-dom'
 import { WardrobeRoute } from '../routes'
+import { useMediaQuery } from 'react-responsive'
+import { tableOrMobileQuery } from '../../utils/mediaQuery'
 
 function Immigration() {
 	const classes = useStyles()
@@ -20,6 +22,8 @@ function Immigration() {
 	if (!metadata || !setMetadata || !availableTraits) {
 		return <></>
 	}
+
+	const isTabletOrMobile = useMediaQuery({ query: tableOrMobileQuery })
 
 	const completePassport = () => {
 		const form = document.getElementById('passportForm') as HTMLFormElement
@@ -37,8 +41,18 @@ function Immigration() {
 		}
 	}
 
+	const finishButton = (
+		<div className={classes.buttonGroup}>
+			{!isFlipped && (
+				<Button onClick={completePassport} className="primary">
+					Finished
+				</Button>
+			)}
+		</div>
+	)
+
 	return (
-		<>
+		<div className={classes.background}>
 			<FadeTo
 				onAnimationEnd={moveToClothing}
 				color={black}
@@ -46,7 +60,7 @@ function Immigration() {
 				isFading={true}
 			/>
 			<div
-				className={classes.page}
+				className={classes.pageLarge}
 				aria-description="You walk towards the immigration gates"
 			>
 				{isFlipped && (
@@ -64,18 +78,17 @@ function Immigration() {
 					</>
 				)}
 				<div
-					className={`${classes.passport} ${classes.pullUpPassportAnimation}`}
+					className={
+						isTabletOrMobile ? classes.passportSmall : `${classes.passport} ${classes.pullUpPassportAnimation}`
+					}
 				>
-					{availableTraits && (
-						<div
-							className={`${classes.traitsContainer} ${
-								isFlipped && classes.squashTraitsAnimation
-							}`}
-						>
-							<TraitSelector availableTraits={availableTraits} />
-						</div>
-					)}
-					<div className={classes.passportContainer}>
+					<div
+						className={
+							isTabletOrMobile
+								? classes.passportContainerSmall
+								: classes.passportContainer
+						}
+					>
 						<img aria-hidden src={'/assets/passport_top.svg'} />
 						<img
 							aria-hidden
@@ -87,24 +100,37 @@ function Immigration() {
 						/>
 						<div className={classes.bottom}>
 							<img aria-hidden src={'/assets/passport_mid.svg'} />
-							{metadata && <Passport />}
-						</div>
-						<img
-							aria-hidden
-							className={classes.hands}
-							src={'/assets/passport_hands.svg'}
-						/>
-						<div className={classes.buttonGroup}>
-							{!isFlipped && (
-								<Button onClick={completePassport} className="primary">
-									Finished
-								</Button>
+							{metadata && (
+								<Passport
+									finishButton={isTabletOrMobile ? finishButton : null}
+								/>
 							)}
 						</div>
+						{!isTabletOrMobile && finishButton}
+						{!isTabletOrMobile && (
+							<img
+								aria-hidden
+								className={classes.hands}
+								src={'/assets/passport_hands.svg'}
+							/>
+						)}
 					</div>
 				</div>
 			</div>
-		</>
+			<div>
+				{availableTraits && (
+					<div
+						className={`${
+							isTabletOrMobile
+								? classes.traitsContainerSmall
+								: classes.traitsContainer
+						} ${isFlipped && classes.squashTraitsAnimation}`}
+					>
+						<TraitSelector availableTraits={availableTraits} />
+					</div>
+				)}
+			</div>
+		</div>
 	)
 }
 

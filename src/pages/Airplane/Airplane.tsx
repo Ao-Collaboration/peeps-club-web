@@ -6,9 +6,10 @@ import { black } from '../../config/colors'
 import { useNavigate } from 'react-router-dom'
 import { MetadataContext } from '../../context/Metadata/MetadataContext'
 import { Category } from '../../interface/availableTraits'
-import { AnotherDeviceRoute, ImmigrationIntroRoute } from '../routes'
-import { useMediaQuery } from 'react-responsive'
+import { ImmigrationIntroRoute } from '../routes'
 import Button from '../../components/Button/Button'
+import AnotherDevice from '../AnotherDevice/AnotherDevice'
+import { isPortrait } from '../../utils/mediaQuery'
 
 const Airplane = () => {
 	const classes = useStyles()
@@ -23,13 +24,10 @@ const Airplane = () => {
 		return <></>
 	}
 
-	const isTabletOrMobile = useMediaQuery({ query: '(max-width: 1224px)' })
-
-	useEffect(() => {
-		if (isTabletOrMobile) {
-			navigate(AnotherDeviceRoute.path)
-		}
-	}, [isTabletOrMobile])
+	if (isPortrait()) {
+		// Portrait
+		return <AnotherDevice />
+	}
 
 	const getAvailableDistricts = async () => {
 		const districts = availableTraits.filter(item => {

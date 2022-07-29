@@ -1,8 +1,10 @@
 import { faAngleLeft } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useContext, useState } from 'react'
+import { useMediaQuery } from 'react-responsive'
 import { MetadataContext } from '../../context/Metadata/MetadataContext'
 import { Category, CategoryName } from '../../interface/availableTraits'
+import { tableOrMobileQuery } from '../../utils/mediaQuery'
 import useStyles from './TraitSelector.styles'
 
 interface Props {
@@ -42,6 +44,8 @@ const TraitSelector: React.FC<Props> = ({ availableTraits }) => {
 		return <></>
 	}
 
+	const isTabletOrMobile = useMediaQuery({ query: tableOrMobileQuery })
+
 	const updateCategory = (index: number) => {
 		setSelectedCategoryIndex(index)
 	}
@@ -75,7 +79,7 @@ const TraitSelector: React.FC<Props> = ({ availableTraits }) => {
 					</>
 				)}
 			</div>
-			<div className={classes.thumbnails}>
+			<div className={isTabletOrMobile ? classes.thumbnailsSmall : classes.thumbnails}>
 				{selectedCategoryIndex < 0
 					? categories.map((category, index) => (
 						<div key={category}>

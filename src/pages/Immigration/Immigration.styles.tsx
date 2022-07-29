@@ -8,7 +8,7 @@ const styles = {
 				transform: 'translate(0%, 150%)',
 			},
 			to: {
-				transform: 'translate(0%,  0%)',
+				transform: 'translate(0%, 0%)',
 			},
 		},
 		'@keyframes flip': {
@@ -21,27 +21,27 @@ const styles = {
 		},
 		'@keyframes stamp': {
 			'0%': {
-				transform: 'translate(0%,  -200%)',
+				transform: 'translate(0%, -200%)',
 			},
 			'50%': {
-				transform: 'translate(0%,  0%)',
+				transform: 'translate(0%, 0%)',
 			},
 			'100%': {
-				transform: 'translate(0%,  0%)',
+				transform: 'translate(0%, 0%)',
 			},
 		},
 		'@keyframes stamp_arm': {
 			'0%': {
-				transform: 'translate(0%,  -200%)',
+				transform: 'translate(0%, -200%)',
 			},
 			'50%': {
-				transform: 'translate(0%,  0%)',
+				transform: 'translate(0%, 0%)',
 			},
 			'55%': {
-				transform: 'translate(0%,  0%)',
+				transform: 'translate(0%, 0%)',
 			},
 			'100%': {
-				transform: 'translate(0%,  -300%)',
+				transform: 'translate(0%, -300%)',
 			},
 		},
 		'@keyframes squash_traits': {
@@ -57,14 +57,27 @@ const styles = {
 			},
 		},
 	},
-	page: {
+	background: {
 		backgroundColor: dark_grey,
 		backgroundSize: 'cover',
-		height: '100vh',
+		position: 'absolute',
+		top: 0,
 		width: '100vw',
+		height: '100vh',
+		zIndex: -100,
+		overflow: 'hidden',
+	},
+	page: {
+		minHeight: '100vh',
 		position: 'absolute',
 		top: '0',
-		zIndex: '-100',
+		paddingTop: '50px',
+		boxSizing: 'border-box',
+		width: '100vw',
+	},
+	pageLarge: {
+		composes: '$page',
+		height: '100vh',
 		overflow: 'hidden',
 	},
 	passport: {
@@ -72,12 +85,19 @@ const styles = {
 		alignItems: 'center',
 		justifyContent: 'center',
 		height: '100vh',
-		transform: 'translate(0%, 150%)',
+	},
+	passportSmall: {
+		composes: '$passport',
+		height: '80px',
+		marginLeft: '150px',
 	},
 	passportContainer: {
 		display: 'flex',
 		flexDirection: 'column',
-		marginLeft: '-10em',
+	},
+	passportContainerSmall: {
+		composes: '$passportContainer',
+		transform: 'scale(0.7)',
 	},
 	bottom: {
 		width: 'auto',
@@ -86,13 +106,12 @@ const styles = {
 	hands: {
 		marginTop: '-3em',
 		zIndex: '100',
+		pointerEvents: 'none',
 	},
 	buttonGroup: {
-		position: 'absolute',
-		bottom: '3em',
-		left: '50%',
-		width: '400px',
 		zIndex: '1000',
+		display: 'flex',
+		justifyContent: 'center',
 	},
 	pageToFlip: {
 		position: 'absolute',
@@ -111,8 +130,8 @@ const styles = {
 		width: '400px',
 		display: 'block',
 		marginLeft: '35%',
-		top: '-20%',
-		transform: 'translate(0%,  -200%)',
+		bottom: '15vh',
+		transform: 'translate(0%, -200%)',
 	},
 	pullUpPassportAnimation: {
 		animationName: 'passport',
@@ -143,8 +162,14 @@ const styles = {
 		onIterationCount: '1',
 	},
 	traitsContainer: {
+		position: 'absolute',
+		top: 0,
 		width: '250px',
 		zIndex: '1000',
+	},
+	traitsContainerSmall: {
+		composes: '$traitsContainer',
+		width: '150px',
 	},
 	squashTraitsAnimation: {
 		animationName: 'squash_traits',

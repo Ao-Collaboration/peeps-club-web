@@ -7,6 +7,7 @@ import {
 	white,
 	yellow,
 } from '../../config/colors'
+import { mint_page_bg } from '../../config/common-styles'
 import { headingFontFamily } from '../../config/jss-vars'
 
 const styles = {
@@ -46,27 +47,24 @@ const styles = {
 		composes: '$fadeInAndOut1',
 		animationDelay: '1s',
 	},
+	pageBg: mint_page_bg,
 	page: {
+		composes: '$pageBg',
 		display: 'flex',
 		flexDirection: 'column',
 		justifyContent: 'center',
 		alignItems: 'center',
-		height: '100vh',
 		width: '100vw',
-		position: 'absolute',
-		top: '0',
-		zIndex: '-100',
-		overflow: 'hidden',
+		fontSize: '0.8em',
 	},
 	title: {
 		fontFamily: headingFontFamily,
 		color: black,
-		fontSize: '2.5rem',
-		padding: '1rem 2.5rem',
-		borderRadius: '5rem',
+		fontSize: '2.5em',
+		borderRadius: '5em',
 	},
 	peepImage: {
-		maxWidth: '400px',
+		maxWidth: 'min(30vw, 400px)',
 		border: `20px solid ${yellow}`,
 		borderRadius: '10px',
 		padding: '5px',
@@ -76,6 +74,10 @@ const styles = {
 		marginTop: '1em',
 		justifyContent: 'center',
 		alignItems: 'center',
+		fontSize: '0.8em',
+	},
+	enlarge: {
+		fontSize: '1.5em',
 	},
 	link: {
 		backgroundColor: transparent_blue,
@@ -89,9 +91,9 @@ const styles = {
 		background: transparent_blue,
 		fontFamily: headingFontFamily,
 		color: white,
-		fontSize: '2rem',
+		fontSize: '2em',
 		margin: '0.5em',
-		padding: '1rem 2rem',
+		padding: '1em 2em',
 		borderRadius: '2em',
 		textTransform: 'uppercase',
 		textDecoration: 'none',
@@ -105,7 +107,7 @@ const styles = {
 		},
 	},
 	guestPeep: {
-		maxWidth: '400px',
+		maxWidth: 'min(30vw, 400px)',
 	},
 	bounce: {
 		animationName: 'bounce',

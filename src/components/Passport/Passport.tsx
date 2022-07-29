@@ -8,9 +8,17 @@ import doFetch from '../../utils/doFetch'
 import BirthdaySelector from './BirthdaySelector'
 import useStyles from './Passport.styles'
 
-const Passport: React.FC = () => {
-	const { metadata, setMetadata, availableTraits, getSelectedTrait } =
-		useContext(MetadataContext)
+interface Props {
+	finishButton: React.ReactElement | null
+}
+
+const Passport: React.FC<Props> = ({ finishButton }) => {
+	const {
+		metadata,
+		setMetadata,
+		availableTraits,
+		getSelectedTrait,
+	} = useContext(MetadataContext)
 	const { profile } = useContext(ProfileContext)
 	const [peepImage, setPeepImage] = useState('')
 
@@ -137,9 +145,13 @@ const Passport: React.FC = () => {
 						updateTrait('Birthday', birthday)
 					}}
 				/>
-				<p aria-label="Passport Number" className={classes.mono}>
-					{getPassportCode()}
-				</p>
+				{finishButton ? (
+					finishButton
+				) : (
+					<p aria-label="Passport Number" className={classes.mono}>
+						{getPassportCode()}
+					</p>
+				)}
 			</form>
 		</div>
 	)

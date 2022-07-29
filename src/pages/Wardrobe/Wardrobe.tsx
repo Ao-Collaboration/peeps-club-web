@@ -1,6 +1,7 @@
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useContext, useEffect, useState } from 'react'
+import { useMediaQuery } from 'react-responsive'
 import FadeTo from '../../components/Scene/FadeTo'
 import WardrobeConfirm from '../../components/Trait/WardrobeConfirm'
 import WardrobeTraitSelector from '../../components/Trait/WardrobeTraitSelector'
@@ -10,6 +11,7 @@ import { MetadataContext } from '../../context/Metadata/MetadataContext'
 import { CategoryName } from '../../interface/availableTraits'
 import { getFullDescription, Trait } from '../../interface/metadata'
 import doFetch from '../../utils/doFetch'
+import { tableOrMobileQuery } from '../../utils/mediaQuery'
 import useStyles from './Wardrobe.styles'
 
 function Wardrobe() {
@@ -101,11 +103,13 @@ function Wardrobe() {
 		setSelectionString('')
 	}
 
+	const isTabletOrMobile = useMediaQuery({ query: tableOrMobileQuery })
+
 	return (
 		<>
 			<FadeTo color={black} isFadeOut={false} isFading={true} />
-			<div aria-hidden className={classes.page}></div>
-			<div className={classes.container}>
+			<div aria-hidden className={classes.background}></div>
+			<div className={isTabletOrMobile ? classes.containerSmall : classes.container}>
 				<div className={classes.navpanel}>
 					<input
 						type="image"

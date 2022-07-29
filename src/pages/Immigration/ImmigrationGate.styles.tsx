@@ -44,6 +44,7 @@ const styles = {
 		right: '5%',
 		backgroundColor: translucent_white,
 		width: '20em',
+		maxWidth: '33vw',
 		borderRadius: '2em 2em 2em 0em',
 		textAlign: 'center',
 		fontSize: '1.4em',
@@ -52,6 +53,10 @@ const styles = {
 			fontFamily: headingFontFamily,
 		},
 	},
+	speechSmall: {
+		composes: '$speech',
+		fontSize: '1em',
+	},
 	topLayer: {
 		position: 'absolute',
 		top: '0',
@@ -59,13 +64,12 @@ const styles = {
 		overflow: 'hidden',
 		minHeight: '100%',
 		width: '100%',
+		cursorEvents: 'none',
 	},
 	buttonGroup: {
-		position: 'absolute',
-		top: '55%',
-		right: '12%',
-		transform: 'translate(-50%, -50%)',
-		zIndex: '500',
+		position: 'relative',
+		zIndex: 500,
+		height: 0,
 	},
 	skipButton: {
 		position: 'absolute',

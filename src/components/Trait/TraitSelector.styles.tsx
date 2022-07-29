@@ -6,9 +6,14 @@ const styles = {
 	container: {
 		width: '100%',
 		backgroundColor: '#ffdb13',
-		marginTop: '10em',
 		zIndex: '1000',
 		border: `3px solid ${peeps_darkblue}`,
+		marginTop: '60px',
+		boxSizing: 'border-box',
+		maxHeight: 'calc(100vh - 61px)',
+		overflowY: 'hidden',
+		display: 'flex',
+		flexDirection: 'column',
 	},
 	tabs: {
 		display: 'flex',
@@ -37,13 +42,13 @@ const styles = {
 		display: 'grid',
 		padding: '0.5em',
 		gridGap: '0.5em',
-		gridTemplateColumns: '48% 48%',
-		height: '400px',
-		overflow: 'scroll',
+		gridTemplateColumns: '1fr 1fr',
+		height: '100%',
+		overflowY: 'scroll',
 		'& div': {
 			width: '100%',
 			'& input': {
-				width: '80%',
+				maxWidth: '80%',
 				margin: 'auto',
 				display: 'block',
 			},
@@ -53,6 +58,10 @@ const styles = {
 				margin: '0',
 			},
 		},
+	},
+	thumbnailsSmall: {
+		composes: '$thumbnails',
+		gridTemplateColumns: '1fr',
 	},
 	selected: {
 		backgroundColor: white,
