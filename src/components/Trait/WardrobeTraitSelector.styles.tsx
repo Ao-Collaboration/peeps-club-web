@@ -122,6 +122,11 @@ const styles = {
 		marginLeft: '1em',
 		marginTop: '2.7em',
 		gridAutoRows: 'min-content',
+		msOverflowStyle: 'none',
+		scrollbarWidth: 'none',
+		'&::-webkit-scrollbar': {
+			display: 'none',
+		},
 	},
 	hangerImage: {
 		width: '80%',
