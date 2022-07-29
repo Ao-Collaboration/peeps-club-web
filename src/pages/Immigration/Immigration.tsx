@@ -7,7 +7,7 @@ import TraitSelector from '../../components/Trait/TraitSelector'
 import Passport from '../../components/Passport/Passport'
 import Button from '../../components/Button/Button'
 import { useNavigate } from 'react-router-dom'
-import { WardrobeRoute } from '../routes'
+import { ImmigrationExitRoute, WardrobeRoute } from '../routes'
 import { useMediaQuery } from 'react-responsive'
 import { tableOrMobileQuery } from '../../utils/mediaQuery'
 
@@ -37,7 +37,7 @@ function Immigration() {
 
 	const moveToClothing = () => {
 		if (isFlipped) {
-			navigate(WardrobeRoute.path)
+			navigate(ImmigrationExitRoute.path)
 		}
 	}
 
@@ -79,7 +79,9 @@ function Immigration() {
 				)}
 				<div
 					className={
-						isTabletOrMobile ? classes.passportSmall : `${classes.passport} ${classes.pullUpPassportAnimation}`
+						isTabletOrMobile
+							? classes.passportSmall
+							: `${classes.passport} ${classes.pullUpPassportAnimation}`
 					}
 				>
 					<div
