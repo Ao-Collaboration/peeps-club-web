@@ -87,7 +87,7 @@ const WardrobeTraitSelector: React.FC<Props> = ({ categories }) => {
 					if (category === 'Tops') {
 						updateTrait('Bottoms', 'Skinny Black Jeans')
 					} else {
-						updateTrait('Tops', 'Tucked Tank')
+						updateTrait('Tops', 'Purple Tank')
 					}
 				}
 			}
@@ -143,6 +143,11 @@ const WardrobeTraitSelector: React.FC<Props> = ({ categories }) => {
 					}
 				}
 			}
+		}
+
+		if ((tops && bottoms && !onePiece) || (!tops && !bottoms && onePiece)) {
+			// eslint-disable-next-line no-console
+			console.log('valid')
 		}
 
 		return (tops && bottoms && !onePiece) || (!tops && !bottoms && onePiece)
