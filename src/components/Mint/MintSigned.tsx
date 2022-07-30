@@ -62,7 +62,7 @@ const MintSigned: React.FC<Props> = ({ onMint }) => {
 	}
 
 	const getRemainingTime = () => {
-		const left = expiry - Math.floor(Date.now() / 1000)
+		const left = expiry - Math.floor(Date.now() / 1000) - 60*60 // Remove 1 hour for display
 		const hours = Math.floor(left / 60 / 60)
 		const minutes = Math.floor((left - hours * 60 * 60) / 60)
 
