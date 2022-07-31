@@ -38,3 +38,8 @@ export const YourPeepRoute: Route = {
 	name: 'Welcome',
 	path: '/welcome',
 }
+
+export const PartyRoute: Route = {
+	name: 'Party',
+	path: '/party',
+}
