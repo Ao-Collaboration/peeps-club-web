@@ -14,6 +14,7 @@ const NUMBER_PEEPS = 10
 const Party = () => {
 	const classes = useStyles()
 	const { web3Provider } = useContext(Web3Context)
+	const [peepIds, setPeepIds] = useState<number[]>([])
 	const [peepImages, setPeepImages] = useState<string[]>([])
 
 	if (!web3Provider) {
@@ -56,6 +57,7 @@ const Party = () => {
 
 			const svgs = await Promise.all(svgTasks)
 			setPeepImages(svgs)
+			setPeepIds(peepIds)
 		}
 		doIt()
 	}, [peepImages])
@@ -94,8 +96,8 @@ const Party = () => {
 					: 'Get ready to parrrrtyyyyyy'}
 			</h2>
 			{peepImages.length ? (
-				peepImages.map(svg => (
-					<div className={classes.peep} style={getRandomPeepStyles()}>
+				peepImages.map((svg, idx) => (
+					<div className={classes.peep} style={getRandomPeepStyles()} key={`peepsvg-${peepIds[idx]}`}>
 						<SVG src={svg} />
 					</div>
 				))
