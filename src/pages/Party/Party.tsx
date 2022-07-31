@@ -2,6 +2,7 @@ import { ethers } from 'ethers'
 import { useCallback, useContext, useEffect, useState } from 'react'
 import SVG from 'react-inlinesvg'
 import peepsABI from '../../abi/peepsABI.json'
+import Loading from '../../components/Loading/Loading'
 import { host } from '../../config/api'
 import { getPeepsContractId } from '../../config/contract'
 import { Web3Context } from '../../context/Web3/Web3Context'
@@ -15,9 +16,7 @@ const Party = () => {
 	const { web3Provider } = useContext(Web3Context)
 	const [peepImages, setPeepImages] = useState<string[]>([])
 
-	if (
-		!web3Provider
-	) {
+	if (!web3Provider) {
 		return <></>
 	}
 
@@ -31,26 +30,31 @@ const Party = () => {
 	const getRandomPeeps = useCallback(() => {
 		const doIt = async () => {
 			const totalPeeps = await peepsContract.totalSupply()
-			const svgs: string[] = []
 			const peepIds: number[] = []
+			const svgTasks: Promise<string>[] = []
 
 			// Get random owner peep
 			const addr = await signer.getAddress()
 			const walletBal = await peepsContract.balanceOf(addr)
 			if (walletBal > 0) {
 				const randomIdx = Math.floor(Math.random() * walletBal)
-				const randomId = await peepsContract.tokenOfOwnerByIndex(addr, randomIdx)
-				svgs.push(await getPeepSvgFromId(randomId))
+				const randomId = await peepsContract.tokenOfOwnerByIndex(
+					addr,
+					randomIdx,
+				)
+				svgTasks.push(getPeepSvgFromId(randomId))
 				peepIds.push(randomId)
 			}
 			// Get random peeps
-			while(svgs.length < NUMBER_PEEPS) {
+			while (svgTasks.length < NUMBER_PEEPS) {
 				const randomId = Math.floor(Math.random() * totalPeeps)
 				if (peepIds.indexOf(randomId) === -1) {
-					svgs.push(await getPeepSvgFromId(randomId))
+					svgTasks.push(getPeepSvgFromId(randomId))
 					peepIds.push(randomId)
 				}
 			}
+
+			const svgs = await Promise.all(svgTasks)
 			setPeepImages(svgs)
 		}
 		doIt()
@@ -83,15 +87,21 @@ const Party = () => {
 	}
 
 	return (
-		<div className={classes.page}>
+		<div className={peepImages.length ? classes.page : classes.pageLoading}>
 			<h2 className={classes.title}>
-				{peepImages.length ? 'Party timeeeeeee!!!!!' : 'Get ready to parrrrtyyyyyy'}
+				{peepImages.length
+					? 'Party timeeeeeee!!!!!'
+					: 'Get ready to parrrrtyyyyyy'}
 			</h2>
-			{peepImages.map(svg => (
-				<div className={classes.peep} style={getRandomPeepStyles()}>
-					<SVG src={svg} />
-				</div>
-			))}
+			{peepImages.length ? (
+				peepImages.map(svg => (
+					<div className={classes.peep} style={getRandomPeepStyles()}>
+						<SVG src={svg} />
+					</div>
+				))
+			) : (
+				<Loading />
+			)}
 		</div>
 	)
 }
