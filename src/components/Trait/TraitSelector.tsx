@@ -23,6 +23,7 @@ const TraitSelector: React.FC<Props> = ({ availableTraits }) => {
 		'Eye Style',
 		'Eye Outline',
 		'Expression',
+		'Top Facial Hair',
 	]
 	const categoryExampleImages = [
 		'Asymmetric Vitiligo',
@@ -34,6 +35,7 @@ const TraitSelector: React.FC<Props> = ({ availableTraits }) => {
 		'Bow',
 		'Classic Eyelashes',
 		'Meow',
+		'Moustache',
 	]
 	const [selectedCategoryIndex, setSelectedCategoryIndex] = useState(-1)
 
@@ -79,7 +81,11 @@ const TraitSelector: React.FC<Props> = ({ availableTraits }) => {
 					</>
 				)}
 			</div>
-			<div className={isTabletOrMobile ? classes.thumbnailsSmall : classes.thumbnails}>
+			<div
+				className={
+					isTabletOrMobile ? classes.thumbnailsSmall : classes.thumbnails
+				}
+			>
 				{selectedCategoryIndex < 0
 					? categories.map((category, index) => (
 						<div key={category}>
