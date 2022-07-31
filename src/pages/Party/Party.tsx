@@ -33,12 +33,21 @@ const Party = () => {
 			const totalPeeps = await peepsContract.totalSupply()
 			const svgs: string[] = []
 			const peepIds: number[] = []
+
+			// Get random owner peep
+			const addr = await signer.getAddress()
+			const walletBal = await peepsContract.balanceOf(addr)
+			if (walletBal > 0) {
+				const randomIdx = Math.floor(Math.random() * walletBal)
+				const randomId = await peepsContract.tokenOfOwnerByIndex(addr, randomIdx)
+				svgs.push(await getPeepSvgFromId(randomId))
+				peepIds.push(randomId)
+			}
+			// Get random peeps
 			while(svgs.length < NUMBER_PEEPS) {
 				const randomId = Math.floor(Math.random() * totalPeeps)
 				if (peepIds.indexOf(randomId) === -1) {
-					const uri: string = await peepsContract.tokenURI(randomId)
-					const svgId = uri.split(/\/(\d+)/)[1]
-					svgs.push(await getPeepFromURI(svgId))
+					svgs.push(await getPeepSvgFromId(randomId))
 					peepIds.push(randomId)
 				}
 			}
@@ -53,9 +62,11 @@ const Party = () => {
 		}
 	}, [])
 
-	const getPeepFromURI = async (peepURI: string) => {
+	const getPeepSvgFromId = async (peepId: number) => {
+		const uri: string = await peepsContract.tokenURI(peepId)
+		const svgId = uri.split(/\/(\d+)/)[1]
 		const svg = await doFetch(
-			`${host}/peep/${peepURI}.svg`,
+			`${host}/peep/${svgId}.svg`,
 			'GET',
 			undefined,
 			'image/svg+xml',
