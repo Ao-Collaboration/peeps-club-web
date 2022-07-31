@@ -56,7 +56,7 @@ const Party = () => {
 			}
 
 			const svgs = await Promise.all(svgTasks)
-			setPeepImages(svgs)
+			setPeepImages(svgs.reverse())
 			setPeepIds(peepIds)
 		}
 		doIt()
