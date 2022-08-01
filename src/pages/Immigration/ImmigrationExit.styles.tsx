@@ -23,6 +23,7 @@ const styles = {
 	front: {
 		composes: '$bg',
 		zIndex: '10000',
+		pointerEvents: 'none',
 	},
 	back: {
 		composes: '$bg',
