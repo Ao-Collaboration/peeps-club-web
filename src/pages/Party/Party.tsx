@@ -21,6 +21,15 @@ const Party = () => {
 		return <></>
 	}
 
+	const getPosition = (idx: number) => {
+		const pos = (70 / NUMBER_PEEPS) * idx + 5
+		return pos + (Math.random() * 10 - 5)
+	}
+	const positions: number[] = []
+	for (let i = 0; i < NUMBER_PEEPS; i++) {
+		positions.push(getPosition(i))
+	}
+
 	const signer = web3Provider?.getSigner()
 	const peepsContract = new ethers.Contract(
 		getPeepsContractId(web3Provider?.network?.chainId),
@@ -56,7 +65,14 @@ const Party = () => {
 			}
 
 			const svgs = await Promise.all(svgTasks)
-			setPeepImages(svgs.reverse())
+
+			// Shuffle position of own peep
+			const newPos = Math.floor(Math.random() * NUMBER_PEEPS)
+			const yours = svgs[0]
+			svgs[0] = svgs[newPos]
+			svgs[newPos] = yours
+
+			setPeepImages(svgs)
 			setPeepIds(peepIds)
 		}
 		doIt()
@@ -80,9 +96,9 @@ const Party = () => {
 		return URL.createObjectURL(svg)
 	}
 
-	const getRandomPeepStyles = (): React.CSSProperties => {
+	const getRandomPeepStyles = (idx: number): React.CSSProperties => {
 		return {
-			left: `${10 + Math.floor(Math.random() * 60)}%`,
+			left: `${positions[idx]}%`,
 			animationDelay: `0.${Math.floor(Math.random() * 100)}s`,
 			animationDuration: `${Math.random() + 0.8}s`,
 		}
@@ -97,7 +113,7 @@ const Party = () => {
 			</h2>
 			{peepImages.length ? (
 				peepImages.map((svg, idx) => (
-					<div className={classes.peep} style={getRandomPeepStyles()} key={`peepsvg-${peepIds[idx]}`}>
+					<div className={classes.peep} style={getRandomPeepStyles(idx)} key={`peepsvg-${peepIds[idx]}`}>
 						<SVG src={svg} />
 					</div>
 				))
