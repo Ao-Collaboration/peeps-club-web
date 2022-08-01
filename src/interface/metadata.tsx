@@ -138,10 +138,6 @@ export const defaultPeep: Trait[] = [
 		value: 'Night',
 	},
 	{
-		trait_type: 'Top Facial Hair',
-		value: 'None',
-	},
-	{
 		trait_type: 'Pronouns',
 		value: 'They/Them',
 	},

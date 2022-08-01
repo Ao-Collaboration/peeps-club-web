@@ -79,7 +79,11 @@ const TraitSelector: React.FC<Props> = ({ availableTraits }) => {
 					</>
 				)}
 			</div>
-			<div className={isTabletOrMobile ? classes.thumbnailsSmall : classes.thumbnails}>
+			<div
+				className={
+					isTabletOrMobile ? classes.thumbnailsSmall : classes.thumbnails
+				}
+			>
 				{selectedCategoryIndex < 0
 					? categories.map((category, index) => (
 						<div key={category}>

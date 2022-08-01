@@ -109,7 +109,11 @@ function Wardrobe() {
 		<>
 			<FadeTo color={black} isFadeOut={false} isFading={true} />
 			<div aria-hidden className={classes.background}></div>
-			<div className={isTabletOrMobile ? classes.containerSmall : classes.container}>
+			<div
+				className={
+					isTabletOrMobile ? classes.containerSmall : classes.container
+				}
+			>
 				<div className={classes.navpanel}>
 					<input
 						type="image"
