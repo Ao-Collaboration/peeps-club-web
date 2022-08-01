@@ -74,7 +74,7 @@ function ImmigrationExit() {
 					className={`${classes.yourPeep} ${classes.move}`}
 				/>
 			)}
-			<div className={`${classes.gate}`} onAnimationEnd={next}>
+			<div onAnimationEnd={next}>
 				<img
 					src="assets/Airport Arrivals Background.svg"
 					className={classes.back}

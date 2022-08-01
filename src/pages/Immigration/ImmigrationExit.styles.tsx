@@ -13,7 +13,6 @@ const styles = {
 			},
 		},
 	},
-	gate: {},
 	bg: {
 		minHeight: '100%',
 		width: '100%',
