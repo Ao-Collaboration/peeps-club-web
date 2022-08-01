@@ -65,7 +65,14 @@ const Party = () => {
 			}
 
 			const svgs = await Promise.all(svgTasks)
-			setPeepImages(svgs.reverse())
+
+			// Shuffle position of own peep
+			const newPos = Math.floor(Math.random() * NUMBER_PEEPS)
+			const yours = svgs[0]
+			svgs[0] = svgs[newPos]
+			svgs[newPos] = yours
+
+			setPeepImages(svgs)
 			setPeepIds(peepIds)
 		}
 		doIt()
