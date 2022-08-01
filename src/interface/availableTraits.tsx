@@ -28,7 +28,6 @@ export type CategoryName =
 	| 'Clothing Accessory'
 	| 'Facial Hair'
 	| 'Eye Outline'
-	| 'Top Facial Hair'
 	| 'Front Accessory'
 	| 'Skin'
 	| 'Pronouns'
