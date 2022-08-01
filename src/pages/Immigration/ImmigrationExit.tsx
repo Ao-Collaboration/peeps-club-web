@@ -14,7 +14,6 @@ function ImmigrationExit() {
 	const classes = useStyles()
 	const { metadata } = useContext(MetadataContext)
 	const [peepImage, setPeepImage] = useState('')
-	const [playAnimation, setPlayAnimation] = useState(false)
 	const navigate = useNavigate()
 
 	if (!metadata) {
@@ -50,14 +49,7 @@ function ImmigrationExit() {
 
 	return (
 		<>
-			<FadeTo
-				onAnimationEnd={() => {
-					setPlayAnimation(true)
-				}}
-				color={black}
-				isFadeOut={false}
-				isFading={true}
-			/>
+			<FadeTo color={black} isFadeOut={false} isFading={true} />
 			<div
 				className={`${classes.bubble} ${classes.granny} ${classes.move}`}
 				onAnimationEnd={next}

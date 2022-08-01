@@ -9,7 +9,7 @@ const styles = {
 				transform: 'translateX(0%)',
 			},
 			'100%': {
-				transform: 'translateX(600%)',
+				transform: 'translateX(100vw)',
 			},
 		},
 	},
@@ -56,7 +56,6 @@ const styles = {
 		padding: '0.4em',
 		fontFamily: headingFontFamily,
 		fontSize: '1.5em',
-		composes: '$bubble',
 		borderRadius: '20px 20px 20px 0px',
 		marginLeft: '10em',
 	},
