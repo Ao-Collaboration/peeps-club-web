@@ -41,7 +41,7 @@ function Wardrobe() {
 	]
 	type CategorySelection = 'Area' | 'Peep' | 'Outfit'
 
-	const { metadata, setMetadata } = useContext(MetadataContext)
+	const { metadata } = useContext(MetadataContext)
 	const [currentTraits, setCurrentTraits] = useState(sunIconTraits)
 	const [selectionString, setSelectionString] = useState('Area   Selections')
 	const [peepImage, setPeepImage] = useState('')
@@ -49,23 +49,13 @@ function Wardrobe() {
 	const [isToggleHidden, setIsToggleHidden] = useState(true)
 	const [isShowingDone, setIsShowingDone] = useState(false)
 
-	if (!metadata || !setMetadata) {
+	if (!metadata) {
 		return <></>
 	}
 
 	useEffect(() => {
 		getPeepImage()
 	}, [metadata, isBackgroundDisplayed])
-
-	useEffect(() => {
-		const updatedMetadata: Trait[] = JSON.parse(JSON.stringify(metadata))
-		updatedMetadata.forEach(trait => {
-			if (trait.trait_type === 'Outerwear') {
-				trait.value = 'None'
-			}
-		})
-		setMetadata(updatedMetadata)
-	}, [])
 
 	const getPeepImage = async () => {
 		const requestMetadata: Trait[] = JSON.parse(JSON.stringify(metadata))

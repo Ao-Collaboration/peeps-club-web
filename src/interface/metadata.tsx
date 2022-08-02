@@ -115,7 +115,7 @@ export const defaultPeep: Trait[] = [
 	},
 	{
 		trait_type: 'Outerwear',
-		value: 'Tan Hoodie',
+		value: 'None',
 	},
 	{
 		trait_type: 'Pose',
