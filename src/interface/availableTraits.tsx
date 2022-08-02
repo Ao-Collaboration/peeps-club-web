@@ -34,3 +34,4 @@ export type CategoryName =
 	| 'Birthday'
 	| 'Name'
 	| 'Shoes'
+	| 'Top Facial Hair'
