@@ -79,7 +79,9 @@ function Immigration() {
 				)}
 				<div
 					className={
-						isTabletOrMobile ? classes.passportSmall : `${classes.passport} ${classes.pullUpPassportAnimation}`
+						isTabletOrMobile
+							? classes.passportSmall
+							: `${classes.passport} ${classes.pullUpPassportAnimation}`
 					}
 				>
 					<div

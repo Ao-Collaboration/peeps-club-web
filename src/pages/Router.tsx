@@ -2,6 +2,7 @@ import { HashRouter, Route, Routes } from 'react-router-dom'
 import {
 	AirplaneRoute,
 	HomeRoute,
+	ImmigrationExitRoute,
 	ImmigrationGateRoute,
 	ImmigrationIntroRoute,
 	ImmigrationRoute,
@@ -22,6 +23,7 @@ import ImmigrationGate from './Immigration/ImmigrationGate'
 import { ProfileContext } from '../context/Profile/ProfileContext'
 import YourPeep from './YourPeep/YourPeep'
 import Party from './Party/Party'
+import ImmigrationExit from './Immigration/ImmigrationExit'
 
 function Router() {
 	const { web3Provider } = useContext(Web3Context)
@@ -51,6 +53,10 @@ function Router() {
 							<Route
 								path={ImmigrationIntroRoute.path}
 								element={<ImmigrationIntro />}
+							/>
+							<Route
+								path={ImmigrationExitRoute.path}
+								element={<ImmigrationExit />}
 							/>
 							<Route
 								path={ImmigrationGateRoute.path}
