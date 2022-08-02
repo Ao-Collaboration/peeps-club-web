@@ -102,10 +102,6 @@ export const defaultPeep: Trait[] = [
 		value: 'None',
 	},
 	{
-		trait_type: 'Top Facial Hair',
-		value: 'None',
-	},
-	{
 		trait_type: 'Front Accessory',
 		value: 'None',
 	},
