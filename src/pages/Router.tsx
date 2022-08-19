@@ -6,6 +6,7 @@ import {
 	ImmigrationGateRoute,
 	ImmigrationIntroRoute,
 	ImmigrationRoute,
+	MirrorRoute,
 	PartyRoute,
 	WardrobeRoute,
 	YourPeepRoute,
@@ -24,6 +25,7 @@ import { ProfileContext } from '../context/Profile/ProfileContext'
 import YourPeep from './YourPeep/YourPeep'
 import Party from './Party/Party'
 import ImmigrationExit from './Immigration/ImmigrationExit'
+import Mirror from './Mirror/Mirror'
 
 function Router() {
 	const { web3Provider } = useContext(Web3Context)
@@ -63,6 +65,7 @@ function Router() {
 								element={<ImmigrationGate />}
 							/>
 							<Route path={WardrobeRoute.path} element={<Wardrobe />} />
+							<Route path={MirrorRoute.path} element={<Mirror />} />
 						</>
 					)}
 				</Routes>
