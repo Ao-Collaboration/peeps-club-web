@@ -16,7 +16,6 @@ import { MirrorRoute } from '../routes'
 
 interface PeepDisplayInfo {
 	name: string
-	image: string
 	uri: string
 	tokenId: number
 }
@@ -85,7 +84,6 @@ const MirrorPeepSelect = () => {
 				const name = getTrait(metadata.attributes, 'Name')
 				infoList.push({
 					name: name,
-					image: metadata.image,
 					uri: uriNumber,
 					tokenId: tokenIds[i],
 				})
@@ -109,7 +107,7 @@ const MirrorPeepSelect = () => {
 		return (
 			<div className={classes.peepSelect}>
 				<p className={classes.text}>{info.name}</p>
-				<img src={info.image} className={classes.image} />
+				<img src={`${host}/peep/${info.uri}.png`} className={classes.image} />
 				<Button
 					onClick={() => {
 						updatePeep(info)
