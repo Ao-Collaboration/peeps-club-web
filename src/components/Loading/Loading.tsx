@@ -3,25 +3,30 @@ import Spinner from '../Spinner/Spinner'
 
 interface Props {
 	hash?: string | null
+	overrideMessage?: string
 }
 
-const Loading: React.FC<Props> = ({ hash }) => {
+const Loading: React.FC<Props> = ({ hash, overrideMessage }) => {
 	return (
 		<>
 			<Spinner />
-			<p>
-				{hash ? (
-					<>
-						Waiting for transaction... (
-						<a href={`https://etherscan.io/tx/${hash}`} target="_blank">
-							view
-						</a>
-						)
-					</>
-				) : (
-					defaultLoadingMessage
-				)}
-			</p>
+			{overrideMessage ? (
+				<p>{overrideMessage}</p>
+			) : (
+				<p>
+					{hash ? (
+						<>
+							Waiting for transaction... (
+							<a href={`https://etherscan.io/tx/${hash}`} target="_blank">
+								view
+							</a>
+							)
+						</>
+					) : (
+						defaultLoadingMessage
+					)}
+				</p>
+			)}
 		</>
 	)
 }

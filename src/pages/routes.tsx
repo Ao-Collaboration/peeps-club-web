@@ -44,6 +44,11 @@ export const MirrorRoute: Route = {
 	path: '/mirror',
 }
 
+export const MirrorPeepSelectRoute: Route = {
+	name: 'Update your Peep',
+	path: '/update-peep',
+}
+
 export const YourPeepRoute: Route = {
 	name: 'Welcome',
 	path: '/welcome',

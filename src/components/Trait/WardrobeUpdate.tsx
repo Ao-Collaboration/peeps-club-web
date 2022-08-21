@@ -1,12 +1,9 @@
-import { ethers } from 'ethers'
-import { FC, useContext, useState } from 'react'
+import { useContext, useState } from 'react'
 import { host } from '../../config/api'
-import { getPeepsContractId } from '../../config/contract'
 import { MetadataContext } from '../../context/Metadata/MetadataContext'
 import { Web3Context } from '../../context/Web3/Web3Context'
 import doFetch from '../../utils/doFetch'
 import Button from '../Button/Button'
-import peepsABI from '../../abi/peepsABI.json'
 import useStyles from './WardrobeConfirm.styles'
 import { useNavigate } from 'react-router-dom'
 import { YourPeepRoute } from '../../pages/routes'
@@ -61,7 +58,7 @@ const WardrobeUpdate: React.FC<Props> = ({ tokenId }) => {
 		}
 
 		try {
-			await doFetch(`${host}/peep/update`, 'POST', req)
+			await doFetch(`${host}/peep/update/${profile.address}`, 'POST', req)
 
 			navigate(YourPeepRoute.path, { state: { uri: profile.id } })
 		} finally {

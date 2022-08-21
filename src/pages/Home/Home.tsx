@@ -15,6 +15,7 @@ import MintSigned from '../../components/Mint/MintSigned'
 import { defaultLoadingMessage } from '../../config/text'
 import useStyles from './Home.styles'
 import Spinner from '../../components/Spinner/Spinner'
+import UpdatePeepButton from '../../components/UpdatePeepButton/UpdatePeepButton'
 
 type ScreenType = 'walletConnect' | 'passportCheck' | 'mint'
 
@@ -180,6 +181,7 @@ function Home() {
 							{passportsOwned.toString()} Passports Ready!
 						</Button>
 					)}
+					<UpdatePeepButton address={profile.address} />
 				</div>
 			</>
 		)
