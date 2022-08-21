@@ -6,9 +6,10 @@ import {
 	light_blue,
 	white,
 	yellow,
+	peepBlue,
 } from '../../config/colors'
 import { mint_page_bg } from '../../config/common-styles'
-import { headingFontFamily } from '../../config/jss-vars'
+import { headingFontFamily, weightSemiBold } from '../../config/jss-vars'
 
 const styles = {
 	'@global': {
@@ -157,6 +158,13 @@ const styles = {
 		borderRadius: '20px 20px 20px 0',
 		position: 'absolute',
 		right: '20%',
+	},
+	text: {
+		fontSize: '1.2rem',
+		color: black,
+		background: white,
+		padding: '0.5rem 1rem',
+		borderRadius: '5px',
 	},
 }
 

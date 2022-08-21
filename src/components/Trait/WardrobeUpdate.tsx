@@ -60,7 +60,9 @@ const WardrobeUpdate: React.FC<Props> = ({ tokenId }) => {
 		try {
 			await doFetch(`${host}/peep/update/${profile.address}`, 'POST', req)
 
-			navigate(YourPeepRoute.path, { state: { uri: profile.id } })
+			navigate(YourPeepRoute.path, {
+				state: { uri: profile.id, isUpdate: true },
+			})
 		} finally {
 			setIsLoading(false)
 		}

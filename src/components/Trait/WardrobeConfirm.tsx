@@ -53,7 +53,9 @@ const WardrobeConfirm = () => {
 			await tx.wait()
 			setPendingHash(null)
 
-			navigate(YourPeepRoute.path, { state: { uri: profile.id } })
+			navigate(YourPeepRoute.path, {
+				state: { uri: profile.id, isUpdate: false },
+			})
 		} finally {
 			setIsLoading(false)
 		}
