@@ -14,6 +14,7 @@ import { greetings } from '../../config/text'
 
 interface propState {
 	uri: string
+	isUpdate: boolean
 }
 
 const YourPeep = () => {
@@ -42,7 +43,7 @@ const YourPeep = () => {
 		const i = Math.floor(Math.random() * greetings.length)
 		return greetings[i]
 	}
-	const { uri } = useLocation().state as propState
+	const { uri, isUpdate } = useLocation().state as propState
 
 	const changePhrase = (setGreeting: (text: string) => void) => {
 		setGreeting(getRandomGreeting())
@@ -75,9 +76,15 @@ const YourPeep = () => {
 	return (
 		<div className={classes.page}>
 			<h2 className={classes.title}>
-				Welcome to Peeps Club, {getTrait(metadata, 'Name')}!!
+				{isUpdate ? 'Your look amazing' : 'Welcome to Peeps Club'}
+				{getTrait(metadata, 'Name')}!!
 			</h2>
 			<img className={classes.peepImage} src={yourPeepImage} />
+			{isUpdate && (
+				<p className={classes.text}>
+					Don't forget to <strong>refresh your metadata</strong> on Opensea!
+				</p>
+			)}
 			<div className={classes.buttonGroup}>
 				<Link className={classes.button} to={HomeRoute.path}>
 					Mint another?

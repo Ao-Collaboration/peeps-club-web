@@ -39,6 +39,16 @@ export const WardrobeRoute: Route = {
 	path: '/wardrobe',
 }
 
+export const MirrorRoute: Route = {
+	name: 'Mirror',
+	path: '/mirror',
+}
+
+export const MirrorPeepSelectRoute: Route = {
+	name: 'Update your Peep',
+	path: '/update-peep',
+}
+
 export const YourPeepRoute: Route = {
 	name: 'Welcome',
 	path: '/welcome',
