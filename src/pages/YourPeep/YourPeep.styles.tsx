@@ -6,10 +6,9 @@ import {
 	light_blue,
 	white,
 	yellow,
-	peepBlue,
 } from '../../config/colors'
 import { mint_page_bg } from '../../config/common-styles'
-import { headingFontFamily, weightSemiBold } from '../../config/jss-vars'
+import { headingFontFamily } from '../../config/jss-vars'
 
 const styles = {
 	'@global': {
