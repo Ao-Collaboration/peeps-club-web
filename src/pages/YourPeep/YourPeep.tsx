@@ -76,7 +76,7 @@ const YourPeep = () => {
 	return (
 		<div className={classes.page}>
 			<h2 className={classes.title}>
-				{isUpdate ? 'Your look amazing' : 'Welcome to Peeps Club'}
+				{isUpdate ? 'You look amazing' : 'Welcome to Peeps Club'}
 				{getTrait(metadata, 'Name')}!!
 			</h2>
 			<img className={classes.peepImage} src={yourPeepImage} />
