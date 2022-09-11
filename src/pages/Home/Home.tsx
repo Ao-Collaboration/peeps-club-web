@@ -15,7 +15,7 @@ import MintSigned from '../../components/Mint/MintSigned'
 import { defaultLoadingMessage } from '../../config/text'
 import useStyles from './Home.styles'
 import Spinner from '../../components/Spinner/Spinner'
-import UpdatePeepButton from '../../components/UpdatePeepButton/UpdatePeepButton'
+import MyPeepsButton from '../../components/MyPeepsButton/MyPeepsButton'
 
 type ScreenType = 'walletConnect' | 'passportCheck' | 'mint'
 
@@ -156,7 +156,7 @@ function Home() {
 					<strong>PASSPORT?!</strong>
 				</ul>
 				<div className={classes.buttonGroup}>
-					<UpdatePeepButton address={profile.address} />
+					<MyPeepsButton address={profile.address} />
 					{isPublicSaleActive || isVIPeepActive ? (
 						<Button
 							onClick={() => {
