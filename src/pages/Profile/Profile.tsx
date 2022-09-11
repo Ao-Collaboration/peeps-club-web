@@ -34,6 +34,9 @@ function Profile() {
 	const centerX = 570
 	const centerY = 450
 
+	const canvas = document.getElementById('canvas') as HTMLCanvasElement
+	const ctx = canvas.getContext('2d')
+
 	if (!web3Provider || !signer) {
 		return <></>
 	}
@@ -69,18 +72,16 @@ function Profile() {
 		let svgString = svgText
 
 		if (isTransparent) {
-			document.querySelector('#Time')?.remove()
-			document.querySelector('#District')?.remove()
+			// if transparent then use the inline svg but removing certain layers
 			const svgElement = document.getElementById('svg5') as HTMLImageElement
+			svgElement.querySelector('#Time')?.remove()
+			svgElement.querySelector('#District')?.remove()
 			svgString = new XMLSerializer().serializeToString(svgElement)
 		}
 
 		if (!svgString) {
 			return
 		}
-
-		const canvas = document.getElementById('canvas') as HTMLCanvasElement
-		const ctx = canvas.getContext('2d')
 
 		const imageElement = new Image()
 		const svgBlob = new Blob([svgString], {
