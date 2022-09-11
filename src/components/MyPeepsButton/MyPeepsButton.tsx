@@ -11,7 +11,7 @@ interface Props {
 	address: string
 }
 
-const UpdatePeepButton: React.FC<Props> = ({ address }) => {
+const MyPeepsButton: React.FC<Props> = ({ address }) => {
 	const { web3Provider } = useContext(Web3Context)
 	const [hasAPeep, setHasAPeep] = useState(false)
 	const navigate = useNavigate()
@@ -46,11 +46,11 @@ const UpdatePeepButton: React.FC<Props> = ({ address }) => {
 		<>
 			{hasAPeep && (
 				<Button onClick={toPeepSelect} className={'blue'}>
-					Update your Peep
+					My Peeps
 				</Button>
 			)}
 		</>
 	)
 }
 
-export default UpdatePeepButton
+export default MyPeepsButton

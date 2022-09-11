@@ -21,6 +21,12 @@ const styles = {
 		margin: '1rem',
 		display: 'flex',
 		flexDirection: 'column',
+		'& button':{
+			marginTop:'1rem',
+		},
+		'& button:first-of-type':{
+			marginTop:'0',
+		}
 	},
 	container: {
 		display: 'flex',

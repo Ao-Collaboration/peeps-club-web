@@ -9,6 +9,7 @@ import {
 	MirrorPeepSelectRoute,
 	MirrorRoute,
 	PartyRoute,
+	ProfileRoute,
 	WardrobeRoute,
 	YourPeepRoute,
 } from './routes'
@@ -28,6 +29,7 @@ import Party from './Party/Party'
 import ImmigrationExit from './Immigration/ImmigrationExit'
 import Mirror from './Mirror/Mirror'
 import MirrorPeepSelect from './Mirror/MirrorPeepSelect'
+import Profile from './Profile/Profile'
 
 function Router() {
 	const { web3Provider } = useContext(Web3Context)
@@ -48,6 +50,7 @@ function Router() {
 				<Header />
 				<Routes>
 					<Route path={HomeRoute.path} element={<Home />} />
+					<Route path={ProfileRoute.path} element={<Profile />} />
 					<Route path={YourPeepRoute.path} element={<YourPeep />} />
 					<Route path={PartyRoute.path} element={<Party />} />
 					<Route
