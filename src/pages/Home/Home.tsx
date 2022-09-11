@@ -156,6 +156,7 @@ function Home() {
 					<strong>PASSPORT?!</strong>
 				</ul>
 				<div className={classes.buttonGroup}>
+					<UpdatePeepButton address={profile.address} />
 					{isPublicSaleActive || isVIPeepActive ? (
 						<Button
 							onClick={() => {
@@ -181,7 +182,6 @@ function Home() {
 							{passportsOwned.toString()} Passports Ready!
 						</Button>
 					)}
-					<UpdatePeepButton address={profile.address} />
 				</div>
 			</>
 		)

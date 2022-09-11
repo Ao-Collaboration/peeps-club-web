@@ -45,8 +45,8 @@ export const MirrorRoute: Route = {
 }
 
 export const MirrorPeepSelectRoute: Route = {
-	name: 'Update your Peep',
-	path: '/update-peep',
+	name: 'My Peeps',
+	path: '/my-peeps',
 }
 
 export const YourPeepRoute: Route = {
@@ -57,4 +57,9 @@ export const YourPeepRoute: Route = {
 export const PartyRoute: Route = {
 	name: 'Party',
 	path: '/party',
+}
+
+export const ProfileRoute: Route = {
+	name: 'Profile',
+	path: '/profile',
 }

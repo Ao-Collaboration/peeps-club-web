@@ -46,7 +46,7 @@ const UpdatePeepButton: React.FC<Props> = ({ address }) => {
 		<>
 			{hasAPeep && (
 				<Button onClick={toPeepSelect} className={'blue'}>
-					Update your Peep
+					My Peeps
 				</Button>
 			)}
 		</>

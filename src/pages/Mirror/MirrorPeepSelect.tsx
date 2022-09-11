@@ -12,7 +12,7 @@ import { host } from '../../config/api'
 import Button from '../../components/Button/Button'
 import { MetadataContext } from '../../context/Metadata/MetadataContext'
 import { useNavigate } from 'react-router-dom'
-import { MirrorRoute } from '../routes'
+import { MirrorRoute, ProfileRoute } from '../routes'
 
 interface PeepDisplayInfo {
 	name: string
@@ -103,6 +103,10 @@ const MirrorPeepSelect = () => {
 		navigate(MirrorRoute.path, { state: { tokenId: info.tokenId } })
 	}
 
+	const generateProfile = async (info: PeepDisplayInfo) => {
+		navigate(ProfileRoute.path, { state: { tokenId: info.tokenId } })
+	}
+
 	const getDisplayPeep = (info: PeepDisplayInfo) => {
 		return (
 			<div className={classes.peepSelect}>
@@ -116,13 +120,21 @@ const MirrorPeepSelect = () => {
 				>
 					Update
 				</Button>
+				<Button
+					onClick={() => {
+						generateProfile(info)
+					}}
+					className={'primary'}
+				>
+					Generate PFP
+				</Button>
 			</div>
 		)
 	}
 
 	return (
 		<div className={classes.page}>
-			<h1 className={classes.title}>Which Peep to update?</h1>
+			<h1 className={classes.title}>My Peeps</h1>
 			{peepDisplayInfo.length > 0 ? (
 				<div className={classes.container}>
 					{peepDisplayInfo.map(info => {
