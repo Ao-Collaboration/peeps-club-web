@@ -17,6 +17,7 @@ interface propState {
 function Profile() {
 	const classes = useStyles()
 	const [name, setName] = useState<string | null>(null)
+	const [ctx, setCtx] = useState<CanvasRenderingContext2D | null>(null)
 	const [isLoading, setIsLoading] = useState(false)
 	const [svgText, setSvgText] = useState<string | null>(null)
 	const [zoom, setZoom] = useState(500)
@@ -34,9 +35,6 @@ function Profile() {
 	const centerX = 570
 	const centerY = 450
 
-	const canvas = document.getElementById('canvas') as HTMLCanvasElement
-	const ctx = canvas.getContext('2d')
-
 	if (!web3Provider || !signer) {
 		return <></>
 	}
@@ -44,6 +42,12 @@ function Profile() {
 	useEffect(() => {
 		const load = async () => {
 			setIsLoading(true)
+
+
+			const canvas = document.getElementById('canvas') as HTMLCanvasElement
+			if(canvas){
+				setCtx(canvas.getContext('2d'))
+			}
 			const uriLink = await peepsContract.tokenURI(tokenId)
 			const uri = uriLink.split(/\/(\d+)/)[1]
 
