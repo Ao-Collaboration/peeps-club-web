@@ -7,6 +7,7 @@ import Mint from './Mint'
 import ReactGA from 'react-ga'
 import Loading from '../Loading/Loading'
 import { toast } from 'react-toastify'
+import { formatRemainingTime } from '../../utils/format'
 
 interface Props {
 	price: BigNumber
@@ -38,14 +39,6 @@ const MintPublic: React.FC<Props> = ({
 		passportABI,
 		signer,
 	)
-
-	const getRemainingTime = () => {
-		const left = endTimestamp - Math.floor(Date.now() / 1000)
-		const hours = Math.floor(left / 60 / 60)
-		const minutes = Math.floor((left - hours * 60 * 60) / 60)
-
-		return `${hours}h ${minutes}m`
-	}
 
 	const mint = async (isNZ: boolean) => {
 		setIsLoading(true)
@@ -104,7 +97,7 @@ const MintPublic: React.FC<Props> = ({
 					onMint={mint}
 					price={price}
 					quantity={quantity}
-					remainingTime={getRemainingTime()}
+					remainingTime={formatRemainingTime(endTimestamp)}
 					setQuantity={setQuantity}
 				/>
 			)}
