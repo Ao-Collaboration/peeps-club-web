@@ -63,3 +63,8 @@ export const ProfileRoute: Route = {
 	name: 'Profile',
 	path: '/profile',
 }
+
+export const TreatRoute: Route = {
+	name: 'Treat',
+	path: '/treat',
+}

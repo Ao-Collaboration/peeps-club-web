@@ -1,18 +1,5 @@
 import { HashRouter, Route, Routes } from 'react-router-dom'
-import {
-	AirplaneRoute,
-	HomeRoute,
-	ImmigrationExitRoute,
-	ImmigrationGateRoute,
-	ImmigrationIntroRoute,
-	ImmigrationRoute,
-	MirrorPeepSelectRoute,
-	MirrorRoute,
-	PartyRoute,
-	ProfileRoute,
-	WardrobeRoute,
-	YourPeepRoute,
-} from './routes'
+import * as paths from './routes'
 import Home from './Home/Home'
 import Airplane from './Airplane/Airplane'
 import Immigration from './Immigration/Immigration'
@@ -30,6 +17,7 @@ import ImmigrationExit from './Immigration/ImmigrationExit'
 import Mirror from './Mirror/Mirror'
 import MirrorPeepSelect from './Mirror/MirrorPeepSelect'
 import Profile from './Profile/Profile'
+import Treat from './Treat/Treat'
 
 function Router() {
 	const { web3Provider } = useContext(Web3Context)
@@ -49,32 +37,36 @@ function Router() {
 			<HashRouter>
 				<Header />
 				<Routes>
-					<Route path={HomeRoute.path} element={<Home />} />
-					<Route path={ProfileRoute.path} element={<Profile />} />
-					<Route path={YourPeepRoute.path} element={<YourPeep />} />
-					<Route path={PartyRoute.path} element={<Party />} />
+					<Route path={paths.HomeRoute.path} element={<Home />} />
+					<Route path={paths.ProfileRoute.path} element={<Profile />} />
+					<Route path={paths.YourPeepRoute.path} element={<YourPeep />} />
+					<Route path={paths.PartyRoute.path} element={<Party />} />
+					<Route path={paths.TreatRoute.path} element={<Treat />} />
 					<Route
-						path={MirrorPeepSelectRoute.path}
+						path={paths.MirrorPeepSelectRoute.path}
 						element={<MirrorPeepSelect />}
 					/>
 					{profile?.id && (
 						<>
-							<Route path={AirplaneRoute.path} element={<Airplane />} />
-							<Route path={ImmigrationRoute.path} element={<Immigration />} />
+							<Route path={paths.AirplaneRoute.path} element={<Airplane />} />
 							<Route
-								path={ImmigrationIntroRoute.path}
+								path={paths.ImmigrationRoute.path}
+								element={<Immigration />}
+							/>
+							<Route
+								path={paths.ImmigrationIntroRoute.path}
 								element={<ImmigrationIntro />}
 							/>
 							<Route
-								path={ImmigrationExitRoute.path}
+								path={paths.ImmigrationExitRoute.path}
 								element={<ImmigrationExit />}
 							/>
 							<Route
-								path={ImmigrationGateRoute.path}
+								path={paths.ImmigrationGateRoute.path}
 								element={<ImmigrationGate />}
 							/>
-							<Route path={WardrobeRoute.path} element={<Wardrobe />} />
-							<Route path={MirrorRoute.path} element={<Mirror />} />
+							<Route path={paths.WardrobeRoute.path} element={<Wardrobe />} />
+							<Route path={paths.MirrorRoute.path} element={<Mirror />} />
 						</>
 					)}
 				</Routes>
