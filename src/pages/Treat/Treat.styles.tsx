@@ -1,8 +1,8 @@
 import { createUseStyles } from 'react-jss'
-import { checklist, mint_page_bg, mint_title } from '../../config/common-styles'
+import { checklist, mint_title, spooky_page_bg } from '../../config/common-styles'
 
 const styles = {
-	page: mint_page_bg,
+	page: spooky_page_bg,
 	title: mint_title,
 	text: {
 		fontSize: '1.5rem',

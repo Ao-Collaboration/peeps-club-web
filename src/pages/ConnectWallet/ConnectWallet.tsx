@@ -1,8 +1,19 @@
+import { useLocation } from 'react-router-dom'
 import ConnectButton from '../../components/Button/ConnectButton'
 import useStyles from './ConnectWallet.styles'
 
 function ConnectWallet() {
 	const classes = useStyles()
+
+	const location = useLocation()
+
+	if (location.pathname.includes('treat')) {
+		return (
+			<div className={classes.pageSpooky}>
+				<ConnectButton />
+			</div>
+		)
+	}
 
 	return (
 		<div className={classes.page}>

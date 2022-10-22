@@ -73,18 +73,19 @@ function Treat() {
 								price={price}
 							/>
 						) : (
-							<p>Out of Candy!</p>
+							<p className={classes.text}>Out of Candy!</p>
 						)}
 					</>
 				) : (
 					<>
 						<Spinner />
-						<p>Trick or Treat!</p>
+						<p className={classes.text}>Trick or Treat!</p>
 					</>
 				)
 			) : (
 				<div>
 					<Button
+						className="blue"
 						onClick={() => {
 							window.location.href =
 								'https://www.youtube.com/watch?v=dQw4w9WgXcQ'
@@ -92,8 +93,9 @@ function Treat() {
 					>
 						Trick
 					</Button>
-					<span> or </span>
+					<span className={classes.text}> or </span>
 					<Button
+						className="blue"
 						onClick={() => {
 							setWantsTreat(true)
 						}}

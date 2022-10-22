@@ -3,12 +3,14 @@ import { black } from '../../config/colors'
 import {
 	checklist,
 	mint_page_bg,
+	spooky_page_bg,
 	translucent_section,
 } from '../../config/common-styles'
 import { headingFontFamily } from '../../config/jss-vars'
 
 const styles = {
 	page: mint_page_bg,
+	pageSpooky: spooky_page_bg,
 	title: {
 		fontFamily: headingFontFamily,
 		color: black,
