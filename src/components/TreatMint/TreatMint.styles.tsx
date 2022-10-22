@@ -14,7 +14,12 @@ const styles = {
 	bag: {
 		position: 'absolute',
 		margin: 'auto',
-		bottom: '10vh',
+		height: '80vh',
+		bottom: 0,
+	},
+	top: {
+		position: 'relative',
+		zIndex: 1000,
 	},
 }
 

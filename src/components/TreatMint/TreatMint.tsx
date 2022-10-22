@@ -47,21 +47,29 @@ const MintPublic: React.FC<Props> = ({ treatContract, peepId, price }) => {
 				<Loading hash={pendingHash} />
 			) : (
 				<>
-					{!isDown && (
-						<Button onClick={mint} className='primary'>
-							Take some Treats!
-						</Button>)
-					}
+					<img
+						aria-hidden
+						className={`${classes.bag}`}
+						src={'/assets/Bag bottom.svg'}
+					/>
 					<img
 						aria-hidden
 						className={`${classes.arm} ${ isDown && classes.armDown}`}
 						src={'/assets/claw.svg'}
 					/>
-					{/* <img
+					<img
 						aria-hidden
 						className={`${classes.bag}`}
-						src={'/assets/stamp_arm.svg'}
-					/> */}
+						src={'/assets/Bag top.svg'}
+					/>
+					{!isDown && (
+						<div className={classes.top}>
+							<Button onClick={mint} className='primary'>
+								Take some Treats!
+							</Button>
+						</div>
+					)
+					}
 				</>
 			)}
 		</>

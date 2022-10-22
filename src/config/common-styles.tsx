@@ -29,7 +29,7 @@ export const mint_page_bg = {
 }
 
 export const spooky_page_bg = {
-	backgroundImage: 'url("assets/mint_bg.png")',
+	backgroundImage: 'url("assets/spooky_bg.png")',
 	backgroundSize: 'cover',
 	minHeight: '100vh',
 	width: '100vw',
