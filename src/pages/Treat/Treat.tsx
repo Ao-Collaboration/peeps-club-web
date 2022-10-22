@@ -85,7 +85,7 @@ function Treat() {
 			) : (
 				<div>
 					<Button
-						className="blue"
+						className="primary"
 						onClick={() => {
 							window.location.href =
 								'https://www.youtube.com/watch?v=dQw4w9WgXcQ'
@@ -95,7 +95,7 @@ function Treat() {
 					</Button>
 					<span className={classes.text}> or </span>
 					<Button
-						className="blue"
+						className="primary"
 						onClick={() => {
 							setWantsTreat(true)
 						}}

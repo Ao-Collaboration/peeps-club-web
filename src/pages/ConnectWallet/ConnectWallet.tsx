@@ -10,7 +10,7 @@ function ConnectWallet() {
 	if (location.pathname.includes('treat')) {
 		return (
 			<div className={classes.pageSpooky}>
-				<ConnectButton />
+				<ConnectButton className='primary' />
 			</div>
 		)
 	}

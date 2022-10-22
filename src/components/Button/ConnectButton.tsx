@@ -3,7 +3,7 @@ import { useContext } from 'react'
 // import WalletConnectProvider from '@walletconnect/web3-provider'
 import Web3Modal from 'web3modal'
 
-import Button from './Button'
+import Button, { ButtonClassNames } from './Button'
 import { ethers } from 'ethers'
 import { Web3Context } from '../../context/Web3/Web3Context'
 import { ProfileContext } from '../../context/Profile/ProfileContext'
@@ -13,7 +13,11 @@ import { HomeRoute } from '../../pages/routes'
 // import { host } from '../../config/api'
 // import doFetch from '../../utils/doFetch'
 
-function ConnectButton() {
+interface Props {
+	className?: ButtonClassNames;
+}
+
+const ConnectButton: React.FC<Props> = ({ className='blue' }) => {
 	const { account, setAccount, setWeb3Provider } = useContext(Web3Context)
 	const { profile, setProfile } = useContext(ProfileContext)
 	const navigate = useNavigate()
@@ -76,7 +80,7 @@ function ConnectButton() {
 	}
 
 	return (
-		<Button onClick={connect} className="blue">
+		<Button onClick={connect} className={className}>
 			{account || 'Connect Wallet'}
 		</Button>
 	)

@@ -1,12 +1,14 @@
 import useStyles, { ClassNames } from './Button.styles'
 
-interface Props {
+export type ButtonClassNames = ClassNames
+
+export interface ButtonProps {
 	className?: ClassNames
 	children?: React.ReactNode
 	onClick: () => void
 }
 
-const Button: React.FC<Props> = ({ children, onClick, className }) => {
+const Button: React.FC<ButtonProps> = ({ children, onClick, className }) => {
 	const classes = useStyles()
 
 	return (
