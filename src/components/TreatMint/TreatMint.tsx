@@ -22,8 +22,8 @@ const MintPublic: React.FC<Props> = ({ treatContract, peepId, price }) => {
 		setTimeout(async () => {
 			try {
 				const tx = await (peepId
-					? treatContract.mintPeeps(peepId)
-					: treatContract.mintPublic({ value: price }))
+					? treatContract.mintPeeps(peepId, { gasLimit: 150000 })
+					: treatContract.mintPublic({ value: price, gasLimit: 150000 }))
 				setIsLoading(true)
 				setPendingHash(tx.hash)
 				await tx.wait()
