@@ -27,7 +27,6 @@ const MintPublic: React.FC<Props> = ({ treatContract, peepId, price }) => {
 				setIsLoading(true)
 				setPendingHash(tx.hash)
 				await tx.wait()
-				setPendingHash(null)
 				// eslint-disable-next-line @typescript-eslint/no-explicit-any
 			} catch (err: any) {
 				if (err?.error?.code === -32000) {
@@ -37,6 +36,9 @@ const MintPublic: React.FC<Props> = ({ treatContract, peepId, price }) => {
 				}
 			} finally {
 				setIsLoading(false)
+				setTimeout(() => {
+					setIsDown(false)
+				}, 500)
 			}
 		}, 3000)
 	}
@@ -54,6 +56,11 @@ const MintPublic: React.FC<Props> = ({ treatContract, peepId, price }) => {
 					/>
 					<img
 						aria-hidden
+						className={`${classes.candy} ${ pendingHash && !isDown && classes.candyUp }`}
+						src={'/assets/candyq.png'}
+					/>
+					<img
+						aria-hidden
 						className={`${classes.arm} ${ isDown && classes.armDown}`}
 						src={'/assets/claw.svg'}
 					/>
@@ -62,7 +69,7 @@ const MintPublic: React.FC<Props> = ({ treatContract, peepId, price }) => {
 						className={`${classes.bag}`}
 						src={'/assets/Bag top.svg'}
 					/>
-					{!isDown && (
+					{!isDown && !pendingHash && (
 						<div className={classes.top}>
 							<Button onClick={mint} className='primary'>
 								Take some Treats!

@@ -11,6 +11,16 @@ const styles = {
 	armDown: {
 		bottom: '20vh',
 	},
+	candy: {
+		position: 'absolute',
+		margin: 'auto',
+		height: '40vh',
+		bottom: '5vh',
+		transition: 'bottom 3s ease',
+	},
+	candyUp: {
+		bottom: '55vh',
+	},
 	bag: {
 		position: 'absolute',
 		margin: 'auto',
