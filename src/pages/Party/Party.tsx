@@ -3,10 +3,9 @@ import { useCallback, useContext, useEffect, useState } from 'react'
 import SVG from 'react-inlinesvg'
 import peepsABI from '../../abi/peepsABI.json'
 import Loading from '../../components/Loading/Loading'
-import { host } from '../../config/api'
 import { getPeepsContractId } from '../../config/contract'
 import { Web3Context } from '../../context/Web3/Web3Context'
-import doFetch from '../../utils/doFetch'
+import { getPeepSvgFromId } from '../../utils/peepAPI'
 import useStyles from './Party.styles'
 
 const NUMBER_PEEPS = 10
@@ -52,14 +51,14 @@ const Party = () => {
 					addr,
 					randomIdx,
 				)
-				svgTasks.push(getPeepSvgFromId(randomId))
+				svgTasks.push(getPeepSvgFromId(peepsContract, randomId))
 				peepIds.push(randomId)
 			}
 			// Get random peeps
 			while (svgTasks.length < NUMBER_PEEPS) {
 				const randomId = Math.floor(Math.random() * totalPeeps)
 				if (peepIds.indexOf(randomId) === -1) {
-					svgTasks.push(getPeepSvgFromId(randomId))
+					svgTasks.push(getPeepSvgFromId(peepsContract, randomId))
 					peepIds.push(randomId)
 				}
 			}
@@ -83,18 +82,6 @@ const Party = () => {
 			getRandomPeeps()
 		}
 	}, [])
-
-	const getPeepSvgFromId = async (peepId: number) => {
-		const uri: string = await peepsContract.tokenURI(peepId)
-		const svgId = uri.split(/\/(\d+)/)[1]
-		const svg = await doFetch(
-			`${host}/peep/${svgId}.svg`,
-			'GET',
-			undefined,
-			'image/svg+xml',
-		)
-		return URL.createObjectURL(svg)
-	}
 
 	const getRandomPeepStyles = (idx: number): React.CSSProperties => {
 		return {
