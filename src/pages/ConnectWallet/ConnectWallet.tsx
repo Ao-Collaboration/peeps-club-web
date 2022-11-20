@@ -1,21 +1,8 @@
-import { Link, useLocation } from 'react-router-dom'
-import Button from '../../components/Button/Button'
 import ConnectButton from '../../components/Button/ConnectButton'
-import { TreatRoute } from '../routes'
 import useStyles from './ConnectWallet.styles'
 
 function ConnectWallet() {
 	const classes = useStyles()
-
-	const location = useLocation()
-
-	if (location.pathname.includes('treat')) {
-		return (
-			<div className={classes.pageSpooky}>
-				<ConnectButton className='primary' />
-			</div>
-		)
-	}
 
 	return (
 		<div className={classes.page}>
@@ -48,11 +35,6 @@ function ConnectWallet() {
 					here
 				</a>
 			</p>
-			<div className={classes.buttonGroup}>
-				<Link to={TreatRoute.path} className={classes.title}>
-					<Button onClick={() => {return true}} className='primary'>Or Click Here for something Spoooooky</Button>
-				</Link>
-			</div>
 		</div>
 	)
 }

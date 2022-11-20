@@ -28,22 +28,6 @@ export const mint_page_bg = {
 	justifyContent: 'center',
 }
 
-export const spooky_page_bg = {
-	backgroundImage: 'url("assets/spooky_bg.png")',
-	backgroundSize: 'cover',
-	minHeight: '100vh',
-	width: '100vw',
-	position: 'absolute',
-	top: 0,
-	zIndex: '-100',
-	paddingTop: '50px',
-	boxSizing: 'border-box',
-	display: 'flex',
-	flexDirection: 'column',
-	alignItems: 'center',
-	justifyContent: 'center',
-}
-
 export const mint_title = {
 	fontFamily: headingFontFamily,
 	color: black,

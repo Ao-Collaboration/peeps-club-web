@@ -17,7 +17,6 @@ import ImmigrationExit from './Immigration/ImmigrationExit'
 import Mirror from './Mirror/Mirror'
 import MirrorPeepSelect from './Mirror/MirrorPeepSelect'
 import Profile from './Profile/Profile'
-import Treat from './Treat/Treat'
 
 function Router() {
 	const { web3Provider } = useContext(Web3Context)
@@ -41,7 +40,6 @@ function Router() {
 					<Route path={paths.ProfileRoute.path} element={<Profile />} />
 					<Route path={paths.YourPeepRoute.path} element={<YourPeep />} />
 					<Route path={paths.PartyRoute.path} element={<Party />} />
-					<Route path={paths.TreatRoute.path} element={<Treat />} />
 					<Route
 						path={paths.MirrorPeepSelectRoute.path}
 						element={<MirrorPeepSelect />}
