@@ -5,19 +5,18 @@ import FadeTo from '../../components/Scene/FadeTo'
 import { black } from '../../config/colors'
 import { useNavigate } from 'react-router-dom'
 import { MetadataContext } from '../../context/Metadata/MetadataContext'
-import { Category } from '../../interface/availableTraits'
-// import { ImmigrationIntroRoute } from '../routes'
 import { ImmigrationGateRoute } from '../routes'
 import Button from '../../components/Button/Button'
 import AnotherDevice from '../AnotherDevice/AnotherDevice'
 import { isPortrait } from '../../utils/mediaQuery'
+import { Trait } from '../../interface/metadata'
 
 const Airplane = () => {
 	const classes = useStyles()
 	const [isLanding, setIsLanding] = useState(false)
 	const [isFading, setisFading] = useState(false)
 	const [showList, setShowList] = useState(false)
-	const [availableDistricts, setAvailableDistricts] = useState<Category>()
+	const [availableDistricts, setAvailableDistricts] = useState<Trait[]>()
 	const { metadata, setMetadata, availableTraits } = useContext(MetadataContext)
 	const navigate = useNavigate()
 
@@ -31,10 +30,9 @@ const Airplane = () => {
 	}
 
 	const getAvailableDistricts = async () => {
-		const districts = availableTraits.filter(item => {
-			return item.category === 'District'
-		})[0]
-
+		const districts = availableTraits.filter(t =>
+			t.categories?.includes('District'),
+		)
 		setAvailableDistricts(districts)
 	}
 
@@ -42,15 +40,16 @@ const Airplane = () => {
 		getAvailableDistricts()
 	}, [])
 
-	const startLanding = (district: string) => {
-		const updatedMetadata = [...metadata]
-		updatedMetadata.forEach(item => {
-			if (item.trait_type === 'District') {
-				item.value = district
-			}
+	const startLanding = (districtName: string) => {
+		const updatedMetadata = metadata.filter(t => {
+			!t.categories?.includes('District')
 		})
-		setMetadata(updatedMetadata)
-		setIsLanding(true)
+		const district = availableDistricts?.find(t => t.name === districtName)
+		if (district) {
+			updatedMetadata.push(district)
+			setMetadata(updatedMetadata)
+			setIsLanding(true)
+		}
 	}
 
 	const startFade = async () => {
@@ -111,23 +110,19 @@ const Airplane = () => {
 					{showList && (
 						<div className={classes.landingLinks}>
 							{availableDistricts &&
-								availableDistricts.items
-									.filter(item => {
-										return item.name !== 'None'
-									})
-									.map(option => (
-										<a
-											tabIndex={0}
-											aria-label={option.name}
-											key={option.name}
-											onClick={() => {
-												startLanding(option.name)
-												return false
-											}}
-										>
-											{option.name}
-										</a>
-									))}
+								availableDistricts.map(option => (
+									<a
+										tabIndex={0}
+										aria-label={option.name}
+										key={option.name}
+										onClick={() => {
+											startLanding(option.name)
+											return false
+										}}
+									>
+										{option.name}
+									</a>
+								))}
 						</div>
 					)}
 				</div>
@@ -135,13 +130,13 @@ const Airplane = () => {
 					<SVG src={'/assets/Cloud 1 Asset.svg'} />
 				</div>
 			</div>
-			{ isLanding && 
+			{isLanding && (
 				<div className={classes.skipButton}>
 					<Button onClick={isDone} className="primary">
 						Skip
 					</Button>
 				</div>
-			}
+			)}
 		</>
 	)
 }

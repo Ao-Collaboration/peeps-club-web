@@ -218,12 +218,6 @@ const styles = {
 		marginLeft: '-3.5em',
 		bottom: '0',
 	},
-	exclusionTips: {
-		position: 'absolute',
-		bottom: '2em',
-		width: '18em',
-		color: peeps_darkblue,
-	},
 	disabled: {
 		filter: 'brightness(0.7)',
 		zIndex: '-100',

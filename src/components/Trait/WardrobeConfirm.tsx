@@ -12,6 +12,7 @@ import { useNavigate } from 'react-router-dom'
 import { YourPeepRoute } from '../../pages/routes'
 import Loading from '../Loading/Loading'
 import { ProfileContext } from '../../context/Profile/ProfileContext'
+import { getTrait } from '../../interface/metadata'
 
 const WardrobeConfirm = () => {
 	const { metadata } = useContext(MetadataContext)
@@ -32,11 +33,7 @@ const WardrobeConfirm = () => {
 		signer,
 	)
 
-	const getName = () => {
-		return metadata.filter(trait => {
-			return trait.trait_type === 'Name'
-		})[0].value
-	}
+	const getName = () => getTrait(metadata, 'Name')
 
 	const mintPeep = async () => {
 		setIsLoading(true)

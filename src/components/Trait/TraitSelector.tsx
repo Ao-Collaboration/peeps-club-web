@@ -3,41 +3,26 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useContext, useState } from 'react'
 import { useMediaQuery } from 'react-responsive'
 import { MetadataContext } from '../../context/Metadata/MetadataContext'
-import { Category, CategoryName } from '../../interface/availableTraits'
 import { tableOrMobileQuery } from '../../utils/mediaQuery'
 import useStyles from './TraitSelector.styles'
+import { Trait } from '../../interface/metadata'
 
 interface Props {
-	availableTraits: Category[]
+	availableTraits: Trait[]
 }
 
 const TraitSelector: React.FC<Props> = ({ availableTraits }) => {
 	const classes = useStyles()
-	const categories: CategoryName[] = [
-		'Skin Condition',
-		'Skin',
-		'Facial Hair',
-		'Hair',
-		'Hair Colour',
-		'Eye Colour',
-		'Eye Style',
-		'Eye Outline',
-		'Expression',
-		'Top Facial Hair',
-	]
-	const categoryExampleImages = [
-		'Asymmetric Vitiligo',
-		'Almond',
-		'Full Beard',
-		'Twin Braids',
-		'Mid Brown',
-		'Blue',
-		'Bow',
-		'Classic Eyelashes',
-		'Meow',
-		'Moustache',
-	]
+	//FIXME Correct category handling
+	// For now we use the second element in the list as the group
+	const categories = Array.from(
+		new Set( // Unique
+			availableTraits.map(t => t.categories?.[1]).filter(c => !!c) as string[],
+		),
+	)
 	const [selectedCategoryIndex, setSelectedCategoryIndex] = useState(-1)
+	const [selectedCategoryTraits, setSelectedCategoryTraits] =
+		useState<Trait[]>(availableTraits)
 
 	const { metadata, setMetadata, getSelectedTrait } =
 		useContext(MetadataContext)
@@ -50,17 +35,25 @@ const TraitSelector: React.FC<Props> = ({ availableTraits }) => {
 
 	const updateCategory = (index: number) => {
 		setSelectedCategoryIndex(index)
+		const category = categories[index]
+		setSelectedCategoryTraits(
+			availableTraits.filter(t => t.categories?.includes(category)),
+		)
 	}
 
 	const updateSelectedTraits = (categoryIndex: number, name: string) => {
-		const updatedMetadata = [...metadata]
-		updatedMetadata.forEach(traitItem => {
-			if (traitItem.trait_type === categories[categoryIndex]) {
-				traitItem.value = name
-			}
-		})
-		setMetadata(updatedMetadata)
+		const trait = availableTraits.find(t => t.name === name)
+		if (trait) {
+			const category = categories[categoryIndex]
+			const updatedMetadata = [...metadata].filter(
+				t => !t.categories?.includes(category),
+			)
+			updatedMetadata.push(trait)
+			setMetadata(updatedMetadata)
+		}
 	}
+
+	const showCategoryList = selectedCategoryIndex === -1
 
 	return (
 		<div className={classes.container}>
@@ -86,8 +79,8 @@ const TraitSelector: React.FC<Props> = ({ availableTraits }) => {
 					isTabletOrMobile ? classes.thumbnailsSmall : classes.thumbnails
 				}
 			>
-				{selectedCategoryIndex < 0
-					? categories.map((category, index) => (
+				{showCategoryList &&
+					categories.map((category, index) => (
 						<div key={category}>
 							<div className={classes.icon}>
 								<input
@@ -96,41 +89,36 @@ const TraitSelector: React.FC<Props> = ({ availableTraits }) => {
 										updateCategory(index)
 									}}
 									aria-label={category}
-									src={`/assets/${category}/${categoryExampleImages[index]}.png`}
+									src={`/assets/categories/${category}.png`} //FIXME We need images for this
 								/>
 							</div>
 							<p aria-hidden>{category}</p>
 						</div>
-					))
-					: availableTraits
-						.filter(traitCategory => {
-							return (
-								traitCategory.category === categories[selectedCategoryIndex]
-							)
-						})[0]
-						.items.map(item => (
-							<div
-								key={item.name}
-								className={
-									item.name ===
-										getSelectedTrait(categories[selectedCategoryIndex])
-										? classes.selected
-										: ''
-								}
-							>
-								<div className={classes.icon}>
-									<input
-										type="image"
-										onClick={() => {
-											updateSelectedTraits(selectedCategoryIndex, item.name)
-										}}
-										aria-label={item.name}
-										src={`/assets/${categories[selectedCategoryIndex]}/${item.name}.png`}
-									/>
-								</div>
-								<p aria-hidden>{item.name}</p>
+					))}
+				{!showCategoryList &&
+					selectedCategoryTraits.map(trait => (
+						<div
+							key={trait.name}
+							className={
+								trait.name ===
+								getSelectedTrait(categories[selectedCategoryIndex])
+									? classes.selected
+									: ''
+							}
+						>
+							<div className={classes.icon}>
+								<input
+									type="image"
+									onClick={() => {
+										updateSelectedTraits(selectedCategoryIndex, trait.name)
+									}}
+									aria-label={trait.name}
+									src={`/assets/traits/${trait.name}.png`} //FIXME Need to move all traits into one big folder
+								/>
 							</div>
-						))}
+							<p aria-hidden>{trait.name}</p>
+						</div>
+					))}
 			</div>
 		</div>
 	)

@@ -2,8 +2,7 @@ import { useContext, useEffect, useState } from 'react'
 import { host } from '../../config/api'
 import { MetadataContext } from '../../context/Metadata/MetadataContext'
 import { ProfileContext } from '../../context/Profile/ProfileContext'
-import { CategoryName } from '../../interface/availableTraits'
-import { getTopDescription } from '../../interface/metadata'
+import { getTopDescription, traitsToMetadata } from '../../interface/metadata'
 import doFetch from '../../utils/doFetch'
 import BirthdaySelector from './BirthdaySelector'
 import useStyles from './Passport.styles'
@@ -13,12 +12,8 @@ interface Props {
 }
 
 const Passport: React.FC<Props> = ({ finishButton }) => {
-	const {
-		metadata,
-		setMetadata,
-		availableTraits,
-		getSelectedTrait,
-	} = useContext(MetadataContext)
+	const { metadata, setMetadata, availableTraits, getSelectedTrait } =
+		useContext(MetadataContext)
 	const { profile } = useContext(ProfileContext)
 	const [peepImage, setPeepImage] = useState('')
 
@@ -36,29 +31,33 @@ const Passport: React.FC<Props> = ({ finishButton }) => {
 		const svg = await doFetch(
 			`${host}/peep/`,
 			'POST',
-			{ attributes: metadata },
+			{ attributes: traitsToMetadata(metadata) },
 			'image/svg+xml',
 		)
 		setPeepImage(URL.createObjectURL(svg))
 	}
 
-	const getDistricts = () => {
-		return availableTraits?.filter(item => {
-			return item.category === 'District'
-		})[0]
-	}
+	const districts =
+		availableTraits?.filter(t => t.categories?.includes('District')) ?? []
 
-	const updateTrait = (category: CategoryName, value: string) => {
-		const updatedMetadata = [...metadata]
-		updatedMetadata.forEach(trait => {
-			if (trait.trait_type === category) {
-				trait.value = value
-			}
-		})
+	const updateTrait = (category: string, value: string) => {
+		const updatedMetadata = metadata.filter(
+			t => !t.categories?.includes(category),
+		)
+		const trait = availableTraits?.find(t => t.name === value)
+		if (trait) {
+			updatedMetadata.push(trait)
+		} else {
+			// Name, birthday, pronouns, other non-defined traits
+			updatedMetadata.push({
+				name: value,
+				categories: [category],
+			})
+		}
 		setMetadata(updatedMetadata)
 	}
 
-	const updateTraitViaInput = (category: CategoryName, id: string) => {
+	const updateTraitViaInput = (category: string, id: string) => {
 		const input = document.getElementById(id) as HTMLInputElement
 		updateTrait(category, input.value)
 	}
@@ -114,15 +113,11 @@ const Passport: React.FC<Props> = ({ finishButton }) => {
 						id="districtSelect"
 						defaultValue={getSelectedTrait('District')}
 					>
-						{getDistricts()
-							?.items.filter(item => {
-								return item.name !== 'None'
-							})
-							.map(item => (
-								<option key={item.name} value={item.name}>
-									{item.name}
-								</option>
-							))}
+						{districts.map(t => (
+							<option key={t.name} value={t.name}>
+								{t.name}
+							</option>
+						))}
 					</select>
 				</div>
 				<div>

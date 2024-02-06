@@ -8,43 +8,25 @@ import WardrobeTraitSelector from '../../components/Trait/WardrobeTraitSelector'
 import { host } from '../../config/api'
 import { black } from '../../config/colors'
 import { MetadataContext } from '../../context/Metadata/MetadataContext'
-import { CategoryName } from '../../interface/availableTraits'
-import { getFullDescription, Trait } from '../../interface/metadata'
+import {
+	Trait,
+	getFullDescription,
+	traitsToMetadata,
+} from '../../interface/metadata'
+import {
+	CategorySelection,
+	removeLocationTraits,
+} from '../../interface/selection'
 import doFetch from '../../utils/doFetch'
 import { tableOrMobileQuery } from '../../utils/mediaQuery'
 import useStyles from './Wardrobe.styles'
 
 function Wardrobe() {
 	const classes = useStyles()
-	const sunIconTraits: CategoryName[] = ['Time', 'District']
-	const personIconTraits: CategoryName[] = [
-		'Skin',
-		'Skin Condition',
-		'Facial Hair',
-		'Hair',
-		'Hair Colour',
-		'Eye Colour',
-		'Eye Style',
-		'Eye Outline',
-		'Expression',
-		'Top Facial Hair',
-	]
-	const shirtIconTraits: CategoryName[] = [
-		'Tops',
-		'Bottoms',
-		'One Piece',
-		'Outerwear',
-		'Shoes',
-		'Front Accessory',
-		'Rear Accessory',
-		'Pose',
-		'Clothing Accessory',
-	]
-	type CategorySelection = 'Area' | 'Peep' | 'Outfit'
 
-	const { metadata } = useContext(MetadataContext)
-	const [currentTraits, setCurrentTraits] = useState(sunIconTraits)
-	const [selectionString, setSelectionString] = useState('Area   Selections')
+	const { metadata, availableTraits } = useContext(MetadataContext)
+	const [selectedCategory, setSelectedCategory] =
+		useState<CategorySelection | null>('Location')
 	const [peepImage, setPeepImage] = useState('')
 	const [isBackgroundDisplayed, setIsBackgroundDisplayed] = useState(true)
 	const [isToggleHidden, setIsToggleHidden] = useState(true)
@@ -59,49 +41,47 @@ function Wardrobe() {
 	}, [metadata, isBackgroundDisplayed])
 
 	const getPeepImage = async () => {
-		const requestMetadata: Trait[] = JSON.parse(JSON.stringify(metadata))
+		let requestMetadata: Trait[] = [...metadata]
 		if (!isBackgroundDisplayed) {
-			requestMetadata.forEach(category => {
-				if (category.trait_type === 'District') {
-					category.value = 'None'
-				} else if (category.trait_type === 'Time') {
-					category.value = 'None'
-				}
-			})
+			requestMetadata = removeLocationTraits(requestMetadata)
 		}
 
 		const svg = await doFetch(
 			`${host}/peep/`,
 			'POST',
-			{ attributes: requestMetadata },
+			{ attributes: traitsToMetadata(requestMetadata) },
 			'image/svg+xml',
 		)
 		setPeepImage(URL.createObjectURL(svg))
 	}
 
-	const changeSelection = (selection: CategorySelection) => {
-		setSelectionString(`${selection}  Selections`)
+	const changeSelection = (selection: CategorySelection | null) => {
+		setSelectedCategory(selection)
 		setIsShowingDone(false)
-		switch (selection) {
-		case 'Area':
-			setCurrentTraits(sunIconTraits)
+
+		if (selection === 'Location') {
 			setIsBackgroundDisplayed(true) // show background by default on this tab
 			setIsToggleHidden(true)
-			break
-		case 'Outfit':
-			setCurrentTraits(shirtIconTraits)
+		} else {
 			setIsToggleHidden(false)
-			break
-		case 'Peep':
-			setCurrentTraits(personIconTraits)
-			setIsToggleHidden(false)
-			break
 		}
 	}
 
 	const showDone = () => {
 		setIsShowingDone(true)
-		setSelectionString('')
+		setSelectedCategory(null)
+	}
+
+	const getSecondLevelCategories = (category: string) => {
+		const level = category === 'Pose' ? 0 : 1 // Return first level instead for pose
+		return Array.from(
+			new Set(
+				availableTraits
+					?.filter(t => t.categories?.includes(category))
+					.map(t => t.categories?.[level])
+					.filter(c => !!c) as string[],
+			),
+		)
 	}
 
 	const isTabletOrMobile = useMediaQuery({ query: tableOrMobileQuery })
@@ -119,29 +99,48 @@ function Wardrobe() {
 					<input
 						type="image"
 						onClick={() => {
-							changeSelection('Area')
+							changeSelection('Location')
 						}}
 						className={classes.icon}
 						src="/assets/Icon Sun Asset.svg"
 						aria-label="Area Trait Selection"
 					/>
+					{/* FIXME What about name and such? */}
 					<input
 						type="image"
 						onClick={() => {
-							changeSelection('Peep')
+							changeSelection('Face')
 						}}
 						className={classes.icon}
 						src="/assets/Icon Person Asset.svg"
-						aria-label="Peep Trait Selection"
+						aria-label="Face Selection"
 					/>
 					<input
 						type="image"
 						onClick={() => {
-							changeSelection('Outfit')
+							changeSelection('Pose')
+						}}
+						className={classes.icon}
+						src="/assets/Icon Person Asset.svg"
+						aria-label="Pose Selection"
+					/>
+					<input
+						type="image"
+						onClick={() => {
+							changeSelection('Clothing')
 						}}
 						className={classes.icon}
 						src="/assets/Icon Shirt Asset.svg"
-						aria-label="Outfit Selection"
+						aria-label="Clothing Selection"
+					/>
+					<input
+						type="image"
+						onClick={() => {
+							changeSelection('Accessory')
+						}}
+						className={classes.icon}
+						src="/assets/Icon Shirt Asset.svg"
+						aria-label="Accessory Selection"
 					/>
 					<input
 						type="image"
@@ -151,11 +150,15 @@ function Wardrobe() {
 						aria-label="Done?"
 					/>
 					<span aria-hidden className={classes.title}>
-						{selectionString}
+						{selectedCategory}
 					</span>
 				</div>
 				{!isShowingDone ? (
-					<WardrobeTraitSelector categories={currentTraits} />
+					<WardrobeTraitSelector
+						categories={
+							selectedCategory ? getSecondLevelCategories(selectedCategory) : []
+						}
+					/>
 				) : (
 					<WardrobeConfirm />
 				)}

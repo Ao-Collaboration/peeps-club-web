@@ -35,87 +35,93 @@ function Home() {
 	const navigate = useNavigate()
 	const signer = web3Provider?.getSigner()
 	const passportContract = new ethers.Contract(
-		getPassportContractId(web3Provider?.network?.chainId),
+		getPassportContractId(web3Provider?.network?.chainId ?? 1),
 		passportABI,
 		signer,
 	)
 
-	if (!profile || !setProfile || !web3Provider || !signer) {
-		return <></>
-	}
-
 	const getMessage = async () => {
-		const response = await doFetch(
-			`${host}/passport/message/${profile.address}/`,
-			'GET',
-		)
-		return response.message
+		if (profile) {
+			const response = await doFetch(
+				`${host}/passport/message/${profile.address}/`,
+				'GET',
+			)
+			return response.message
+		}
 	}
 
 	const confirmOwnership = async (signature: string) => {
-		const req = { signature: signature }
-		const response = await doFetch(
-			`${host}/passport/sign/${profile.address}/`,
-			'POST',
-			req,
-		)
-		const p = { ...profile }
-		p.id = response.id
-		setProfile(p)
+		if (profile && setProfile) {
+			const req = { signature: signature }
+			const response = await doFetch(
+				`${host}/passport/sign/${profile.address}/`,
+				'POST',
+				req,
+			)
+			const p = { ...profile }
+			p.id = response.id
+			setProfile(p)
+		}
+	}
+
+	const flyOut = async () => {
+		if (profile && signer) {
+			const message = await getMessage()
+			const signature = await signer.signMessage(message)
+			await confirmOwnership(signature)
+		}
+
 		navigate(AirplaneRoute.path)
 	}
 
-	const signMessage = async () => {
-		const message = await getMessage()
-		const signature = await signer.signMessage(message)
-
-		await confirmOwnership(signature)
-	}
-
 	const getSaleInfo = async () => {
-		setIsLoading(true)
-		let isPublic = false
+		if (web3Provider && profile) {
+			setIsLoading(true)
+			let isPublic = false
 
-		try {
-			const saleInfo = new SaleInfo(await passportContract.saleInfo())
-			setSaleInfo(saleInfo)
-
-			const now = Math.floor(Date.now() / 1000)
-			isPublic = saleInfo.endTimestamp > now
-			setPublicSaleActive(isPublic)
-			setPublicTokensLeft(saleInfo.maxMint - saleInfo.totalMinted)
-		} catch (err) {
-			setPublicSaleActive(false)
-			setPublicTokensLeft(0)
-		}
-
-		if (!isPublic) {
 			try {
-				const response = await doFetch(
-					`${host}/mint/passport/listed/${profile.address}`,
-					'GET',
-				)
-				setVIPeepActive(response.listed)
-			} catch (err) {
-				// Fine
-			}
-		}
+				const saleInfo = new SaleInfo(await passportContract.saleInfo())
+				setSaleInfo(saleInfo)
 
-		setIsLoading(false)
+				const now = Math.floor(Date.now() / 1000)
+				isPublic = saleInfo.endTimestamp > now
+				setPublicSaleActive(isPublic)
+				setPublicTokensLeft(saleInfo.maxMint - saleInfo.totalMinted)
+			} catch (err) {
+				setPublicSaleActive(false)
+				setPublicTokensLeft(0)
+			}
+
+			if (!isPublic) {
+				try {
+					const response = await doFetch(
+						`${host}/mint/passport/listed/${profile.address}`,
+						'GET',
+					)
+					setVIPeepActive(response.listed)
+				} catch (err) {
+					// Fine
+				}
+			}
+
+			setIsLoading(false)
+		}
 	}
 
 	const getOwnsPassport = async () => {
-		setScreen('passportCheck')
-		try {
-			const tokenCount = await passportContract.balanceOf(
-				await signer.getAddress(),
-				0,
-			)
-			if (tokenCount > 0) {
-				setPassportsOwned(tokenCount)
+		if (signer) {
+			setScreen('passportCheck')
+			try {
+				const tokenCount = await passportContract.balanceOf(
+					await signer.getAddress(),
+					0,
+				)
+				if (tokenCount > 0) {
+					setPassportsOwned(tokenCount)
+				}
+			} catch (err) {
+				setPassportsOwned(0)
 			}
-		} catch (err) {
-			setPassportsOwned(0)
 		}
 	}
 
@@ -156,7 +162,7 @@ function Home() {
 					<strong>PASSPORT?!</strong>
 				</ul>
 				<div className={classes.buttonGroup}>
-					<MyPeepsButton address={profile.address} />
+					{profile && <MyPeepsButton address={profile.address} />}
 					{isPublicSaleActive || isVIPeepActive ? (
 						<Button
 							onClick={() => {
@@ -178,8 +184,13 @@ function Home() {
 						</Button>
 					)}
 					{passportsOwned > 0 && (
-						<Button onClick={signMessage} className="blue">
+						<Button onClick={flyOut} className="blue">
 							{passportsOwned.toString()} Passports Ready!
+						</Button>
+					)}
+					{passportsOwned === 0 && !web3Provider && (
+						<Button onClick={flyOut} className="blue">
+							Fly Out!
 						</Button>
 					)}
 				</div>
@@ -215,13 +226,10 @@ function Home() {
 	}
 
 	const getScreen = () => {
-		switch (screen) {
-		case 'passportCheck':
+		if (screen === 'passportCheck') {
 			return getPreMintDisplay()
-			break
-		case 'mint':
+		} else if (screen === 'mint') {
 			return getMintDisplay()
-			break
 		}
 	}
 

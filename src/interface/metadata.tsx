@@ -1,14 +1,22 @@
-import { CategoryName } from './availableTraits'
-
 export type Trait = {
-	trait_type: CategoryName
-	value: string
+	name: string
+	tags?: string[]
+	categories?: string[]
+	exclusive?: {
+		projectName: string
+		projectLink: string
+	}
 }
 
-export const getTrait = (metadata: Trait[], category: CategoryName) => {
-	return metadata.filter(trait => {
-		return trait.trait_type === category
-	})[0].value
+export const getTrait = (metadata: Trait[], category: string) => {
+	const trait = metadata.find(trait =>
+		trait.categories?.includes(category),
+	)?.name
+	if (!trait) {
+		// eslint-disable-next-line no-console
+		console.error(`Unable to find ${category} in`, metadata)
+	}
+	return trait ?? '' // FIXME Error handle instead
 }
 
 export const getTopDescription = (metadata: Trait[]) => {
@@ -60,101 +68,62 @@ export const getFullDescription = (metadata: Trait[]) => {
 	return description
 }
 
-export const defaultPeep: Trait[] = [
+export const traitsToMetadata = (traits: Trait[]) =>
+	traits.map(t => ({
+		value: t.name,
+		trait_type: t.categories?.join(' - ') ?? '',
+	}))
+
+//FIXME Default Peep values
+export const DEFAULT_PEEP: Trait[] = [
 	{
-		trait_type: 'Tops',
-		value: 'Black Tank Top',
+		name: 'Desert',
+		categories: ['District'],
 	},
 	{
-		trait_type: 'Bottoms',
-		value: 'Skinny Jeans',
+		name: 'Night',
+		categories: ['Time'],
 	},
 	{
-		trait_type: 'One Piece',
-		value: 'None',
+		name: 'Black Tank Top',
 	},
 	{
-		trait_type: 'Clothing Accessory',
-		value: 'None',
+		name: 'Skinny Jeans',
 	},
 	{
-		trait_type: 'District',
-		value: 'Desert',
+		name: 'Meow',
 	},
 	{
-		trait_type: 'Expression',
-		value: 'Meow',
+		name: 'Dark Brown',
 	},
 	{
-		trait_type: 'Eye Colour',
-		value: 'Dark Brown',
+		name: 'Classic Eyelashes',
 	},
 	{
-		trait_type: 'Eye Outline',
-		value: 'Classic Eyelashes',
+		name: 'Bow',
 	},
 	{
-		trait_type: 'Eye Style',
-		value: 'Bow',
+		name: 'Messy Bun',
 	},
 	{
-		trait_type: 'Facial Hair',
-		value: 'None',
+		name: 'Grey Hair',
 	},
 	{
-		trait_type: 'Front Accessory',
-		value: 'None',
+		name: 'Basic',
 	},
 	{
-		trait_type: 'Hair',
-		value: 'Messy Bun',
+		name: 'Limestone',
 	},
 	{
-		trait_type: 'Hair Colour',
-		value: 'Grey',
+		categories: ['Pronouns'],
+		name: 'They/Them',
 	},
 	{
-		trait_type: 'Outerwear',
-		value: 'None',
+		categories: ['Birthday'],
+		name: '4 February',
 	},
 	{
-		trait_type: 'Pose',
-		value: 'Basic',
-	},
-	{
-		trait_type: 'Rear Accessory',
-		value: 'None',
-	},
-	{
-		trait_type: 'Skin',
-		value: 'Limestone',
-	},
-	{
-		trait_type: 'Skin Condition',
-		value: 'None',
-	},
-	{
-		trait_type: 'Time',
-		value: 'Night',
-	},
-	{
-		trait_type: 'Top Facial Hair',
-		value: 'None',
-	},
-	{
-		trait_type: 'Pronouns',
-		value: 'They/Them',
-	},
-	{
-		trait_type: 'Birthday',
-		value: '4 February',
-	},
-	{
-		trait_type: 'Name',
-		value: '',
-	},
-	{
-		trait_type: 'Shoes',
-		value: 'None',
+		categories: ['Name'],
+		name: '',
 	},
 ]

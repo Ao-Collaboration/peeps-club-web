@@ -1,8 +1,8 @@
 import { useContext } from 'react'
 
-// import WalletConnectProvider from '@walletconnect/web3-provider'
 import Web3Modal from 'web3modal'
 
+import useStyles from './ConnectButton.styles'
 import Button, { ButtonClassNames } from './Button'
 import { ethers } from 'ethers'
 import { Web3Context } from '../../context/Web3/Web3Context'
@@ -10,15 +10,15 @@ import { ProfileContext } from '../../context/Profile/ProfileContext'
 import { useNavigate } from 'react-router-dom'
 import { HomeRoute } from '../../pages/routes'
 
-// import { host } from '../../config/api'
-// import doFetch from '../../utils/doFetch'
-
 interface Props {
-	className?: ButtonClassNames;
+	className?: ButtonClassNames
 }
 
-const ConnectButton: React.FC<Props> = ({ className='blue' }) => {
-	const { account, setAccount, setWeb3Provider } = useContext(Web3Context)
+const ConnectButton: React.FC<Props> = ({ className = 'blue' }) => {
+	const classes = useStyles()
+
+	const { account, setAccount, setWeb3Provider, connectWithoutWeb3 } =
+		useContext(Web3Context)
 	const { profile, setProfile } = useContext(ProfileContext)
 	const navigate = useNavigate()
 	if (!setAccount || !setWeb3Provider || !setProfile) {
@@ -79,10 +79,20 @@ const ConnectButton: React.FC<Props> = ({ className='blue' }) => {
 		setWeb3Provider(provider)
 	}
 
+	const withoutWeb3 = async () => {
+		setProfile({ address: ethers.constants.AddressZero })
+		connectWithoutWeb3 && connectWithoutWeb3()
+	}
+
 	return (
-		<Button onClick={connect} className={className}>
-			{account || 'Connect Wallet'}
-		</Button>
+		<div className={classes.verticalGroup}>
+			<Button onClick={connect} className={className}>
+				{account || 'Connect Wallet'}
+			</Button>
+			<Button onClick={withoutWeb3} className="link">
+				Skip
+			</Button>
+		</div>
 	)
 }
 

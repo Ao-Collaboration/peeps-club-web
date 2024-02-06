@@ -3,17 +3,20 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useContext, useEffect, useState } from 'react'
 import { useMediaQuery } from 'react-responsive'
 import { useLocation } from 'react-router-dom'
-import FadeTo from '../../components/Scene/FadeTo'
 import WardrobeTraitSelector from '../../components/Trait/WardrobeTraitSelector'
 import WardrobeUpdate from '../../components/Trait/WardrobeUpdate'
 import { host } from '../../config/api'
 import { black } from '../../config/colors'
 import { MetadataContext } from '../../context/Metadata/MetadataContext'
-import { CategoryName } from '../../interface/availableTraits'
 import { getFullDescription, Trait } from '../../interface/metadata'
 import doFetch from '../../utils/doFetch'
 import { tableOrMobileQuery } from '../../utils/mediaQuery'
 import useStyles from './Mirror.styles'
+import {
+	CategorySelection,
+	removeLocationTraits,
+} from '../../interface/selection'
+import FadeTo from '../../components/Scene/FadeTo'
 
 interface propState {
 	tokenId: number
@@ -21,35 +24,10 @@ interface propState {
 
 function Mirror() {
 	const classes = useStyles()
-	const sunIconTraits: CategoryName[] = ['Time', 'District']
-	const personIconTraits: CategoryName[] = [
-		'Skin',
-		'Skin Condition',
-		'Facial Hair',
-		'Hair',
-		'Hair Colour',
-		'Eye Colour',
-		'Eye Style',
-		'Eye Outline',
-		'Expression',
-		'Top Facial Hair',
-	]
-	const shirtIconTraits: CategoryName[] = [
-		'Tops',
-		'Bottoms',
-		'One Piece',
-		'Outerwear',
-		'Shoes',
-		'Front Accessory',
-		'Rear Accessory',
-		'Pose',
-		'Clothing Accessory',
-	]
-	type CategorySelection = 'Area' | 'Peep' | 'Outfit'
 
 	const { metadata } = useContext(MetadataContext)
-	const [currentTraits, setCurrentTraits] = useState(sunIconTraits)
-	const [selectionString, setSelectionString] = useState('Area   Selections')
+	const [selectedCategory, setSelectedCategory] =
+		useState<CategorySelection | null>('Location')
 	const [peepImage, setPeepImage] = useState('')
 	const [isBackgroundDisplayed, setIsBackgroundDisplayed] = useState(true)
 	const [isToggleHidden, setIsToggleHidden] = useState(true)
@@ -66,15 +44,9 @@ function Mirror() {
 	}, [metadata, isBackgroundDisplayed])
 
 	const getPeepImage = async () => {
-		const requestMetadata: Trait[] = JSON.parse(JSON.stringify(metadata))
+		let requestMetadata: Trait[] = [...metadata]
 		if (!isBackgroundDisplayed) {
-			requestMetadata.forEach(category => {
-				if (category.trait_type === 'District') {
-					category.value = 'None'
-				} else if (category.trait_type === 'Time') {
-					category.value = 'None'
-				}
-			})
+			requestMetadata = removeLocationTraits(requestMetadata)
 		}
 
 		const svg = await doFetch(
@@ -86,29 +58,21 @@ function Mirror() {
 		setPeepImage(URL.createObjectURL(svg))
 	}
 
-	const changeSelection = (selection: CategorySelection) => {
-		setSelectionString(`${selection}  Selections`)
+	const changeSelection = (selection: CategorySelection | null) => {
+		setSelectedCategory(selection)
 		setIsShowingDone(false)
-		switch (selection) {
-		case 'Area':
-			setCurrentTraits(sunIconTraits)
+
+		if (selection === 'Location') {
 			setIsBackgroundDisplayed(true) // show background by default on this tab
 			setIsToggleHidden(true)
-			break
-		case 'Outfit':
-			setCurrentTraits(shirtIconTraits)
+		} else {
 			setIsToggleHidden(false)
-			break
-		case 'Peep':
-			setCurrentTraits(personIconTraits)
-			setIsToggleHidden(false)
-			break
 		}
 	}
 
 	const showDone = () => {
 		setIsShowingDone(true)
-		setSelectionString('')
+		setSelectedCategory(null)
 	}
 
 	const isTabletOrMobile = useMediaQuery({ query: tableOrMobileQuery })
@@ -126,7 +90,7 @@ function Mirror() {
 					<input
 						type="image"
 						onClick={() => {
-							changeSelection('Area')
+							changeSelection('Location')
 						}}
 						className={classes.icon}
 						src="/assets/Icon Sun Asset.svg"
@@ -135,7 +99,8 @@ function Mirror() {
 					<input
 						type="image"
 						onClick={() => {
-							changeSelection('Peep')
+							// FIXME Peep?
+							changeSelection(null)
 						}}
 						className={classes.icon}
 						src="/assets/Icon Person Asset.svg"
@@ -144,7 +109,8 @@ function Mirror() {
 					<input
 						type="image"
 						onClick={() => {
-							changeSelection('Outfit')
+							// FIXME Outfit?
+							changeSelection(null)
 						}}
 						className={classes.icon}
 						src="/assets/Icon Shirt Asset.svg"
@@ -158,11 +124,11 @@ function Mirror() {
 						aria-label="Done?"
 					/>
 					<span aria-hidden className={classes.title}>
-						{selectionString}
+						{selectedCategory}
 					</span>
 				</div>
 				{!isShowingDone ? (
-					<WardrobeTraitSelector categories={currentTraits} />
+					<WardrobeTraitSelector categories={[]} /> // FIXME Limit traits by category
 				) : (
 					<WardrobeUpdate tokenId={tokenId} />
 				)}

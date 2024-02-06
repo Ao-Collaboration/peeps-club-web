@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from 'react'
 import { MetadataContext } from '../../context/Metadata/MetadataContext'
 import { Web3Context } from '../../context/Web3/Web3Context'
-import { defaultPeep, getTrait } from '../../interface/metadata'
+import { DEFAULT_PEEP, getTrait } from '../../interface/metadata'
 import useStyles from './YourPeep.styles'
 import { ProfileContext } from '../../context/Profile/ProfileContext'
 import doFetch from '../../utils/doFetch'
@@ -56,7 +56,7 @@ const YourPeep = () => {
 				setYourPeepImage(peepImage)
 
 				// reset metadata in case they want to mint another
-				setMetadata(JSON.parse(JSON.stringify(defaultPeep)))
+				setMetadata([...DEFAULT_PEEP])
 				setProfile({ address: profile.address })
 			}
 		}

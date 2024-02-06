@@ -9,6 +9,7 @@ import { useNavigate } from 'react-router-dom'
 import { YourPeepRoute } from '../../pages/routes'
 import Loading from '../Loading/Loading'
 import { ProfileContext } from '../../context/Profile/ProfileContext'
+import { getTrait } from '../../interface/metadata'
 
 interface Props {
 	tokenId: number
@@ -27,11 +28,7 @@ const WardrobeUpdate: React.FC<Props> = ({ tokenId }) => {
 
 	const signer = web3Provider?.getSigner()
 
-	const getName = () => {
-		return metadata.filter(trait => {
-			return trait.trait_type === 'Name'
-		})[0].value
-	}
+	const getName = () => getTrait(metadata, 'Name')
 
 	const getMessage = async () => {
 		const response = await doFetch(

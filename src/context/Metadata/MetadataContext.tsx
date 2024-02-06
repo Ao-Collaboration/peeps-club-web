@@ -9,17 +9,17 @@ import {
 	useState,
 } from 'react'
 import { host } from '../../config/api'
-import { Category, CategoryName } from '../../interface/availableTraits'
-import { defaultPeep, Trait } from '../../interface/metadata'
+import { DEFAULT_PEEP, getTrait, Trait } from '../../interface/metadata'
 import doFetch from '../../utils/doFetch'
 import { ProfileContext } from '../Profile/ProfileContext'
+import { ethers } from 'ethers'
 
 interface CtxProps {
 	metadata?: Trait[] | null
 	setMetadata?: Dispatch<SetStateAction<Trait[] | null>>
-	availableTraits?: Category[] | null
-	setAvailableTraits?: Dispatch<SetStateAction<Category[] | null>>
-	getSelectedTrait?: (category: CategoryName) => string | undefined
+	availableTraits?: Trait[] | null
+	setAvailableTraits?: Dispatch<SetStateAction<Trait[] | null>>
+	getSelectedTrait?: (category: string) => string | undefined
 }
 interface Props {
 	children: ReactNode
@@ -28,33 +28,30 @@ interface Props {
 export const MetadataContext = createContext<CtxProps>({})
 const MetadataContextProvider: FC<Props> = ({ children }) => {
 	const [metadata, setMetadata] = useState<Trait[] | null>([])
-	const [availableTraits, setAvailableTraits] = useState<Category[] | null>([])
+	const [availableTraits, setAvailableTraits] = useState<Trait[] | null>([])
 	const { profile } = useContext(ProfileContext)
 
 	const getAvailableTraits = async (address: string) => {
 		const results = await doFetch(`${host}/peep/traits/${address}/`, 'GET')
-		setAvailableTraits(results as Category[])
+		setAvailableTraits(results as Trait[])
 	}
 
-	const getSelectedTrait = (category: CategoryName) => {
+	const getSelectedTrait = (category: string) => {
 		if (metadata) {
-			return metadata.filter(trait => {
-				return trait.trait_type === category
-			})[0].value
+			return getTrait(metadata, category)
 		}
 	}
 
 	useEffect(() => {
-		if (profile?.address) {
-			getAvailableTraits(profile?.address)
-		}
+		// Default to address(0) when no wallet
+		getAvailableTraits(profile?.address ?? ethers.constants.AddressZero)
 	}, [profile])
 
 	useEffect(() => {
 		// load metadata from local storage if it exists
 		const local = localStorage.getItem('metadata')
 		if (local === null) {
-			setMetadata(JSON.parse(JSON.stringify(defaultPeep)))
+			setMetadata([...DEFAULT_PEEP])
 		} else {
 			setMetadata(JSON.parse(local))
 		}

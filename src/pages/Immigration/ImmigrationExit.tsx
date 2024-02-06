@@ -9,6 +9,7 @@ import doFetch from '../../utils/doFetch'
 import { host } from '../../config/api'
 import { WardrobeRoute } from '../routes'
 import Button from '../../components/Button/Button'
+import { removeLocationTraits } from '../../interface/selection'
 
 function ImmigrationExit() {
 	const classes = useStyles()
@@ -21,15 +22,7 @@ function ImmigrationExit() {
 	}
 
 	const getPeepImage = async () => {
-		const requestMetadata: Trait[] = JSON.parse(JSON.stringify(metadata))
-		requestMetadata.forEach(category => {
-			if (category.trait_type === 'District') {
-				category.value = 'None'
-			} else if (category.trait_type === 'Time') {
-				category.value = 'None'
-			}
-		})
-
+		const requestMetadata: Trait[] = removeLocationTraits(metadata)
 		const svg = await doFetch(
 			`${host}/peep/`,
 			'POST',
