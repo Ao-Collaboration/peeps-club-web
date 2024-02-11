@@ -1,5 +1,6 @@
 export type Trait = {
 	name: string
+	label?: string
 	tags?: string[]
 	categories?: string[]
 	exclusive?: {
