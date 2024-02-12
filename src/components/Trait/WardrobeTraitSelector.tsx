@@ -5,6 +5,7 @@ import { MetadataContext } from '../../context/Metadata/MetadataContext'
 import { Trait } from '../../interface/metadata'
 import TraitRequest from './TraitRequest'
 import useStyles from './WardrobeTraitSelector.styles'
+import { oneAndOnlyOne } from '../../config/category'
 
 interface Props {
 	categories: string[]
@@ -49,11 +50,23 @@ const WardrobeTraitSelector: React.FC<Props> = ({ categories }) => {
 		value: string,
 	) => {
 		const hadMatch = metadataTraits.find(t => t.name === value)
-		const updatedMetadata = metadataTraits.filter(
-			t => t.categories?.join(' - ') !== categoryString,
-		)
+		const mustHaveExactlyOne = oneAndOnlyOne.includes(categoryString)
+		let updatedMetadata = [...metadataTraits]
+
+		if (hadMatch && mustHaveExactlyOne) {
+			// Can't remove this trait
+			return
+		}
+
+		if (hadMatch || mustHaveExactlyOne) {
+			// deselect trait or only one so remove current trait
+			updatedMetadata = metadataTraits.filter(
+				t => t.categories?.join(' - ') !== categoryString,
+			)
+		}
+
 		if (!hadMatch) {
-			// Removed item that was already on
+			// add trait as long as we weren't already wearing it
 			const trait = availableTraits.find(t => t.name === value)
 			if (trait) {
 				updatedMetadata.push(trait)
@@ -65,6 +78,7 @@ const WardrobeTraitSelector: React.FC<Props> = ({ categories }) => {
 				})
 			}
 		}
+
 		setMetadata(updatedMetadata)
 	}
 
@@ -157,7 +171,11 @@ const WardrobeTraitSelector: React.FC<Props> = ({ categories }) => {
 				<img
 					aria-hidden
 					className={classes.hangerImage}
-					src={traitSelected(trait.name) ? '/assets/Trait Hanger Selected.svg' : '/assets/Trait Hanger Asset.svg'}
+					src={
+						traitSelected(trait.name)
+							? '/assets/Trait Hanger Selected.svg'
+							: '/assets/Trait Hanger Asset.svg'
+					}
 				/>
 			</div>
 		)
