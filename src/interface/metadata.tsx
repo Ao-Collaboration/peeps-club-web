@@ -20,6 +20,7 @@ export const getTrait = (metadata: Trait[], category: string) => {
 }
 
 export const getTopDescription = (metadata: Trait[]) => {
+	// FIXME This is broken with the new category system - probably need overhaul
 	let description = `Looking at ${getTrait(
 		metadata,
 		'Name',
@@ -48,6 +49,7 @@ export const getTopDescription = (metadata: Trait[]) => {
 }
 
 export const getFullDescription = (metadata: Trait[]) => {
+	// FIXME This is broken with the new category system - probably need overhaul
 	let description = getTopDescription(metadata)
 	description += ` In their ${getTrait(
 		metadata,
@@ -94,7 +96,7 @@ export const DEFAULT_PEEP: Trait[] = [
 		name: 'Meow',
 	},
 	{
-		name: 'Dark Brown',
+		name: 'Dark Brown Eye Colour',
 	},
 	{
 		name: 'Classic Eyelashes',
@@ -106,7 +108,7 @@ export const DEFAULT_PEEP: Trait[] = [
 		name: 'Messy Bun',
 	},
 	{
-		name: 'Grey Hair',
+		name: 'Grey Hair Colour',
 	},
 	{
 		name: 'Basic',

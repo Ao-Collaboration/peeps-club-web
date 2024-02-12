@@ -42,7 +42,7 @@ const Airplane = () => {
 
 	const startLanding = (districtName: string) => {
 		const updatedMetadata = metadata.filter(t => {
-			!t.categories?.includes('District')
+			return !t.categories?.includes('District')
 		})
 		const district = availableDistricts?.find(t => t.name === districtName)
 		if (district) {
