@@ -88,33 +88,43 @@ export const DEFAULT_PEEP: Trait[] = [
 	},
 	{
 		name: 'Black Tank Top',
+		categories: ['Clothing', 'Tops', 'Tank Top'],
 	},
 	{
 		name: 'Skinny Jeans',
+		categories: ['Clothing', 'Bottoms', 'Pants'],
 	},
 	{
 		name: 'Meow',
+		categories: ['Face', 'Expression'],
 	},
 	{
 		name: 'Dark Brown Eye Colour',
+		categories: ['Face', 'Eyes', 'Colour'],
 	},
 	{
 		name: 'Classic Eyelashes',
+		categories: ['Face', 'Eyes', 'Lashes'],
 	},
 	{
 		name: 'Bow',
+		categories: ['Face', 'Eyes', 'Style'],
 	},
 	{
 		name: 'Messy Bun',
+		categories: ['Face', 'Hair', 'Style'],
 	},
 	{
 		name: 'Grey Hair Colour',
+		categories: ['Face', 'Hair', 'Colour'],
 	},
 	{
 		name: 'Basic',
+		categories: ['Pose'],
 	},
 	{
 		name: 'Limestone',
+		categories: ['Face', 'Skin', 'Tone'],
 	},
 	{
 		categories: ['Pronouns'],
