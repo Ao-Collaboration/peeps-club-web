@@ -134,7 +134,7 @@ const WardrobeTraitSelector: React.FC<Props> = ({ categories }) => {
 					onClick={() => {
 						selectTraitHangar(trait)
 					}}
-					aria-label={traitName}
+					aria-label={trait.label}
 				>
 					<div
 						aria-hidden
@@ -143,7 +143,7 @@ const WardrobeTraitSelector: React.FC<Props> = ({ categories }) => {
 						}}
 						className={classes.icon}
 					></div>
-					<p aria-hidden>{traitName}</p>
+					<p aria-hidden>{trait.label}</p>
 
 					{trait.exclusive?.projectLink && (
 						<div className={classes.exclusiveItem}>
@@ -157,7 +157,11 @@ const WardrobeTraitSelector: React.FC<Props> = ({ categories }) => {
 				<img
 					aria-hidden
 					className={classes.hangerImage}
-					src={traitSelected(trait.name) ? '/assets/Trait Hanger Selected.svg' : '/assets/Trait Hanger Asset.svg'}
+					src={
+						traitSelected(trait.name)
+							? '/assets/Trait Hanger Selected.svg'
+							: '/assets/Trait Hanger Asset.svg'
+					}
 				/>
 			</div>
 		)

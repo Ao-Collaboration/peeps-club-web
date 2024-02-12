@@ -112,11 +112,11 @@ const TraitSelector: React.FC<Props> = ({ availableTraits }) => {
 									onClick={() => {
 										updateSelectedTraits(selectedCategoryIndex, trait.name)
 									}}
-									aria-label={trait.name}
+									aria-label={trait.label}
 									src={`/assets/traits/${trait.name}.png`} //FIXME Need to move all traits into one big folder
 								/>
 							</div>
-							<p aria-hidden>{trait.name}</p>
+							<p aria-hidden>{trait.label}</p>
 						</div>
 					))}
 			</div>
