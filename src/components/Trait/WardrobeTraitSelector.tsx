@@ -44,6 +44,23 @@ const WardrobeTraitSelector: React.FC<Props> = ({ categories }) => {
 		}
 	}
 
+	const hasOnlyOneClothingItem = (metadataTraits: Trait[]) => {
+		const clothingCountSets = metadataTraits.filter(
+			t =>
+				t.categories?.includes('Set') ||
+				t.categories?.includes('Jumpsuits') ||
+				t.categories?.includes('Dresses'),
+		).length
+		const clothingCountItems = metadataTraits.filter(
+			t => t.categories?.includes('Tops') || t.categories?.includes('Bottoms'),
+		).length
+
+		return (
+			(clothingCountSets === 1 && clothingCountItems === 0) ||
+			(clothingCountSets === 0 && clothingCountItems === 2)
+		)
+	}
+
 	const updateTrait = (
 		metadataTraits: Trait[],
 		categoryString: string,
@@ -51,10 +68,12 @@ const WardrobeTraitSelector: React.FC<Props> = ({ categories }) => {
 	) => {
 		const hadMatch = metadataTraits.find(t => t.name === value)
 		const mustHaveExactlyOne = oneAndOnlyOne.includes(categoryString)
+		const islastPieceOfClothing =
+			hadMatch && hasOnlyOneClothingItem(metadataTraits)
 		let updatedMetadata = [...metadataTraits]
 
-		if (hadMatch && mustHaveExactlyOne) {
-			// Can't remove this trait
+		if ((hadMatch && mustHaveExactlyOne) || islastPieceOfClothing) {
+			// FIXME How does UI handle not being able to remove a trait
 			return
 		}
 
@@ -84,26 +103,8 @@ const WardrobeTraitSelector: React.FC<Props> = ({ categories }) => {
 
 	const selectTraitHangar = (trait: Trait) => {
 		const selectedCategory = categories[selectedCategoryIndex]
-		let metadataTraits = [...metadata]
-		if (selectedCategory === 'Set' || selectedCategory === 'Jumpsuits') {
-			// Remove clothing options (but not shoes)
-			metadataTraits = metadataTraits.filter(
-				t =>
-					!t.categories?.includes('Clothing') ||
-					t.categories?.includes('Shoes'),
-			)
-		} else if (
-			['Tops', 'Outerwear', 'Dresses', 'Bottoms'].includes(selectedCategory)
-		) {
-			// Remove Jumpsuits and Set (reverse of above)
-			metadataTraits = metadataTraits.filter(
-				t =>
-					!t.categories?.includes('Set') ||
-					!t.categories?.includes('Jumpsuits'),
-			)
-		}
 		updateTrait(
-			metadataTraits,
+			metadata,
 			trait.categories?.join(' - ') ?? selectedCategory,
 			trait.name,
 		)
