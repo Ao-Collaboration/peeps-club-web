@@ -8,3 +8,5 @@ export const oneAndOnlyOne = [
 	'Face - Expression',
 	'Pose',
 ]
+
+export const atLeastSomeClothes = ['Set', 'Jumpsuits', 'Dresses']

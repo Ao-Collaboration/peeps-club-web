@@ -5,7 +5,7 @@ import { MetadataContext } from '../../context/Metadata/MetadataContext'
 import { Trait } from '../../interface/metadata'
 import TraitRequest from './TraitRequest'
 import useStyles from './WardrobeTraitSelector.styles'
-import { oneAndOnlyOne } from '../../config/category'
+import { atLeastSomeClothes, oneAndOnlyOne } from '../../config/category'
 
 interface Props {
 	categories: string[]
@@ -45,11 +45,8 @@ const WardrobeTraitSelector: React.FC<Props> = ({ categories }) => {
 	}
 
 	const hasOnlyOneClothingItem = (metadataTraits: Trait[]) => {
-		const clothingCountSets = metadataTraits.filter(
-			t =>
-				t.categories?.includes('Set') ||
-				t.categories?.includes('Jumpsuits') ||
-				t.categories?.includes('Dresses'),
+		const clothingCountSets = metadataTraits.filter(t =>
+			atLeastSomeClothes.some(category => t.categories?.includes(category)),
 		).length
 		const clothingCountItems = metadataTraits.filter(
 			t => t.categories?.includes('Tops') || t.categories?.includes('Bottoms'),
@@ -77,11 +74,16 @@ const WardrobeTraitSelector: React.FC<Props> = ({ categories }) => {
 			return
 		}
 
-		if (hadMatch || mustHaveExactlyOne) {
-			// deselect trait or only one so remove current trait
+		if (mustHaveExactlyOne) {
+			// selected, remove previous
 			updatedMetadata = metadataTraits.filter(
 				t => t.categories?.join(' - ') !== categoryString,
 			)
+		}
+
+		if (hadMatch) {
+			// deselect selected trait
+			updatedMetadata = metadataTraits.filter(t => t.name !== value)
 		}
 
 		if (!hadMatch) {
