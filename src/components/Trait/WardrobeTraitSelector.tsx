@@ -84,9 +84,7 @@ const WardrobeTraitSelector: React.FC<Props> = ({ categories }) => {
 		if (hadMatch) {
 			// deselect selected trait
 			updatedMetadata = metadataTraits.filter(t => t.name !== value)
-		}
-
-		if (!hadMatch) {
+		} else {
 			// add trait as long as we weren't already wearing it
 			const trait = availableTraits.find(t => t.name === value)
 			if (trait) {
