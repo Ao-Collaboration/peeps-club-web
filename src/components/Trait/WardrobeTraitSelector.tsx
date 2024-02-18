@@ -5,7 +5,8 @@ import { MetadataContext } from '../../context/Metadata/MetadataContext'
 import { Trait } from '../../interface/metadata'
 import TraitRequest from './TraitRequest'
 import useStyles from './WardrobeTraitSelector.styles'
-import { atLeastSomeClothes, oneAndOnlyOne } from '../../config/category'
+import doFetch from '../../utils/doFetch'
+import { host } from '../../config/api'
 
 interface Props {
 	categories: string[]
@@ -17,6 +18,8 @@ const WardrobeTraitSelector: React.FC<Props> = ({ categories }) => {
 	const [isWardrobeOpen, setIsWardrobeOpen] = useState(false)
 	const [selectableTraits, setSelectableTraits] = useState<Trait[]>([])
 	const [isRequestDisplayed, setIsRequestDisplayed] = useState(false)
+	const [oneAndOnlyOneList, setOneAndOnlyOneList] = useState<string[]>([])
+	const [atLeastSomeClothesList, setAtLeastSomeClothes] = useState<string[]>([])
 
 	const { metadata, setMetadata, availableTraits, getSelectedTrait } =
 		useContext(MetadataContext)
@@ -34,6 +37,16 @@ const WardrobeTraitSelector: React.FC<Props> = ({ categories }) => {
 		setIsWardrobeOpen(selectedCategoryIndex < 0)
 	}, [selectedCategoryIndex])
 
+	useEffect(() => {
+		getCategoryRules()
+	}, [])
+
+	const getCategoryRules = async () => {
+		const response = await doFetch(`${host}/peep/category-rules`, 'GET')
+		setAtLeastSomeClothes(response.atLeastSomeClothes)
+		setOneAndOnlyOneList(response.oneAndOnlyOne)
+	}
+
 	const updateCategory = (index: number) => {
 		setSelectedCategoryIndex(index)
 		if (index >= 0) {
@@ -46,7 +59,7 @@ const WardrobeTraitSelector: React.FC<Props> = ({ categories }) => {
 
 	const hasOnlyOneClothingItem = (metadataTraits: Trait[]) => {
 		const clothingCountSets = metadataTraits.filter(t =>
-			atLeastSomeClothes.some(category => t.categories?.includes(category)),
+			atLeastSomeClothesList.some(category => t.categories?.includes(category)),
 		).length
 		const clothingCountItems = metadataTraits.filter(
 			t => t.categories?.includes('Tops') || t.categories?.includes('Bottoms'),
@@ -64,12 +77,11 @@ const WardrobeTraitSelector: React.FC<Props> = ({ categories }) => {
 		value: string,
 	) => {
 		const hadMatch = metadataTraits.find(t => t.name === value)
-		const mustHaveExactlyOne = oneAndOnlyOne.includes(categoryString)
-		const islastPieceOfClothing =
-			hadMatch && hasOnlyOneClothingItem(metadataTraits)
+		const mustHaveExactlyOne = oneAndOnlyOneList.includes(categoryString)
+		const islastPieceOfClothing = hasOnlyOneClothingItem(metadataTraits)
 		let updatedMetadata = [...metadataTraits]
 
-		if ((hadMatch && mustHaveExactlyOne) || islastPieceOfClothing) {
+		if (hadMatch && (mustHaveExactlyOne || islastPieceOfClothing)) {
 			// FIXME How does UI handle not being able to remove a trait
 			return
 		}
