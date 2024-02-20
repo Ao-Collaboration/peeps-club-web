@@ -9,6 +9,8 @@ import { Web3Context } from '../../context/Web3/Web3Context'
 import { ProfileContext } from '../../context/Profile/ProfileContext'
 import { useNavigate } from 'react-router-dom'
 import { HomeRoute } from '../../pages/routes'
+import doFetch from '../../utils/doFetch'
+import { host } from '../../config/api'
 
 interface Props {
 	className?: ButtonClassNames
@@ -39,6 +41,11 @@ const ConnectButton: React.FC<Props> = ({ className = 'blue' }) => {
 			},
 			disableInjectedProvider: false,
 		})
+
+	const getOffChainSession = async () => {
+		const response = await doFetch(`${host}/passport/session`, 'POST')
+		return response.id
+	}
 
 	const connect = async () => {
 		const web3Modal = await getWeb3Modal()
@@ -80,7 +87,12 @@ const ConnectButton: React.FC<Props> = ({ className = 'blue' }) => {
 	}
 
 	const withoutWeb3 = async () => {
-		setProfile({ address: ethers.constants.AddressZero })
+		const sessionID = await getOffChainSession()
+		setProfile({
+			address: ethers.constants.AddressZero,
+			isOffChain: true,
+			id: sessionID,
+		})
 		connectWithoutWeb3 && connectWithoutWeb3()
 	}
 
