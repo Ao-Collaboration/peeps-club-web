@@ -58,6 +58,16 @@ const WardrobeConfirm = () => {
 		}
 	}
 
+	const createOffChainPeep = async () => {
+		setIsLoading(true)
+		const req = { attributes: metadata }
+		await doFetch(`${host}/mint/peep/create/`, 'POST', req)
+
+		navigate(YourPeepRoute.path, {
+			state: { uri: profile.id, isUpdate: false },
+		})
+	}
+
 	const classes = useStyles()
 	return (
 		<div className={classes.container}>
@@ -73,15 +83,27 @@ const WardrobeConfirm = () => {
 				src="/assets/wardrobe_door.svg"
 				className={`${classes.wardrobeDoor} ${classes.openWardrobe}`}
 			/>
-			<div className={classes.doorpanel}>
-				<h1 className="">Mint your Peep</h1>
-				<p>Are you ready to burn your passport to mint your Peep?</p>
-				{isLoading ? (
-					<Loading hash={pendingHash} />
-				) : (
-					<Button onClick={mintPeep}>Mint {getName()}</Button>
-				)}
-			</div>
+			{profile.isOffChain ? (
+				<div className={classes.doorpanel}>
+					<h1 className="">Create your Peep</h1>
+					<p>Are you ready?</p>
+					{isLoading ? (
+						<Loading />
+					) : (
+						<Button onClick={createOffChainPeep}>Create {getName()}</Button>
+					)}
+				</div>
+			) : (
+				<div className={classes.doorpanel}>
+					<h1 className="">Mint your Peep</h1>
+					<p>Are you ready to burn your passport to mint your Peep?</p>
+					{isLoading ? (
+						<Loading hash={pendingHash} />
+					) : (
+						<Button onClick={mintPeep}>Mint {getName()}</Button>
+					)}
+				</div>
+			)}
 			<div className={classes.hangerContainer}></div>
 		</div>
 	)
