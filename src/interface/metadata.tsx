@@ -21,6 +21,7 @@ export const getTrait = (metadata: Trait[], category: string) => {
 }
 
 export const getTopDescription = (metadata: Trait[]) => {
+	// FIXME This is broken with the new category system - probably need overhaul
 	let description = `Looking at ${getTrait(
 		metadata,
 		'Name',
@@ -49,6 +50,7 @@ export const getTopDescription = (metadata: Trait[]) => {
 }
 
 export const getFullDescription = (metadata: Trait[]) => {
+	// FIXME This is broken with the new category system - probably need overhaul
 	let description = getTopDescription(metadata)
 	description += ` In their ${getTrait(
 		metadata,
@@ -87,33 +89,43 @@ export const DEFAULT_PEEP: Trait[] = [
 	},
 	{
 		name: 'Black Tank Top',
+		categories: ['Clothing', 'Tops', 'Tank Top'],
 	},
 	{
 		name: 'Skinny Jeans',
+		categories: ['Clothing', 'Bottoms', 'Pants'],
 	},
 	{
 		name: 'Meow',
+		categories: ['Face', 'Expression'],
 	},
 	{
-		name: 'Dark Brown',
+		name: 'Dark Brown Eye Colour',
+		categories: ['Face', 'Eyes', 'Colour'],
 	},
 	{
 		name: 'Classic Eyelashes',
+		categories: ['Face', 'Eyes', 'Lashes'],
 	},
 	{
 		name: 'Bow',
+		categories: ['Face', 'Eyes', 'Style'],
 	},
 	{
 		name: 'Messy Bun',
+		categories: ['Face', 'Hair', 'Style'],
 	},
 	{
-		name: 'Grey Hair',
+		name: 'Grey Hair Colour',
+		categories: ['Face', 'Hair', 'Colour'],
 	},
 	{
 		name: 'Basic',
+		categories: ['Pose'],
 	},
 	{
 		name: 'Limestone',
+		categories: ['Face', 'Skin', 'Tone'],
 	},
 	{
 		categories: ['Pronouns'],
