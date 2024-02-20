@@ -5,6 +5,8 @@ import { MetadataContext } from '../../context/Metadata/MetadataContext'
 import { Trait } from '../../interface/metadata'
 import TraitRequest from './TraitRequest'
 import useStyles from './WardrobeTraitSelector.styles'
+import doFetch from '../../utils/doFetch'
+import { host } from '../../config/api'
 
 interface Props {
 	categories: string[]
@@ -16,6 +18,8 @@ const WardrobeTraitSelector: React.FC<Props> = ({ categories }) => {
 	const [isWardrobeOpen, setIsWardrobeOpen] = useState(false)
 	const [selectableTraits, setSelectableTraits] = useState<Trait[]>([])
 	const [isRequestDisplayed, setIsRequestDisplayed] = useState(false)
+	const [oneAndOnlyOneList, setOneAndOnlyOneList] = useState<string[]>([])
+	const [atLeastSomeClothesList, setAtLeastSomeClothes] = useState<string[]>([])
 
 	const { metadata, setMetadata, availableTraits, getSelectedTrait } =
 		useContext(MetadataContext)
@@ -33,6 +37,16 @@ const WardrobeTraitSelector: React.FC<Props> = ({ categories }) => {
 		setIsWardrobeOpen(selectedCategoryIndex < 0)
 	}, [selectedCategoryIndex])
 
+	useEffect(() => {
+		getCategoryRules()
+	}, [])
+
+	const getCategoryRules = async () => {
+		const response = await doFetch(`${host}/peep/category-rules`, 'GET')
+		setAtLeastSomeClothes(response.atLeastSomeClothes)
+		setOneAndOnlyOneList(response.oneAndOnlyOne)
+	}
+
 	const updateCategory = (index: number) => {
 		setSelectedCategoryIndex(index)
 		if (index >= 0) {
@@ -43,17 +57,47 @@ const WardrobeTraitSelector: React.FC<Props> = ({ categories }) => {
 		}
 	}
 
+	const hasOnlyOneClothingItem = (metadataTraits: Trait[]) => {
+		const clothingCountSets = metadataTraits.filter(t =>
+			atLeastSomeClothesList.some(category => t.categories?.includes(category)),
+		).length
+		const clothingCountItems = metadataTraits.filter(
+			t => t.categories?.includes('Tops') || t.categories?.includes('Bottoms'),
+		).length
+
+		return (
+			(clothingCountSets === 1 && clothingCountItems === 0) ||
+			(clothingCountSets === 0 && clothingCountItems === 2)
+		)
+	}
+
 	const updateTrait = (
 		metadataTraits: Trait[],
 		categoryString: string,
 		value: string,
 	) => {
 		const hadMatch = metadataTraits.find(t => t.name === value)
-		const updatedMetadata = metadataTraits.filter(
-			t => t.categories?.join(' - ') !== categoryString,
-		)
-		if (!hadMatch) {
-			// Removed item that was already on
+		const mustHaveExactlyOne = oneAndOnlyOneList.includes(categoryString)
+		const islastPieceOfClothing = hasOnlyOneClothingItem(metadataTraits)
+		let updatedMetadata = [...metadataTraits]
+
+		if (hadMatch && (mustHaveExactlyOne || islastPieceOfClothing)) {
+			// FIXME How does UI handle not being able to remove a trait
+			return
+		}
+
+		if (mustHaveExactlyOne) {
+			// selected, remove previous
+			updatedMetadata = metadataTraits.filter(
+				t => t.categories?.join(' - ') !== categoryString,
+			)
+		}
+
+		if (hadMatch) {
+			// deselect selected trait
+			updatedMetadata = metadataTraits.filter(t => t.name !== value)
+		} else {
+			// add trait as long as we weren't already wearing it
 			const trait = availableTraits.find(t => t.name === value)
 			if (trait) {
 				updatedMetadata.push(trait)
@@ -65,31 +109,14 @@ const WardrobeTraitSelector: React.FC<Props> = ({ categories }) => {
 				})
 			}
 		}
+
 		setMetadata(updatedMetadata)
 	}
 
 	const selectTraitHangar = (trait: Trait) => {
 		const selectedCategory = categories[selectedCategoryIndex]
-		let metadataTraits = [...metadata]
-		if (selectedCategory === 'Set' || selectedCategory === 'Jumpsuits') {
-			// Remove clothing options (but not shoes)
-			metadataTraits = metadataTraits.filter(
-				t =>
-					!t.categories?.includes('Clothing') ||
-					t.categories?.includes('Shoes'),
-			)
-		} else if (
-			['Tops', 'Outerwear', 'Dresses', 'Bottoms'].includes(selectedCategory)
-		) {
-			// Remove Jumpsuits and Set (reverse of above)
-			metadataTraits = metadataTraits.filter(
-				t =>
-					!t.categories?.includes('Set') ||
-					!t.categories?.includes('Jumpsuits'),
-			)
-		}
 		updateTrait(
-			metadataTraits,
+			metadata,
 			trait.categories?.join(' - ') ?? selectedCategory,
 			trait.name,
 		)
