@@ -22,6 +22,7 @@ export const getTrait = (metadata: Trait[], category: string) => {
 
 export const getTopDescription = (metadata: Trait[]) => {
 	// FIXME This is broken with the new category system - probably need overhaul
+	return ''
 	let description = `Looking at ${getTrait(
 		metadata,
 		'Name',
@@ -51,6 +52,7 @@ export const getTopDescription = (metadata: Trait[]) => {
 
 export const getFullDescription = (metadata: Trait[]) => {
 	// FIXME This is broken with the new category system - probably need overhaul
+	return ''
 	let description = getTopDescription(metadata)
 	description += ` In their ${getTrait(
 		metadata,
