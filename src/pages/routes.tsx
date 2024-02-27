@@ -54,6 +54,11 @@ export const YourPeepRoute: Route = {
 	path: '/welcome',
 }
 
+export const YourOffChainPeepRoute: Route = {
+	name: 'New Peep',
+	path: '/new-peep',
+}
+
 export const PartyRoute: Route = {
 	name: 'Party',
 	path: '/party',

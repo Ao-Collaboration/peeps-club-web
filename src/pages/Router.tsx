@@ -11,6 +11,7 @@ import Wardrobe from './Wardrobe/Wardrobe'
 import ImmigrationIntro from './Immigration/ImmigrationIntro'
 import ImmigrationGate from './Immigration/ImmigrationGate'
 import YourPeep from './YourPeep/YourPeep'
+import YourOffChainPeep from './YourPeep/YourOffChainPeep'
 import Party from './Party/Party'
 import ImmigrationExit from './Immigration/ImmigrationExit'
 import Mirror from './Mirror/Mirror'
@@ -37,6 +38,10 @@ function Router() {
 					<Route path={paths.HomeRoute.path} element={<Home />} />
 					<Route path={paths.ProfileRoute.path} element={<Profile />} />
 					<Route path={paths.YourPeepRoute.path} element={<YourPeep />} />
+					<Route
+						path={paths.YourOffChainPeepRoute.path}
+						element={<YourOffChainPeep />}
+					/>
 					<Route path={paths.PartyRoute.path} element={<Party />} />
 					<Route
 						path={paths.MirrorPeepSelectRoute.path}
