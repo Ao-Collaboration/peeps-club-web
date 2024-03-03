@@ -89,8 +89,6 @@ const ConnectButton: React.FC<Props> = ({ className = 'blue' }) => {
 	const withoutWeb3 = async () => {
 		const sessionID = await getOffChainSession()
 		setProfile({
-			address: ethers.constants.AddressZero,
-			isOffChain: true,
 			id: sessionID,
 		})
 		connectWithoutWeb3 && connectWithoutWeb3()

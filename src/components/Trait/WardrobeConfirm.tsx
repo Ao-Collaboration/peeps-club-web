@@ -12,7 +12,7 @@ import { useNavigate } from 'react-router-dom'
 import { YourOffChainPeepRoute, YourPeepRoute } from '../../pages/routes'
 import Loading from '../Loading/Loading'
 import { ProfileContext } from '../../context/Profile/ProfileContext'
-import { Trait, getTrait, traitsToMetadata } from '../../interface/metadata'
+import { getTrait, traitsToMetadata } from '../../interface/metadata'
 
 const WardrobeConfirm = () => {
 	const { metadata } = useContext(MetadataContext)
@@ -26,7 +26,7 @@ const WardrobeConfirm = () => {
 		return <></>
 	}
 
-	if (!web3Provider && !profile.isOffChain) {
+	if (!web3Provider && profile.address) {
 		return <></>
 	}
 
@@ -87,7 +87,7 @@ const WardrobeConfirm = () => {
 				src="/assets/wardrobe_door.svg"
 				className={`${classes.wardrobeDoor} ${classes.openWardrobe}`}
 			/>
-			{profile.isOffChain ? (
+			{ !profile.address ? (
 				<div className={classes.doorpanel}>
 					<h1 className="">Create your Peep</h1>
 					<p>Are you ready?</p>
