@@ -20,59 +20,6 @@ export const getTrait = (metadata: Trait[], category: string) => {
 	return trait ?? '' // FIXME Error handle instead
 }
 
-export const getTopDescription = (metadata: Trait[]) => {
-	// FIXME This is broken with the new category system - probably need overhaul
-	return ''
-	let description = `Looking at ${getTrait(
-		metadata,
-		'Name',
-	)}'s face you see a ${getTrait(metadata, 'Skin')} complexion,`
-	if (getTrait(metadata, 'Skin Condition') !== 'None') {
-		description += ` with ${getTrait(metadata, 'Skin Condition')}`
-	}
-	description += ` and big ${getTrait(metadata, 'Eye Colour')} ${getTrait(
-		metadata,
-		'Eye Style',
-	)} eyes.`
-	description += ' Their face is framed by their'
-	if (getTrait(metadata, 'Facial Hair') !== 'None') {
-		description += ` ${getTrait(metadata, 'Facial Hair')} and`
-	}
-	description += ` ${getTrait(metadata, 'Hair Colour')} ${getTrait(
-		metadata,
-		'Hair',
-	)}.`
-
-	description += ` They have an ${getTrait(
-		metadata,
-		'Expression',
-	)} expression on their face.`
-	return description
-}
-
-export const getFullDescription = (metadata: Trait[]) => {
-	// FIXME This is broken with the new category system - probably need overhaul
-	return ''
-	let description = getTopDescription(metadata)
-	description += ` In their ${getTrait(
-		metadata,
-		'Pose',
-	)} pose, they are rocking a pair of ${getTrait(metadata, 'Shoes')} and`
-	if (getTrait(metadata, 'One Piece') !== 'None') {
-		description += ` are wearing a ${getTrait(metadata, 'One Piece')}.`
-	} else {
-		description += ` are wearing a ${getTrait(metadata, 'Tops')} and ${getTrait(
-			metadata,
-			'Bottoms',
-		)}.`
-	}
-	description += ` In the background you can see the ${getTrait(
-		metadata,
-		'District',
-	)}.`
-	return description
-}
-
 export const traitsToMetadata = (traits: Trait[]) =>
 	traits.map(t => ({
 		value: t.name,

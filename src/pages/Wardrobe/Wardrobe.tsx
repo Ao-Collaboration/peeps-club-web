@@ -10,7 +10,6 @@ import { black } from '../../config/colors'
 import { MetadataContext } from '../../context/Metadata/MetadataContext'
 import {
 	Trait,
-	getFullDescription,
 	traitsToMetadata,
 } from '../../interface/metadata'
 import {
@@ -163,7 +162,6 @@ function Wardrobe() {
 					<WardrobeConfirm />
 				)}
 				<div
-					aria-label={`${getFullDescription(metadata)}`}
 					style={{ backgroundImage: `url(${peepImage})` }}
 					className={classes.mirrorPeep}
 				>
