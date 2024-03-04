@@ -7,9 +7,10 @@ import doFetch from '../../utils/doFetch'
 import { host } from '../../config/api'
 import { Link, useLocation } from 'react-router-dom'
 import { HomeRoute } from '../routes'
-import { greetings } from '../../config/text'
+
 import Copy from '../../components/Button/Copy'
 import { CreatedPeep } from '../../interface/createdPeep'
+import BouncingPeep from '../../components/Scene/BouncingPeep'
 
 const YourPeep = () => {
 	const classes = useStyles()
@@ -31,15 +32,7 @@ const YourPeep = () => {
 		return <></>
 	}
 
-	const getRandomGreeting = () => {
-		const i = Math.floor(Math.random() * greetings.length)
-		return greetings[i]
-	}
 	const { uri } = useLocation().state as CreatedPeep
-
-	const changePhrase = (setGreeting: (text: string) => void) => {
-		setGreeting(getRandomGreeting())
-	}
 
 	useEffect(() => {
 		const getYourPeep = async () => {
@@ -81,58 +74,41 @@ const YourPeep = () => {
 					Make Another?
 				</Link>
 			</div>
-
 			<div className={classes.milky}>
-				{milkyGreeting.length > 0 && (
-					<div
-						className={`${classes.bubbleLeft} ${classes.fadeInAndOut1}`}
-						onAnimationIteration={() => {
-							changePhrase(setMilkyGreeting)
-						}}
-					>
-						{milkyGreeting}
-					</div>
-				)}
-				<img className={classes.guestPeep} src={'/assets/Milky.svg'} />
+				<BouncingPeep
+					fadeClass={classes.fadeInAndOut1}
+					greeting={milkyGreeting}
+					isBubbleFlipped={true}
+					setGreeting={setMilkyGreeting}
+					svgPath="/assets/Milky.svg"
+				/>
 			</div>
 			<div className={classes.jono}>
-				{jonoGreeting.length > 0 && (
-					<div
-						className={`${classes.bubbleLeft} ${classes.fadeInAndOut2}`}
-						onAnimationIteration={() => {
-							changePhrase(setJonoGreeting)
-						}}
-					>
-						{jonoGreeting}
-					</div>
-				)}
-				<img className={classes.guestPeep} src={'/assets/Jono.svg'} />
+				<BouncingPeep
+					fadeClass={classes.fadeInAndOut2}
+					greeting={jonoGreeting}
+					isBubbleFlipped={true}
+					setGreeting={setJonoGreeting}
+					svgPath="/assets/Jono.svg"
+				/>
 			</div>
 			<div className={classes.granny}>
-				{grannyGreeting.length > 0 && (
-					<div
-						className={`${classes.bubbleRight} ${classes.fadeInAndOut3}`}
-						onAnimationIteration={() => {
-							changePhrase(setGrannyGreeting)
-						}}
-					>
-						{grannyGreeting}
-					</div>
-				)}
-				<img className={classes.guestPeep} src={'/assets/Granny Peep.svg'} />
+				<BouncingPeep
+					fadeClass={classes.fadeInAndOut3}
+					greeting={grannyGreeting}
+					isBubbleFlipped={false}
+					setGreeting={setGrannyGreeting}
+					svgPath="/assets/Granny Peep.svg"
+				/>
 			</div>
 			<div className={classes.officer}>
-				{officerGreeting.length > 0 && (
-					<div
-						className={`${classes.bubbleRight} ${classes.fadeInAndOut4}`}
-						onAnimationIteration={() => {
-							changePhrase(setOfficerGreeting)
-						}}
-					>
-						{officerGreeting}
-					</div>
-				)}
-				<img className={classes.guestPeep} src={'/assets/Officer.svg'} />
+				<BouncingPeep
+					fadeClass={classes.fadeInAndOut4}
+					greeting={officerGreeting}
+					isBubbleFlipped={false}
+					setGreeting={setOfficerGreeting}
+					svgPath="/assets/Officer.svg"
+				/>
 			</div>
 		</div>
 	)
