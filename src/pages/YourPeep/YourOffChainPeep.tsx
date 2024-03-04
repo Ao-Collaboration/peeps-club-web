@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from 'react'
 import { MetadataContext } from '../../context/Metadata/MetadataContext'
 import { DEFAULT_PEEP, getTrait } from '../../interface/metadata'
-import useStyles from './YourOffChainPeep.styles'
+import useStyles from './YourPeep.styles'
 import { ProfileContext } from '../../context/Profile/ProfileContext'
 import doFetch from '../../utils/doFetch'
 import { host } from '../../config/api'
