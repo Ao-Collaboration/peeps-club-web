@@ -11,11 +11,7 @@ import { HomeRoute } from '../routes'
 import TwitterLogo from '../../components/Logo/TwitterLogo'
 import DiscordLogo from '../../components/Logo/DiscordLogo'
 import { greetings } from '../../config/text'
-
-interface propState {
-	uri: string
-	isUpdate: boolean
-}
+import { CreatedPeep } from '../../interface/createdPeep'
 
 const YourPeep = () => {
 	const classes = useStyles()
@@ -43,7 +39,7 @@ const YourPeep = () => {
 		const i = Math.floor(Math.random() * greetings.length)
 		return greetings[i]
 	}
-	const { uri, isUpdate } = useLocation().state as propState
+	const { uri, isUpdate } = useLocation().state as CreatedPeep
 
 	const changePhrase = (setGreeting: (text: string) => void) => {
 		setGreeting(getRandomGreeting())

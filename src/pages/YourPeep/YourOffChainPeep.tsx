@@ -9,11 +9,7 @@ import { Link, useLocation } from 'react-router-dom'
 import { HomeRoute } from '../routes'
 import { greetings } from '../../config/text'
 import Copy from '../../components/Button/Copy'
-
-interface propState {
-	uri: string
-	isUpdate: boolean
-}
+import { CreatedPeep } from '../../interface/createdPeep'
 
 const YourPeep = () => {
 	const classes = useStyles()
@@ -39,7 +35,7 @@ const YourPeep = () => {
 		const i = Math.floor(Math.random() * greetings.length)
 		return greetings[i]
 	}
-	const { uri } = useLocation().state as propState
+	const { uri } = useLocation().state as CreatedPeep
 
 	const changePhrase = (setGreeting: (text: string) => void) => {
 		setGreeting(getRandomGreeting())
@@ -57,7 +53,7 @@ const YourPeep = () => {
 			}
 		}
 		getYourPeep()
-	}, [])
+	}, [uri])
 
 	const getPeepFromURI = async (peepURI: string) => {
 		const svg = await doFetch(
