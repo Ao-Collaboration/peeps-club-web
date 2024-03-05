@@ -1,22 +1,22 @@
 import useStyles from './BouncingPeep.styles'
 import { greetings } from '../../config/text'
+import { useState } from 'react'
 
 interface Props {
-	greeting: string
+	initialGreeting: string
 	fadeClass: string
-	setGreeting: (greeting: string) => void
 	svgPath: string
 	isBubbleFlipped: boolean
 }
 
 const BouncingPeep: React.FC<Props> = ({
-	greeting,
+	initialGreeting,
 	fadeClass,
-	setGreeting,
 	svgPath,
 	isBubbleFlipped,
 }) => {
 	const classes = useStyles()
+	const [greeting, setGreeting] = useState(initialGreeting)
 
 	const changePhrase = (setGreeting: (text: string) => void) => {
 		setGreeting(getRandomGreeting())

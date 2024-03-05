@@ -17,10 +17,6 @@ const YourPeep = () => {
 	const { metadata, setMetadata } = useContext(MetadataContext)
 	const { profile, setProfile } = useContext(ProfileContext)
 	const [yourPeepImage, setYourPeepImage] = useState('')
-	const [milkyGreeting, setMilkyGreeting] = useState('Aloha')
-	const [jonoGreeting, setJonoGreeting] = useState('Ciao')
-	const [grannyGreeting, setGrannyGreeting] = useState('Hello')
-	const [officerGreeting, setOfficerGreeting] = useState('Bonjour!')
 
 	if (
 		!metadata ||
@@ -77,36 +73,32 @@ const YourPeep = () => {
 			<div className={classes.milky}>
 				<BouncingPeep
 					fadeClass={classes.fadeInAndOut1}
-					greeting={milkyGreeting}
+					initialGreeting="Aloha"
 					isBubbleFlipped={true}
-					setGreeting={setMilkyGreeting}
 					svgPath="/assets/Milky.svg"
 				/>
 			</div>
 			<div className={classes.jono}>
 				<BouncingPeep
 					fadeClass={classes.fadeInAndOut2}
-					greeting={jonoGreeting}
+					initialGreeting="Ciao"
 					isBubbleFlipped={true}
-					setGreeting={setJonoGreeting}
 					svgPath="/assets/Jono.svg"
 				/>
 			</div>
 			<div className={classes.granny}>
 				<BouncingPeep
 					fadeClass={classes.fadeInAndOut3}
-					greeting={grannyGreeting}
+					initialGreeting="Bonjour!"
 					isBubbleFlipped={false}
-					setGreeting={setGrannyGreeting}
 					svgPath="/assets/Granny Peep.svg"
 				/>
 			</div>
 			<div className={classes.officer}>
 				<BouncingPeep
 					fadeClass={classes.fadeInAndOut4}
-					greeting={officerGreeting}
+					initialGreeting="Hello"
 					isBubbleFlipped={false}
-					setGreeting={setOfficerGreeting}
 					svgPath="/assets/Officer.svg"
 				/>
 			</div>
