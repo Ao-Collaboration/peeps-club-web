@@ -106,9 +106,6 @@ const styles = {
 			textDecoration: 'underline',
 		},
 	},
-	guestPeep: {
-		maxWidth: 'min(30vw, 400px)',
-	},
 	bounce: {
 		animationName: 'bounce',
 		animationDuration: '0.3s',
@@ -138,25 +135,6 @@ const styles = {
 		animationDelay: '0.2s',
 		position: 'absolute',
 		right: '10%',
-	},
-	bubble: {
-		backgroundColor: light_blue,
-		padding: '0.4em',
-		zIndex: '1000',
-		fontFamily: headingFontFamily,
-		fontSize: '1.5em',
-	},
-	bubbleLeft: {
-		composes: '$bubble',
-		borderRadius: '20px 20px 0 20px',
-		position: 'absolute',
-		left: '20%',
-	},
-	bubbleRight: {
-		composes: '$bubble',
-		borderRadius: '20px 20px 20px 0',
-		position: 'absolute',
-		right: '20%',
 	},
 	text: {
 		fontSize: '1.2rem',

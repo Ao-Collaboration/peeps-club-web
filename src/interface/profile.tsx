@@ -1,4 +1,4 @@
 export interface Profile {
 	id?: string
-	address: string
+	address?: string
 }

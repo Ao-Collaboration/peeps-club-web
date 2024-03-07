@@ -9,10 +9,10 @@ import Button from '../Button/Button'
 import peepsABI from '../../abi/peepsABI.json'
 import useStyles from './WardrobeConfirm.styles'
 import { useNavigate } from 'react-router-dom'
-import { YourPeepRoute } from '../../pages/routes'
+import { YourOffChainPeepRoute, YourPeepRoute } from '../../pages/routes'
 import Loading from '../Loading/Loading'
 import { ProfileContext } from '../../context/Profile/ProfileContext'
-import { getTrait } from '../../interface/metadata'
+import { getTrait, traitsToMetadata } from '../../interface/metadata'
 
 const WardrobeConfirm = () => {
 	const { metadata } = useContext(MetadataContext)
@@ -22,21 +22,24 @@ const WardrobeConfirm = () => {
 	const [pendingHash, setPendingHash] = useState<string | null>(null)
 	const navigate = useNavigate()
 
-	if (!metadata || !web3Provider || !profile) {
+	if (!metadata || !profile) {
 		return <></>
 	}
 
-	const signer = web3Provider?.getSigner()
-	const peepsContract = new ethers.Contract(
-		getPeepsContractId(web3Provider?.network?.chainId),
-		peepsABI,
-		signer,
-	)
+	if (!web3Provider && profile.address) {
+		return <></>
+	}
 
 	const getName = () => getTrait(metadata, 'Name')
 
 	const mintPeep = async () => {
 		setIsLoading(true)
+		const signer = web3Provider?.getSigner()
+		const peepsContract = new ethers.Contract(
+			getPeepsContractId(web3Provider?.network?.chainId),
+			peepsABI,
+			signer,
+		)
 		const req = { attributes: metadata }
 		const response = await doFetch(`${host}/mint/peep/authorise/`, 'POST', req)
 
@@ -58,6 +61,17 @@ const WardrobeConfirm = () => {
 		}
 	}
 
+	const createOffChainPeep = async () => {
+		setIsLoading(true)
+		await doFetch(`${host}/mint/peep/create/`, 'POST', {
+			attributes: traitsToMetadata(metadata),
+		})
+
+		navigate(YourOffChainPeepRoute.path, {
+			state: { uri: profile.id, isUpdate: false },
+		})
+	}
+
 	const classes = useStyles()
 	return (
 		<div className={classes.container}>
@@ -73,15 +87,27 @@ const WardrobeConfirm = () => {
 				src="/assets/wardrobe_door.svg"
 				className={`${classes.wardrobeDoor} ${classes.openWardrobe}`}
 			/>
-			<div className={classes.doorpanel}>
-				<h1 className="">Mint your Peep</h1>
-				<p>Are you ready to burn your passport to mint your Peep?</p>
-				{isLoading ? (
-					<Loading hash={pendingHash} />
-				) : (
-					<Button onClick={mintPeep}>Mint {getName()}</Button>
-				)}
-			</div>
+			{ !profile.address ? (
+				<div className={classes.doorpanel}>
+					<h1 className="">Create your Peep</h1>
+					<p>Are you ready?</p>
+					{isLoading ? (
+						<Loading />
+					) : (
+						<Button onClick={createOffChainPeep}>Create {getName()}</Button>
+					)}
+				</div>
+			) : (
+				<div className={classes.doorpanel}>
+					<h1 className="">Mint your Peep</h1>
+					<p>Are you ready to burn your passport to mint your Peep?</p>
+					{isLoading ? (
+						<Loading hash={pendingHash} />
+					) : (
+						<Button onClick={mintPeep}>Mint {getName()}</Button>
+					)}
+				</div>
+			)}
 			<div className={classes.hangerContainer}></div>
 		</div>
 	)

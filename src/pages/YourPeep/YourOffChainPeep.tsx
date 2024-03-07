@@ -1,6 +1,5 @@
 import { useContext, useEffect, useState } from 'react'
 import { MetadataContext } from '../../context/Metadata/MetadataContext'
-import { Web3Context } from '../../context/Web3/Web3Context'
 import { DEFAULT_PEEP, getTrait } from '../../interface/metadata'
 import useStyles from './YourPeep.styles'
 import { ProfileContext } from '../../context/Profile/ProfileContext'
@@ -8,22 +7,20 @@ import doFetch from '../../utils/doFetch'
 import { host } from '../../config/api'
 import { Link, useLocation } from 'react-router-dom'
 import { HomeRoute } from '../routes'
-import TwitterLogo from '../../components/Logo/TwitterLogo'
-import DiscordLogo from '../../components/Logo/DiscordLogo'
+
+import Copy from '../../components/Button/Copy'
 import { CreatedPeep } from '../../interface/createdPeep'
 import BouncingPeep from '../../components/Scene/BouncingPeep'
 
 const YourPeep = () => {
 	const classes = useStyles()
 	const { metadata, setMetadata } = useContext(MetadataContext)
-	const { web3Provider } = useContext(Web3Context)
 	const { profile, setProfile } = useContext(ProfileContext)
 	const [yourPeepImage, setYourPeepImage] = useState('')
 
 	if (
 		!metadata ||
 		!setMetadata ||
-		!web3Provider ||
 		!profile ||
 		!setProfile ||
 		!useLocation().state
@@ -31,7 +28,7 @@ const YourPeep = () => {
 		return <></>
 	}
 
-	const { uri, isUpdate } = useLocation().state as CreatedPeep
+	const { uri } = useLocation().state as CreatedPeep
 
 	useEffect(() => {
 		const getYourPeep = async () => {
@@ -45,11 +42,11 @@ const YourPeep = () => {
 			}
 		}
 		getYourPeep()
-	}, [])
+	}, [uri])
 
 	const getPeepFromURI = async (peepURI: string) => {
 		const svg = await doFetch(
-			`${host}/peep/${peepURI}.svg`,
+			`${host}/peep/${peepURI}.svg?offchain=true`,
 			'GET',
 			undefined,
 			'image/svg+xml',
@@ -60,34 +57,18 @@ const YourPeep = () => {
 	return (
 		<div className={classes.page}>
 			<h2 className={classes.title}>
-				{isUpdate ? 'You look amazing' : 'Welcome to Peeps Club'}
+				You look amazing
 				{getTrait(metadata, 'Name')}!!
 			</h2>
 			<img className={classes.peepImage} src={yourPeepImage} />
-			{isUpdate && (
-				<p className={classes.text}>
-					Don't forget to <strong>refresh your metadata</strong> on Opensea!
-				</p>
-			)}
+			<div>
+				<p>Your Peep's ID is important, keep it safe.</p>
+				<Copy text={uri} />
+			</div>
 			<div className={classes.buttonGroup}>
 				<Link className={classes.button} to={HomeRoute.path}>
-					Mint another?
+					Make Another?
 				</Link>
-				<span className={classes.enlarge}>Come join us at...</span>
-				<a
-					href="https://discord.gg/peepsclub"
-					target="_blank"
-					className={classes.link}
-				>
-					<DiscordLogo className="default" />
-				</a>
-				<a
-					href="https://twitter.com/Peeps_Club"
-					target="_blank"
-					className={classes.link}
-				>
-					<TwitterLogo className="default" />
-				</a>
 			</div>
 			<div className={classes.milky}>
 				<BouncingPeep

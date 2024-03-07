@@ -162,7 +162,7 @@ function Home() {
 					<strong>PASSPORT?!</strong>
 				</ul>
 				<div className={classes.buttonGroup}>
-					{profile && <MyPeepsButton address={profile.address} />}
+					{profile && <MyPeepsButton address={profile.address ? profile.address : ''} />}
 					{isPublicSaleActive || isVIPeepActive ? (
 						<Button
 							onClick={() => {

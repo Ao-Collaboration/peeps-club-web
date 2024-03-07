@@ -8,7 +8,7 @@ import WardrobeUpdate from '../../components/Trait/WardrobeUpdate'
 import { host } from '../../config/api'
 import { black } from '../../config/colors'
 import { MetadataContext } from '../../context/Metadata/MetadataContext'
-import { getFullDescription, Trait } from '../../interface/metadata'
+import { Trait } from '../../interface/metadata'
 import doFetch from '../../utils/doFetch'
 import { tableOrMobileQuery } from '../../utils/mediaQuery'
 import useStyles from './Mirror.styles'
@@ -133,7 +133,6 @@ function Mirror() {
 					<WardrobeUpdate tokenId={tokenId} />
 				)}
 				<div
-					aria-label={`${getFullDescription(metadata)}`}
 					style={{ backgroundImage: `url(${peepImage})` }}
 					className={classes.mirrorPeep}
 				>

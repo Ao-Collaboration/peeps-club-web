@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from 'react'
 import { host } from '../../config/api'
 import { MetadataContext } from '../../context/Metadata/MetadataContext'
 import { ProfileContext } from '../../context/Profile/ProfileContext'
-import { getTopDescription, traitsToMetadata } from '../../interface/metadata'
+import { traitsToMetadata } from '../../interface/metadata'
 import doFetch from '../../utils/doFetch'
 import BirthdaySelector from './BirthdaySelector'
 import useStyles from './Passport.styles'
@@ -84,8 +84,6 @@ const Passport: React.FC<Props> = ({ finishButton }) => {
 			<div>
 				<p className={classes.text}>Passport</p>
 				<div
-					title={getTopDescription(metadata)}
-					aria-label={getTopDescription(metadata)}
 					style={{ backgroundImage: `url(${peepImage})` }}
 					className={classes.passportPhoto}
 				></div>
